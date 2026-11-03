@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#140c24">
+<title>Connection test</title>
+<style>
+:root{--floor:#1c1230;--card:#33245a;--well:#140c24;--ink:#f6f0ff;--dim:#b3a6d6;--good:#3ddc97;--bad:#ff5d73;--warn:#ffc94a;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--floor);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px 40px}
+main{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1{margin:0;font-size:1.5rem}
+p{margin:0;color:var(--dim)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);border-radius:12px;padding:12px 14px}
+.row b{display:block}
+.row small{color:var(--dim);font-size:.8rem;word-break:break-all}
+.st{flex:none;font-weight:900;font-size:.95rem;padding:4px 10px;border-radius:99px;background:var(--well)}
+.ok{color:var(--good)}.no{color:var(--bad)}.wait{color:var(--warn)}
+.sum{background:var(--well);border-radius:12px;padding:14px;font-weight:700}
+button{font:inherit;font-weight:900;border:none;border-radius:12px;padding:14px;background:var(--warn);color:#2a1a00}
+code{font-size:.75rem;color:var(--dim);word-break:break-all}
+</style>
+</head>
+<body>
+<main>
+<h1>Party Showdown connection test</h1>
+<p>Keep this page open for about 20 seconds, then take a screenshot of the whole thing.</p>
+<div id="rows"></div>
+<div class="sum" id="sum">Testing…</div>
+<button id="again">Run again</button>
+<code id="info"></code>
+</main>
+<script>
+const TESTS=[
+  {n:"Normal web port (control)",u:"wss://echo.websocket.org/",kind:"ws"},
+  {n:"Game server 1 (HiveMQ)",u:"wss://broker.hivemq.com:8884/mqtt",kind:"mqtt"},
+  {n:"Game server 2 (EMQX)",u:"wss://broker.emqx.io:8084/mqtt",kind:"mqtt"},
+  {n:"Game server 3 (Mosquitto)",u:"wss://test.mosquitto.org:8081/mqtt",kind:"mqtt"},
+  {n:"Connection library download",u:"https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js",kind:"http"}
+];
+const rows=document.getElementById("rows"),sum=document.getElementById("sum");
+function line(t,i){return `<div class="row"><div><b>${t.n}</b><small>${t.u}</small></div><span class="st wait" id="s${i}">testing…</span></div>`}
+function set(i,ok,msg){const e=document.getElementById("s"+i);e.className="st "+(ok?"ok":"no");e.textContent=msg}
+// MQTT CONNECT packet (protocol 4, clean session, keepalive 30)
+function mqttConnect(){const id="pstest"+Math.random().toString(36).slice(2,8);const enc=new TextEncoder();const cid=enc.encode(id);
+  const vh=[0,4,77,81,84,84,4,2,0,30];const payload=[cid.length>>8,cid.length&255,...cid];const rem=vh.length+payload.length;
+  return new Uint8Array([0x10,rem,...vh,...payload])}
+function testWS(t,i){return new Promise(res=>{const t0=performance.now();let done=false,ws;
+  const fin=(ok,msg)=>{if(done)return;done=true;try{ws&&ws.close()}catch(e){}set(i,ok,msg);res(ok)};
+  const to=setTimeout(()=>fin(false,"timed out"),12000);
+  try{ws=t.kind==="mqtt"?new WebSocket(t.u,["mqtt"]):new WebSocket(t.u)}catch(e){clearTimeout(to);return fin(false,"blocked: "+e.name)}
+  ws.binaryType="arraybuffer";
+  ws.onopen=()=>{if(t.kind==="mqtt"){try{ws.send(mqttConnect())}catch(e){}}else{clearTimeout(to);fin(true,"OK "+Math.round(performance.now()-t0)+" ms")}};
+  ws.onmessage=ev=>{if(t.kind!=="mqtt")return;const b=new Uint8Array(ev.data);clearTimeout(to);
+    if(b[0]===0x20)fin(b[3]===0,b[3]===0?"OK "+Math.round(performance.now()-t0)+" ms":"refused ("+b[3]+")");else fin(false,"odd reply")};
+  ws.onerror=()=>{clearTimeout(to);fin(false,"failed after "+Math.round(performance.now()-t0)+" ms")};
+  ws.onclose=ev=>{if(!done){clearTimeout(to);fin(false,"closed ("+ev.code+")")}};
+})}
+async function testHTTP(t,i){const t0=performance.now();try{const c=new AbortController();setTimeout(()=>c.abort(),12000);const r=await fetch(t.u,{cache:"no-store",signal:c.signal});set(i,r.ok,(r.ok?"OK ":"HTTP "+r.status+" ")+Math.round(performance.now()-t0)+" ms");return r.ok}catch(e){set(i,false,"failed ("+e.name+")");return false}}
+async function run(){rows.innerHTML=TESTS.map(line).join("");sum.textContent="Testing…";
+  const r=await Promise.all(TESTS.map((t,i)=>t.kind==="http"?testHTTP(t,i):testWS(t,i)));
+  const [ctrl,s1,s2,s3,lib]=r,any=s1||s2||s3;
+  let msg;
+  if(any&&lib)msg="This phone can reach the game. If joining still fails, close the game and open it again from Safari.";
+  else if(!lib&&!ctrl)msg="This phone is blocking most web connections from this page. Check for a VPN, ad blocker, DNS profile or Screen Time web filter.";
+  else if(ctrl&&!any)msg="Normal web connections work, but all three game servers are blocked on this phone or network. Something is blocking unusual ports (8884, 8084, 8081): usually a VPN, ad blocker, DNS profile or Screen Time web filter.";
+  else if(!lib)msg="The connection library can't download. A content blocker or DNS filter is probably blocking unpkg.com.";
+  else msg="Mixed results. Send this screenshot to Nehal.";
+  sum.textContent=msg;
+}
+document.getElementById("again").onclick=run;
+document.getElementById("info").textContent=navigator.userAgent+" · "+new Date().toString();
+run();
+</script>
+</body>
+</html>
