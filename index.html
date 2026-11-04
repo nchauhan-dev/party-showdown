@@ -780,7 +780,7 @@ html .qc .tile.right{background:#e6f8ef!important;color:#14794c;opacity:1}
 .qc.win{animation:mGlow 1.2s ease-out 1}
 @keyframes mHot{0%,100%{box-shadow:0 0 0 1px rgba(0,0,0,.06),0 0 18px 2px rgba(255,93,115,.45)}50%{box-shadow:0 0 0 2px #ff5d73,0 0 30px 8px rgba(255,93,115,.6)}}
 .qc.hot{animation:mHot .6s ease-in-out infinite}
-#fx{position:fixed;inset:0;z-index:60;pointer-events:none}
+#fx{position:fixed;left:0;top:0;width:100%;height:100%;z-index:60;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.foil,#fx{display:none}}
 
 .qc.k-charades .band{background:#a3173a}
@@ -930,7 +930,7 @@ html .rskip{align-self:center;background:none;box-shadow:none;color:var(--dim);f
 .stk.good{background:radial-gradient(circle at 35% 30%,#5df0ae,#1a9a62)}
 .stk.bad{background:radial-gradient(circle at 35% 30%,#ff8c9c,#d12b47)}
 .stk.slam{animation:stkIn .5s .35s cubic-bezier(.3,1.5,.5,1) backwards}
-@keyframes stkIn{0%{transform:rotate(-12deg) scale(2.4);opacity:0;filter:blur(3px)}60%{transform:rotate(14deg) scale(.88);opacity:1;filter:none}}
+@keyframes stkIn{0%{transform:rotate(-12deg) scale(1.6);opacity:0;filter:blur(3px)}60%{transform:rotate(14deg) scale(.88);opacity:1;filter:none}}
 .skipi{flex:none;width:34px;height:34px;border:none;border-radius:50%;background:var(--card);color:var(--ink);display:grid;place-items:center;font-size:.85rem;padding:0;min-height:0}
 .scB{aspect-ratio:2/2.95;border-radius:18px;background:linear-gradient(#fbf6ea,#f1e7d1);color:#2a1d10;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 18px 34px -12px rgba(0,0,0,.7),inset 0 0 0 1px rgba(120,90,40,.25)}
 .scB .rib{background:linear-gradient(135deg,#3a2470,#1c1230);color:#ffe7a8;text-align:center;padding:16px 10px 22px;clip-path:polygon(0 0,100% 0,100% 82%,50% 100%,0 82%);flex:none}
@@ -973,7 +973,6 @@ html.th-light .pills .pill{background:rgba(0,0,0,.06)}
 html.th-light .lgo .cdt{background:rgba(0,0,0,.06)}
 .lgo .dwait{flex:1;display:flex;align-items:center;justify-content:center;margin:0;color:var(--dim);font-weight:900;font-size:.9rem;text-align:center}
 @keyframes skIn{from{opacity:0}}
-html,body{overflow-x:hidden;overflow-x:clip;max-width:100%;overscroll-behavior:none}
 .qwrap,.evwrap{max-width:calc(100vw - 88px)}
 .qdeck .bk.l2,.qdeck .bk.r2{display:none}
 .qdeck .bk.l1{transform:translateX(-13px) rotate(-3deg) scale(.97)}.qdeck .bk.r1{transform:translateX(13px) rotate(3deg) scale(.97)}
@@ -1057,7 +1056,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="7.1";
+const APPV="7.2";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1981,9 +1980,16 @@ function openPhone(){
   fillPhone();const b=document.getElementById("ph-body");b.scrollTop=0;const r=b.querySelector(".thrail");if(r)r.scrollLeft=0;
   (window.requestAnimationFrame||setTimeout)(()=>{s.classList.add("open");s.setAttribute("aria-hidden","false");document.getElementById("ph-scrim").classList.add("open")});
 }
+// screen readout: what height the app thinks it has vs the real screen (for tracking down layout gaps)
+function screenDiag(){
+  let sa={t:0,b:0};try{const p=document.createElement("div");p.style.cssText="position:fixed;top:0;left:0;visibility:hidden;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)";document.body.appendChild(p);const cs=getComputedStyle(p);sa={t:parseFloat(cs.paddingTop)||0,b:parseFloat(cs.paddingBottom)||0};p.remove()}catch(e){}
+  let fx=0;try{const p=document.createElement("div");p.style.cssText="position:fixed;left:0;right:0;top:0;bottom:0;visibility:hidden;pointer-events:none";document.body.appendChild(p);fx=Math.round(p.getBoundingClientRect().height);p.remove()}catch(e){}
+  const vv=window.visualViewport,sa2=!!(window.navigator.standalone||(matchMedia&&matchMedia("(display-mode: standalone)").matches));
+  const r=[["App height",Math.round(innerHeight)],["Pinned layer",fx],["Visible",vv?Math.round(vv.height):"–"],["Screen",screen.height],["Page",document.documentElement.scrollHeight],["Scrolled",Math.round(scrollY)],["Safe top/bottom",sa.t+" / "+sa.b],["Home screen app",sa2?"yes":"no"]];
+  return `<section class="ssec"><h3 style="font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:18px 0 8px">Screen check</h3><div style="display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:.85rem;font-weight:800">${r.map(([a,b])=>`<span style="color:var(--dim)">${a}</span><span>${b}</span>`).join("")}</div><p class="hint" style="font-size:.72rem;margin-top:8px">v${APPV} · send a screenshot of this if the screen looks cut off</p></section>`}
 function fillPhone(){
   const b=document.getElementById("ph-body");if(!b)return;const sc=b.scrollTop,r0=b.querySelector(".thrail"),rl=r0?r0.scrollLeft:0;
-  b.innerHTML=lookSection()+aboutSection();b.scrollTop=sc;
+  b.innerHTML=lookSection()+aboutSection()+screenDiag();b.scrollTop=sc;
   const ib=document.getElementById("inst");if(ib)ib.onclick=async()=>{if(!installEvt)return;installEvt.prompt();try{await installEvt.userChoice}catch(e){}installEvt=null;fillPhone()};const r=b.querySelector(".thrail");if(r)r.scrollLeft=rl;
   const after=()=>{applyLook();fillPhone();if(S)syncTopbar();else{const m=document.getElementById("mute");if(m)m.textContent=muted()?"🔇":"🔊"}};
   b.querySelectorAll("[data-th]").forEach(x=>x.onclick=()=>{ls.set("ps-theme",x.dataset.th);after()});
