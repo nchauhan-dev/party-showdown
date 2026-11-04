@@ -1057,7 +1057,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="7.0";
+const APPV="7.1";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1823,6 +1823,8 @@ function sizeCard(){
   const vw=document.documentElement.clientWidth||window.innerWidth||0;
   const base=Math.round(Math.min(280,vw*.72));
   let top=0;for(let e=w;e;e=e.offsetParent)top+=e.offsetTop;
+  // measure as if the timer row is always there (round cards don't have it), so every screen gets the same size
+  {const gb=document.getElementById("gbar");if(gb){let g=0;for(let e=gb;e;e=e.offsetParent)g+=e.offsetTop;top=Math.max(top,g+gb.offsetHeight+18+40+18)}}
   // one fixed size for the whole game: always leave room for the Next card (+ host skip link) or the answer tray,
   // whatever is showing right now, so the card never changes size between question, reveal and ready
   const n=S.players.filter(p=>p.on).length,trayMode=["glyph","closest"].includes(S.mode);
