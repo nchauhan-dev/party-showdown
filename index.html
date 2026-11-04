@@ -973,7 +973,7 @@ html.th-light .pills .pill{background:rgba(0,0,0,.06)}
 html.th-light .lgo .cdt{background:rgba(0,0,0,.06)}
 .lgo .dwait{flex:1;display:flex;align-items:center;justify-content:center;margin:0;color:var(--dim);font-weight:900;font-size:.9rem;text-align:center}
 @keyframes skIn{from{opacity:0}}
-.qwrap,.evwrap{width:calc(100vw - 88px)!important;max-width:none}
+.qwrap,.evwrap{width:min(calc(100vw - 88px),340px)!important;max-width:none}
 .qdeck .bk.l2,.qdeck .bk.r2{display:none}
 .qdeck .bk.l1{transform:translateX(-13px) rotate(-3deg) scale(.97)}.qdeck .bk.r1{transform:translateX(13px) rotate(3deg) scale(.97)}
 /* background art pinned to the screen (iPhone ignores background-attachment:fixed, so the gradient used to stretch with the page) */
@@ -1088,7 +1088,7 @@ const MODES={
   board:{n:"Showdown Board",i:"🔔",r:"Whoever's turn it is picks a square. Everyone reads the question, then the buzzer turns green. First to buzz answers. Right wins the square's points and the next pick. Wrong loses them. Buzz too early and you're locked out for a second, and two wrong buzzes in a row means sitting out a question. Watch for the hidden Daily Double, and a final question where everyone bets.",d:"Pick a square, then race to buzz in. Wrong answers cost points.",min:2},
   lives:{n:"Last One Standing",i:"❤️",r:"Everyone starts with 3 lives. Miss a question and you lose one. Questions get harder as you go. If everyone misses a question, nobody loses a life. The last player with lives left wins.",d:"3 lives each. Miss a question, lose a life.",min:2},
   roller:{n:"High Roller",i:"🎲",r:"Everyone starts with 10 points. Before each question you see its category and difficulty, then bet. A right answer adds your bet, a wrong one takes it away. Go all in if you're sure.",d:"See the category, bet your points, then answer.",min:1},
-  teams:{n:"Team Battle",i:"⚔️",r:"Team Red vs Team Blue. Everyone answers on their own phone, and your team's answer is whatever most of you pick, so talk it over. Easy questions are worth 1 point, medium 2, hard 3.",d:"Two teams. Your team's answer is what most of you pick.",min:4},
+  teams:{n:"Team Battle",i:"⚔️",r:"Team Red vs Team Blue. Everyone answers on their own phone, and your team's answer is whatever most of you pick, so talk it over. Easy questions are worth 1 point, medium 2, hard 3.",d:"Two teams. Your team's answer is what most of you pick.",min:3},
   closest:{n:"Closest Wins",i:"🎯",r:"Every question has a number answer, like a year, a height or a distance. Type your best guess. The closest guess gets 2 points, and spot on gets 3.",d:"Guess a number. Closest guess scores.",min:1},
   charades:{n:"Charades",i:"🎭",r:"Take turns acting out a secret word without talking, pointing or mouthing. Everyone else shouts guesses or types them. If someone says it out loud, the actor taps their name. The guesser and the actor each get 1 point. You can skip up to 3 words a turn.",d:"Act out a secret word. Others shout or type guesses.",min:2},
   glyph:{n:"Decode the Glyph",i:"🧩",r:"Each puzzle is a row of emojis that spells out a movie, song, TV show, saying or something from pop culture. You see the category and how many words it is. Type your answer and keep guessing as many times as you like until time runs out. Small typos are fine. Faster solves score more: 3 points in the first third of the timer, 2 in the middle, 1 at the end.",d:"Turn emoji clues into movies, songs and sayings. Type fast.",min:1}
@@ -1167,7 +1167,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="8.3";
+const APPV="8.5";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
