@@ -879,11 +879,11 @@ html .rskip{align-self:center;background:none;box-shadow:none;color:var(--dim);f
 .qwrap .qdeck>.qc{z-index:3}
 .evwrap{position:relative}.evwrap>.evB,.evwrap>.scB{position:relative;z-index:3}
 .qwrap.hasnx,.evwrap.hasnx{margin-bottom:80px}.qwrap.hassk,.evwrap.hassk{margin-bottom:112px}
-.sklink{animation:skIn .3s 1.4s backwards;position:absolute;left:50%;transform:translateX(-50%);top:calc(100% + 76px);z-index:2;background:none;border:none;color:var(--dim);font:900 .8rem var(--body);text-decoration:underline;text-underline-offset:3px;white-space:nowrap;padding:8px 12px;min-height:0}
-.nx{position:absolute;left:50%;top:calc(100% - 62px);width:84%;height:130px;transform:translateX(-50%);z-index:1;border-radius:16px;color:#2a1a10;
+.sklink{animation:skIn .3s 1.4s backwards;position:absolute;left:0;right:0;margin:0 auto;width:max-content;top:calc(100% + 76px);z-index:2;background:none;border:none;color:var(--dim);font:900 .8rem var(--body);text-decoration:underline;text-underline-offset:3px;white-space:nowrap;padding:8px 12px;min-height:0}
+.nx{position:absolute;left:8%;right:8%;top:calc(100% - 62px);height:130px;z-index:1;border-radius:16px;color:#2a1a10;
   background:linear-gradient(color-mix(in srgb,var(--acc) 80%,#fff),var(--acc));box-shadow:0 0 26px 4px color-mix(in srgb,var(--acc) 55%,transparent),0 12px 24px -8px rgba(0,0,0,.6)}
 .nx.up{animation:nxUp .55s 1.05s cubic-bezier(.2,1.3,.4,1) backwards}
-@keyframes nxUp{from{transform:translateX(-50%) translateY(-70px);opacity:0}}
+@keyframes nxUp{from{transform:translateY(-70px);opacity:0}}
 .nx .nxb{all:unset;box-sizing:border-box;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:9px;padding-bottom:14px;cursor:pointer;border-radius:inherit;-webkit-tap-highlight-color:transparent}
 .nx:not(.done) .nxb:active{transform:translateY(3px)}
 .nx:not(.done){animation:nxPulse 1.8s ease-in-out infinite}
@@ -896,12 +896,12 @@ html .rskip{align-self:center;background:none;box-shadow:none;color:var(--dim);f
 .nx.done{--acc:#2fc985;color:#05301c}.nx.done .dots i{background:rgba(5,48,28,.22)}.nx.done .dots i.on{background:#05301c}.nx.done .nxb{cursor:default}
 /* trays under the card */
 .qwrap.hastray{transition:margin-bottom .35s}
-.tray{position:absolute;left:50%;top:calc(100% - 40px);width:90%;transform:translateX(-50%);z-index:1;border-radius:0 0 18px 18px;background:#fff;color:#1c1230;padding:40px 14px 12px 16px;
+.tray{position:absolute;left:5%;right:5%;top:calc(100% - 40px);z-index:1;border-radius:0 0 18px 18px;background:#fff;color:#1c1230;padding:40px 14px 12px 16px;
   box-shadow:0 0 0 3px var(--acc),0 0 24px 3px color-mix(in srgb,var(--acc) 40%,transparent),0 12px 24px -8px rgba(0,0,0,.6)}
 .tray.up{animation:trayUp .45s .1s cubic-bezier(.2,1.2,.4,1) backwards}
-@keyframes trayUp{from{transform:translateX(-50%) translateY(-60px);opacity:0}}
+@keyframes trayUp{from{transform:translateY(-60px);opacity:0}}
 .tray.tuck{animation:trayTuck .4s ease-in forwards}
-@keyframes trayTuck{to{transform:translateX(-50%) translateY(-90%);opacity:0}}
+@keyframes trayTuck{to{transform:translateY(-90%);opacity:0}}
 .tray form{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;min-height:52px;margin:0;padding:0;background:none;box-shadow:none}
 .tray input{flex:1 1 0;width:auto;min-width:0;border:none!important;background:none!important;box-shadow:none!important;font:800 1.1rem var(--body);color:#1c1230;outline:none;padding:8px 0!important;margin:0;border-radius:0;text-align:left!important;height:auto}
 .tray input::placeholder{color:#b9b2c8}
@@ -995,7 +995,7 @@ html,body{overscroll-behavior:none}
 .tbar .bar{height:100%;border-radius:0;background:rgba(255,255,255,.08)}
 .tbar .bar i{box-shadow:0 0 14px 2px var(--acc);border-radius:0 3px 3px 0}
 .sklink.live{opacity:.55;animation:none}
-.sklink.flow{position:static;transform:none;display:block;margin:-4px auto 0;animation:none}
+.sklink.flow{position:static;transform:none;display:block;margin:-4px auto 0;animation:none;width:max-content}
 /* glow layers animate opacity only (cheap on phones) */
 .nx::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 38px 9px color-mix(in srgb,var(--acc) 70%,transparent);opacity:0;pointer-events:none}
 .nx:not(.done):not(.ghost)::after{animation:nxPulse 1.8s 1.7s ease-in-out infinite}
@@ -1023,7 +1023,7 @@ body::before{background:transparent!important;-webkit-backdrop-filter:none;backd
 @keyframes vAmp{from{transform:scaleY(.45)}to{transform:scaleY(1)}}
 @media (prefers-reduced-motion:reduce){.vline.talk .amp{animation:none}.vline svg{animation:none}}
 /* voice wave sits in the top strip (game + lobby) */
-#vwave{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 2px);width:260px;height:30px;transform:translateX(-50%);z-index:22;pointer-events:none;display:none}
+#vwave{position:fixed;left:0;right:0;margin:0 auto;top:calc(env(safe-area-inset-top,0px) + 2px);width:260px;height:30px;z-index:22;pointer-events:none;display:none}
 body.inapp #vwave{display:block}
 #vwave svg{width:100%;height:100%;overflow:visible}
 #vwave{-webkit-mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent)}
@@ -1167,7 +1167,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="8.8";
+const APPV="8.9";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
