@@ -1167,7 +1167,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="8.5";
+const APPV="8.7";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1815,7 +1815,7 @@ function topbar(){
     const M=MODES[S.mode]||MODES.trivia,lob=S.phase==="lobby";
     const right=lob?`<button id="leave">${isHost()?"End":"Leave"}</button>`:S.phase==="end"?"":`<button id="endg">${isHost()?"End":"Leave"}</button>`;
     try{document.body.classList.add("inapp");vwave()}catch(e){}
-    app.insertAdjacentHTML("afterbegin",`<header class="topbar" id="topbar"><div class="tb1">${lob?"":gameBadge(S.mode)}<span class="sp"></span><button id="mute"></button><button id="cog" aria-label="Settings">${COGSVG}</button>${right}</div>${lob?"":'<div class="scorerow" id="srow" aria-label="Players"></div>'}</header>${lob?"":`<div class="gamebar" id="gbar"></div>`}`);
+    app.insertAdjacentHTML("afterbegin",`<header class="topbar" id="topbar"><div class="tb1">${lob?`<h1>Party <span class="a">Showdown</span></h1>`:gameBadge(S.mode)}<span class="sp"></span><button id="mute"></button><button id="cog" aria-label="Settings">${COGSVG}</button>${right}</div>${lob?"":'<div class="scorerow" id="srow" aria-label="Players"></div>'}</header>${lob?"":`<div class="gamebar" id="gbar"></div>`}`);
     document.getElementById("cog").onclick=openPhone;
     document.getElementById("mute").onclick=()=>{const on=!muted();ls.set("ts-mute",on?"1":"0");if(on)stopSpeech();syncTopbar()};
     if(lob)leaveBtn();
@@ -2165,7 +2165,7 @@ function rLobby(){
   ["rules","top"].forEach(k=>{const b=document.getElementById("sb-"+k);if(b)sheetScroll[k]=b.scrollTop});
   app.querySelectorAll("[data-rail]").forEach(r=>railScroll[r.dataset.rail]=r.scrollLeft);
   if(!host)openSheet=null;
-  const picker=deckHTML(m,host)+(m==="teams"&&!host?`<p style="text-align:center">You're on <b class="t${me().team}">${teamName(me().team)}</b></p>`:"");
+  const picker=deckHTML(m,host);
   const sheetHTML=(k,title,body,extra="",tall=false)=>`<div class="sheet2 ${tall?"tall":""} ${openSheet===k?"open vis":""}" id="sh-${k}" role="dialog" aria-label="${title}" aria-hidden="${openSheet!==k}">
       <div class="shead"><span class="grab" aria-hidden="true"></span><div class="sheadrow"><h2>${title}</h2><button class="btn small" data-close>Done</button></div>${extra}</div>
       <div class="sbody" id="sb-${k}">${body}</div></div>`;
