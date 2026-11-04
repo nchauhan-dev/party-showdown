@@ -878,12 +878,13 @@ html .rskip{align-self:center;background:none;box-shadow:none;color:var(--dim);f
 /* ---- next card (ready), points sticker, scorecard ---- */
 .qwrap .qdeck>.qc{z-index:3}
 .evwrap{position:relative}.evwrap>.evB,.evwrap>.scB{position:relative;z-index:3}
-.qwrap.hasnx,.evwrap.hasnx{margin-bottom:68px}
-.nx{position:absolute;left:50%;top:calc(100% - 76px);width:82%;height:130px;transform:translateX(-50%) rotate(-1.5deg);z-index:1;border-radius:16px;background:#fff;color:#1c1230;
+.qwrap.hasnx,.evwrap.hasnx{margin-bottom:80px}.qwrap.hassk,.evwrap.hassk{margin-bottom:112px}
+.sklink{position:absolute;left:50%;transform:translateX(-50%);top:calc(100% + 76px);z-index:2;background:none;border:none;color:var(--dim);font:900 .8rem var(--body);text-decoration:underline;text-underline-offset:3px;white-space:nowrap;padding:8px 12px;min-height:0}
+.nx{position:absolute;left:50%;top:calc(100% - 62px);width:84%;height:130px;transform:translateX(-50%);z-index:1;border-radius:16px;background:#fff;color:#1c1230;
   box-shadow:0 0 0 3px var(--acc),0 0 24px 3px color-mix(in srgb,var(--acc) 40%,transparent),0 12px 24px -8px rgba(0,0,0,.6)}
 .nx.up{animation:nxUp .55s .25s cubic-bezier(.2,1.3,.4,1) backwards}
-@keyframes nxUp{from{transform:translateX(-50%) translateY(-60px) rotate(-1.5deg);opacity:0}}
-.nx .nxb{all:unset;box-sizing:border-box;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;padding-bottom:11px;cursor:pointer;border-radius:inherit;-webkit-tap-highlight-color:transparent}
+@keyframes nxUp{from{transform:translateX(-50%) translateY(-60px);opacity:0}}
+.nx .nxb{all:unset;box-sizing:border-box;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;padding-bottom:13px;cursor:pointer;border-radius:inherit;-webkit-tap-highlight-color:transparent}
 .nx:not(.done) .nxb:active{transform:translateY(3px)}
 .nx:not(.done){animation:nxPulse 1.6s ease-in-out infinite}
 .nx.up:not(.done){animation:nxUp .55s .25s cubic-bezier(.2,1.3,.4,1) backwards,nxPulse 1.6s .8s ease-in-out infinite}
@@ -1019,7 +1020,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="6.2";
+const APPV="6.3";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1643,6 +1644,7 @@ function render(){
   try{sticker()}catch(e){}
   try{nextCard()}catch(e){}
   topbar();
+  try{sizeCard()}catch(e){}
   try{const nw=app.querySelector(".qc");if(old&&nw&&nw!==old&&oldK!==nw.dataset.k&&oldR&&oldR.width)slideCards(old,oldR,nw)}catch(e){}
   try{magicAfter()}catch(e){}
 }
@@ -1771,9 +1773,19 @@ function nextCard(){
   const fresh=nxSeen!==S.rk;nxSeen=S.rk;
   const dots=live.map(p=>`<i class="${r.has(p.id)?"on":""}"></i>`).join("");
   const lbl=mine?(waiting?"Ready":"Everyone's ready"):esc(shortLbl(rb.dataset.l));
-  host.insertAdjacentHTML("beforeend",`<div class="nx ${qd?"":"gold"} ${mine?"done":""} ${fresh?"up":""}"><button class="nxb" id="rdy" ${mine?"disabled":""} aria-label="${mine?"Ready":"I'm ready: "+esc(rb.dataset.l||"")}"><span class="dots" aria-hidden="true">${dots}</span><span class="lb"><b>${mine?"✓":"›"}</b>${lbl}</span></button>${isHost()&&waiting?`<button class="nxs" id="force" aria-label="Skip the wait">⏭</button>`:""}</div>`);
-  (qd?qd.closest(".qwrap"):ev).classList.add("hasnx");
+  host.insertAdjacentHTML("beforeend",`<div class="nx ${qd?"":"gold"} ${mine?"done":""} ${fresh?"up":""}"><button class="nxb" id="rdy" ${mine?"disabled":""} aria-label="${mine?"Ready":"I'm ready: "+esc(rb.dataset.l||"")}"><span class="dots" aria-hidden="true">${dots}</span><span class="lb"><b>${mine?"✓":"›"}</b>${lbl}</span></button></div>${isHost()&&waiting?`<button class="sklink" id="force">Skip the wait</button>`:""}`);
+  (qd?qd.closest(".qwrap"):ev).classList.add("hasnx");if(isHost()&&waiting)(qd?qd.closest(".qwrap"):ev).classList.add("hassk");
   rb.remove();wireReady();
+}
+function sizeCard(){
+  const w=app.querySelector(".qwrap,.evwrap");if(!w)return;
+  w.style.width="";const base=w.offsetWidth;if(!base)return;
+  let top=0;for(let e=w;e;e=e.offsetParent)top+=e.offsetTop;let after=0;
+  for(let s=w.nextElementSibling;s;s=s.nextElementSibling){if(s.id==="dockspace"||s.id==="scrim"||s.classList.contains("sheet2"))continue;
+    const cs=getComputedStyle(s);if(cs.position==="fixed"||cs.display==="none")continue;after+=s.offsetHeight+10}
+  const avail=(window.innerHeight||0)-top-after-(isHost()?124:96);
+  const nw=Math.min((window.innerWidth||0)-64,400,Math.floor(avail/1.475));
+  if(nw>base+6){w.style.width=nw+"px";const qc=w.querySelector(".qc");if(qc)fitCard(qc)}
 }
 function sticker(){
   if(!S||S.ctx==="tb")return;const ph=S.phase;
@@ -2195,8 +2207,9 @@ function cardify(o={}){
   app.querySelectorAll(".tags,.qhead .catpill").forEach(t=>t.remove());
   fitCard(wrap.querySelector(".qc"));
 }
-function fitCard(qc){if(!qc||!qc.clientHeight)return;const solo=qc.classList.contains("solo");let qs=solo?1.3:1.1,as=.95;
+function fitCard(qc){if(!qc||!qc.clientHeight)return;const solo=qc.classList.contains("solo"),k=Math.max(1,Math.min(1.22,qc.clientWidth/280));let qs=(solo?1.3:1.1)*k,as=.95*k;
   qc.style.removeProperty("--qs");qc.style.removeProperty("--as");
+  if(k>1.02){qc.style.setProperty("--qs",qs.toFixed(2)+"rem");qc.style.setProperty("--as",as.toFixed(2)+"rem")}
   for(let i=0;i<14&&qc.scrollHeight>qc.clientHeight+1;i++){qs-=.04;as=Math.max(.76,as-.02);qc.style.setProperty("--qs",qs.toFixed(2)+"rem");qc.style.setProperty("--as",as.toFixed(2)+"rem")}
   const b=qc.querySelector(".body");for(let i=0;i<10&&b&&b.scrollHeight>b.clientHeight+1;i++){qs-=.03;as=Math.max(.72,as-.02);qc.style.setProperty("--qs",qs.toFixed(2)+"rem");qc.style.setProperty("--as",as.toFixed(2)+"rem")}}
 function rRead(){

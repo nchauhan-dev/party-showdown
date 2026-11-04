@@ -1,5 +1,5 @@
 /* Party Showdown offline helper: keeps the app on the phone so it opens instantly. */
-const VERSION="ps-v6.2";
+const VERSION="ps-v6.3";
 const CORE=["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./icon-maskable-512.png","./apple-touch-icon.png"];
 const CDN=["unpkg.com","cdn.jsdelivr.net","fonts.googleapis.com","fonts.gstatic.com"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(VERSION).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
