@@ -989,6 +989,13 @@ html,body{overscroll-behavior:none}
 .sklink.ghost{opacity:.22;pointer-events:none;animation:none}
 .sklink.fill{animation:skFill .4s 1.2s backwards}
 @keyframes skFill{from{opacity:.22}}
+/* countdown bar in the top strip, fading out at both ends */
+.tbar{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 13px);height:6px;z-index:21;pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.tbar .bar{height:100%;border-radius:0;background:rgba(255,255,255,.08)}
+.tbar .bar i{box-shadow:0 0 14px 2px var(--acc);border-radius:0 3px 3px 0}
+.sklink.live{opacity:.55;animation:none}
+.sklink.flow{position:static;transform:none;display:block;margin:-4px auto 0;animation:none}
 </style>
 </head>
 <body>
@@ -1068,7 +1075,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="7.5";
+const APPV="7.6";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1767,13 +1774,13 @@ function syncGamebar(){const g=document.getElementById("gbar");if(!g||!S)return;
 const HEADPH=["bet","ddwager","fwager","cready","read","q","reveal","nq","nreveal","gq","greveal","bread","bbuzz","bans","breveal","cact","cres"];
 function fixHead(){
   if(!S||!HEADPH.includes(S.phase))return;const qh=app.querySelector(".qhead");if(!qh)return;
-  const bar=app.querySelector(".bar"),tl=qh.querySelector("#tl"),spk=qh.querySelector("#spk");
-  const g=document.createElement("div");g.className="gtime";
-  if(bar)g.appendChild(bar);else g.insertAdjacentHTML("beforeend",'<div class="bar idle"><i></i></div>');
-  if(tl)g.appendChild(tl);else g.insertAdjacentHTML("beforeend",'<span class="timer"></span>');
-  if(spk)g.appendChild(spk);
-  const sk=app.querySelector("#skip.btn,#go.btn");if(sk){sk.setAttribute("aria-label",sk.textContent.trim());sk.title=sk.textContent.trim();sk.className="skipi";sk.removeAttribute("style");sk.textContent="⏭";g.appendChild(sk)}
-  qh.replaceWith(g);
+  // the countdown lives in the blurred strip at the very top of the screen: just the bar, no number, no buttons
+  const bar=app.querySelector(".bar");
+  if(bar&&!bar.classList.contains("idle")){const tb=document.createElement("div");tb.className="tbar";tb.setAttribute("aria-hidden","true");tb.appendChild(bar);app.appendChild(tb)}
+  else if(bar)bar.remove();
+  // the host's skip button becomes the faded link under the card (see nextCard); keep the button only as the action
+  const sk=app.querySelector("#skip.btn,#go.btn");if(sk){sk.hidden=true;sk.classList.add("hostskip");app.appendChild(sk)}
+  qh.remove();
 }
 function syncTopbar(){
   const m=document.getElementById("mute");if(m){m.textContent=muted()?"🔇":"🔊";m.setAttribute("aria-label",muted()?"Sound off":"Sound on");m.setAttribute("aria-pressed",muted())}
@@ -1817,15 +1824,19 @@ const shortLbl=l=>{l=String(l||"");let m=l.match(/round (\d+)/i);if(m)return "Ro
 let nxSeen="",stkKey="";
 const ARRI=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>`,CHKI=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
 let nxGhost=false;
+function hsk(wrap){const hs=isHost()&&app.querySelector(".hostskip");if(!hs)return false;if(document.getElementById("skq"))return true;wrap.insertAdjacentHTML("afterend",`<button class="sklink live flow" id="skq">Skip</button>`);document.getElementById("skq").onclick=()=>hs.click();return true}
 function nextCard(){
   if(!S)return;const rb=app.querySelector(".readybar");
   const qd=app.querySelector(".qwrap .qdeck"),ev=app.querySelector(".evwrap");const host=qd||ev;
   if(!host){if(rb)nxGhost=false;return}
   const wrap=qd?qd.closest(".qwrap"):ev;
-  if(app.querySelector(".tray")){if(rb)rb.remove();nxGhost=false;return}
+  if(app.querySelector(".tray")){if(rb)rb.remove();nxGhost=false;
+    if(hsk(wrap))return;return}
   // no Next yet (question still open): keep a blank card and a greyed skip link in the same spot so nothing moves
-  if(!rb){host.insertAdjacentHTML("beforeend",`<div class="nx ghost ${qd?"":"gold"}" aria-hidden="true"></div>${isHost()?`<span class="sklink ghost" aria-hidden="true">Skip the wait</span>`:""}`);
-    wrap.classList.add("hasnx");if(isHost())wrap.classList.add("hassk");nxGhost=true;return}
+  const hs=isHost()&&app.querySelector(".hostskip");
+  if(!rb){if(host.querySelector(".nx"))return;host.insertAdjacentHTML("beforeend",`<div class="nx ghost ${qd?"":"gold"}" aria-hidden="true"></div>${isHost()?(hs?`<button class="sklink live" id="skq">Skip</button>`:`<span class="sklink ghost" aria-hidden="true">Skip the wait</span>`):""}`);
+    wrap.classList.add("hasnx");if(isHost())wrap.classList.add("hassk");nxGhost=true;
+    const q=document.getElementById("skq");if(q&&hs)q.onclick=()=>hs.click();return}
   const live=S.players.filter(p=>p.on),r=new Set(S.ready||[]),mine=r.has(pid),waiting=live.filter(p=>!r.has(p.id)).length;
   const fresh=nxSeen!==S.rk;nxSeen=S.rk;
   const dots=live.map(p=>`<i class="${r.has(p.id)?"on":""}"></i>`).join("");
