@@ -1055,7 +1055,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="6.7";
+const APPV="6.8";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1820,11 +1820,12 @@ function sizeCard(){
   const w=app.querySelector(".qwrap,.evwrap");if(!w)return;
   const vw=document.documentElement.clientWidth||window.innerWidth||0;
   const base=Math.round(Math.min(280,vw*.72));
-  let top=0;for(let e=w;e;e=e.offsetParent)top+=e.offsetTop;let after=0;
-  for(let s=w.nextElementSibling;s;s=s.nextElementSibling){if(s.id==="dockspace"||s.id==="scrim"||s.classList.contains("sheet2"))continue;
-    const cs=getComputedStyle(s);if(cs.position==="fixed"||cs.display==="none")continue;after+=s.offsetHeight+10}
-  const mb=parseFloat(getComputedStyle(w).marginBottom)||14;
-  const avail=(window.innerHeight||0)-top-after-mb-16;
+  let top=0;for(let e=w;e;e=e.offsetParent)top+=e.offsetTop;
+  // one fixed size for the whole game: always leave room for the Next card (+ host skip link) or the answer tray,
+  // whatever is showing right now, so the card never changes size between question, reveal and ready
+  const n=S.players.filter(p=>p.on).length,trayMode=["glyph","closest"].includes(S.mode);
+  const room=Math.max(isHost()?112:84,trayMode?16+Math.min(n,5)*32+28:0);
+  const avail=(window.innerHeight||0)-top-room-16;
   const nw=Math.max(base,Math.min(vw-88,380,Math.floor(avail/1.475)));
   const qc=w.querySelector(".qc"),k=qc?qc.dataset.k:(w.className+S.phase);
   const prev=lastCard.k===k?lastCard.w:0;lastCard={k,w:nw};
