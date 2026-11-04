@@ -981,6 +981,14 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
 /* closed sheets are removed from the page (iPhone counted them as page height while parked below the screen) */
 .sheet2:not(.vis){display:none!important}
 html,body{overscroll-behavior:none}
+/* Next slot always present: blank card + greyed skip link while the question is open */
+.nx.ghost{background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.1);animation:none!important;pointer-events:none}
+.nx.fill{animation:nxFill .6s 1.05s ease-out backwards!important}
+.nx.fill:not(.done){animation:nxFill .6s 1.05s ease-out backwards,nxPulse 1.8s 1.7s ease-in-out infinite!important}
+@keyframes nxFill{from{filter:saturate(0) brightness(.35);opacity:.4}}
+.sklink.ghost{opacity:.22;pointer-events:none;animation:none}
+.sklink.fill{animation:skFill .4s 1.2s backwards}
+@keyframes skFill{from{opacity:.22}}
 </style>
 </head>
 <body>
@@ -1024,6 +1032,7 @@ const fmt=n=>Number(n).toLocaleString("en-CA");
 const fmtN=(n,u)=>{n=Number(n);return !u&&Number.isInteger(n)&&n>=1000&&n<=2100?String(n):fmt(n)};
 let AC=null;
 const muted=()=>ls.get("ts-mute","0")==="1";
+try{if(navigator.audioSession)navigator.audioSession.type="ambient"}catch(e){}
 function beep(f=660,d=.08,type="square",v=.05){if(muted())return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.value=v;o.connect(g);g.connect(AC.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+d);o.stop(AC.currentTime+d+.02)}catch(e){}}
 function buzzVib(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
 let wake=null;
@@ -1035,7 +1044,7 @@ const canSpeak="speechSynthesis" in window&&typeof SpeechSynthesisUtterance!=="u
 let spokenKey="";
 function ttsOn(){const v=ls.get("ts-tts",null);return v===null?!!H:v==="1"}
 function setTts(on){ls.set("ts-tts",on?"1":"0");if(!on)stopSpeech();else unlockSpeech()}
-function unlockSpeech(){if(!canSpeak)return;try{const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u)}catch(e){}}
+function unlockSpeech(){if(!canSpeak||!ttsOn()||muted())return;try{const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u)}catch(e){}}
 function stopSpeech(){if(canSpeak)try{speechSynthesis.cancel()}catch(e){}}
 function speak(text){if(!canSpeak||!ttsOn()||muted())return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=1;u.lang="en-US";speechSynthesis.speak(u)}catch(e){}}
 document.addEventListener("pointerdown",()=>{if(ttsOn())unlockSpeech()},{once:true});
@@ -1059,7 +1068,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="7.4";
+const APPV="7.5";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1807,16 +1816,23 @@ const shortLbl=l=>{l=String(l||"");let m=l.match(/round (\d+)/i);if(m)return "Ro
   if(/board/i.test(l))return "Board";if(/winner/i.test(l))return "Winner";if(/Final question/i.test(l))return "Final";return l};
 let nxSeen="",stkKey="";
 const ARRI=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>`,CHKI=`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+let nxGhost=false;
 function nextCard(){
-  const rb=app.querySelector(".readybar");if(!rb||!S)return;
-  const qd=app.querySelector(".qwrap .qdeck"),ev=app.querySelector(".evwrap");const host=qd||ev;if(!host)return;
+  if(!S)return;const rb=app.querySelector(".readybar");
+  const qd=app.querySelector(".qwrap .qdeck"),ev=app.querySelector(".evwrap");const host=qd||ev;
+  if(!host){if(rb)nxGhost=false;return}
+  const wrap=qd?qd.closest(".qwrap"):ev;
+  if(app.querySelector(".tray")){if(rb)rb.remove();nxGhost=false;return}
+  // no Next yet (question still open): keep a blank card and a greyed skip link in the same spot so nothing moves
+  if(!rb){host.insertAdjacentHTML("beforeend",`<div class="nx ghost ${qd?"":"gold"}" aria-hidden="true"></div>${isHost()?`<span class="sklink ghost" aria-hidden="true">Skip the wait</span>`:""}`);
+    wrap.classList.add("hasnx");if(isHost())wrap.classList.add("hassk");nxGhost=true;return}
   const live=S.players.filter(p=>p.on),r=new Set(S.ready||[]),mine=r.has(pid),waiting=live.filter(p=>!r.has(p.id)).length;
   const fresh=nxSeen!==S.rk;nxSeen=S.rk;
   const dots=live.map(p=>`<i class="${r.has(p.id)?"on":""}"></i>`).join("");
-  if(app.querySelector(".tray")){rb.remove();return}
   const lbl=mine?CHKI+(waiting?"Ready":"Everyone's ready"):esc(shortLbl(rb.dataset.l))+ARRI;
-  host.insertAdjacentHTML("beforeend",`<div class="nx ${qd?"":"gold"} ${mine?"done":""} ${fresh?"up":""}"><button class="nxb" id="rdy" ${mine?"disabled":""} aria-label="${mine?"Ready":"I'm ready: "+esc(rb.dataset.l||"")}"><span class="dots" aria-hidden="true">${dots}</span><span class="lb">${lbl}</span></button></div>${isHost()&&waiting?`<button class="sklink" id="force">Skip the wait</button>`:""}`);
-  (qd?qd.closest(".qwrap"):ev).classList.add("hasnx");if(isHost()&&waiting)(qd?qd.closest(".qwrap"):ev).classList.add("hassk");
+  const enter=fresh?(nxGhost?"fill":"up"):"";nxGhost=false;
+  host.insertAdjacentHTML("beforeend",`<div class="nx ${qd?"":"gold"} ${mine?"done":""} ${enter}"><button class="nxb" id="rdy" ${mine?"disabled":""} aria-label="${mine?"Ready":"I'm ready: "+esc(rb.dataset.l||"")}"><span class="dots" aria-hidden="true">${dots}</span><span class="lb">${lbl}</span></button></div>${isHost()?(waiting?`<button class="sklink ${enter==="fill"?"fill":""}" id="force">Skip the wait</button>`:`<span class="sklink ghost" aria-hidden="true">Skip the wait</span>`):""}`);
+  wrap.classList.add("hasnx");if(isHost())wrap.classList.add("hassk");
   rb.remove();wireReady();
 }
 let lastCard={k:"",w:0},cardLock={k:"",w:0};
