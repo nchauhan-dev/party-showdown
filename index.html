@@ -1167,7 +1167,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="8.7";
+const APPV="8.8";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -2258,6 +2258,7 @@ function wireDeck(m,host,choose){
       const k=Math.min(1.14,Math.max(.5,(hh-188)/183));deck.style.setProperty("--k",k.toFixed(3));deck.style.setProperty("--kb",Math.min(1,k).toFixed(3));return hh};
     // fit exactly: if the page ends up taller than the screen, shrink the deck by the overflow so nothing scrolls
     let hh=put(Math.max(280,Math.min(avail,430)));
+    const dw=deck.closest(".dkwrap");if(!(dw&&dw.dataset.home))return; // fit-exactly only on the start page
     for(let i=0;i<2;i++){const over=document.documentElement.scrollHeight-(innerHeight||800);if(over<=0||hh<=280)break;hh=put(Math.max(280,hh-over-2))}};
   // stacked deck: the top card follows your finger, swings out and slides into the pile on the other side
   const S1=[24,6,5,.95,.28],S2=[40,12,9,.9,.45];
