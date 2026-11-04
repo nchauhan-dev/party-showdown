@@ -1007,9 +1007,9 @@ html,body{overscroll-behavior:none}
 @keyframes winGlow{50%{opacity:1}}
 .qc.win{animation:none}
 /* header: translucent glass over the main background, all the way to the top */
-body::before{background:transparent!important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+body::before{background:transparent!important;-webkit-backdrop-filter:none;backdrop-filter:none}
 .tb1{background:transparent!important}
-.topbar{-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);background:color-mix(in srgb,var(--hdr) 35%,transparent)!important}
+.topbar{-webkit-backdrop-filter:none;backdrop-filter:none;background:transparent!important;box-shadow:none!important}
 .scorerow{background:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none}
 /* voice line: flat and quiet until something is read out loud */
 .vline{flex:0 1 150px;height:26px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
@@ -1133,7 +1133,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="7.9";
+const APPV="8.0";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
