@@ -973,9 +973,10 @@ html.th-light .pills .pill{background:rgba(0,0,0,.06)}
 html.th-light .lgo .cdt{background:rgba(0,0,0,.06)}
 .lgo .dwait{flex:1;display:flex;align-items:center;justify-content:center;margin:0;color:var(--dim);font-weight:900;font-size:.9rem;text-align:center}
 @keyframes skIn{from{opacity:0}}
-html,body{overflow-x:hidden;overflow-x:clip;max-width:100%}
-#app{overflow-x:clip}
-.qwrap,.evwrap{max-width:calc(100vw - 72px)}
+html,body{overflow-x:hidden;overflow-x:clip;max-width:100%;overscroll-behavior:none}
+.qwrap,.evwrap{max-width:calc(100vw - 88px)}
+.qdeck .bk.l2,.qdeck .bk.r2{display:none}
+.qdeck .bk.l1{transform:translateX(-13px) rotate(-3deg) scale(.97)}.qdeck .bk.r1{transform:translateX(13px) rotate(3deg) scale(.97)}
 </style>
 </head>
 <body>
@@ -1054,7 +1055,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="6.5";
+const APPV="6.7";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1824,7 +1825,7 @@ function sizeCard(){
     const cs=getComputedStyle(s);if(cs.position==="fixed"||cs.display==="none")continue;after+=s.offsetHeight+10}
   const mb=parseFloat(getComputedStyle(w).marginBottom)||14;
   const avail=(window.innerHeight||0)-top-after-mb-16;
-  const nw=Math.max(base,Math.min(vw-72,400,Math.floor(avail/1.475)));
+  const nw=Math.max(base,Math.min(vw-88,380,Math.floor(avail/1.475)));
   const qc=w.querySelector(".qc"),k=qc?qc.dataset.k:(w.className+S.phase);
   const prev=lastCard.k===k?lastCard.w:0;lastCard={k,w:nw};
   w.classList.remove("shr","shr0");
