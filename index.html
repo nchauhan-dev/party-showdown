@@ -915,6 +915,32 @@ html .rskip{align-self:center;background:none;box-shadow:none;color:var(--dim);f
 .scB li .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.scB li .pt{font:400 1.1rem "Bungee","Arial Black",sans-serif}
 .scB li em{font-style:normal;font:900 .7rem var(--body);color:#1a9a62;width:30px;text-align:right}.scB li em.neg{color:#d12b47}.scB li em.z{color:#b9a988}
 .scB .foot{text-align:center;font:900 .62rem var(--body);letter-spacing:.2em;text-transform:uppercase;color:#a08a60;padding:4px 0 14px;flex:none}
+
+/* ---- lobby dock (home-style) ---- */
+.ldock{gap:12px;padding-top:14px}
+.fl{display:flex;justify-content:center;align-items:flex-start;gap:12px;padding-top:6px;min-height:68px}
+.fl .p{display:flex;flex-direction:column;align-items:center;gap:4px;width:54px;flex:none;animation:flBob 3.2s ease-in-out infinite}
+.fl .p:nth-child(2n){animation-delay:-1.2s}.fl .p:nth-child(3n){animation-delay:-2.1s}
+@keyframes flBob{50%{transform:translateY(-3px)}}
+.fl .av{position:relative;width:42px;height:42px;border-radius:50%;background:var(--pc);display:grid;place-items:center;font:900 1.05rem var(--body);color:#1c1230;box-shadow:0 6px 14px -4px color-mix(in srgb,var(--pc) 70%,transparent)}
+.fl .p.me .av{box-shadow:0 0 0 2.5px var(--sheet,#1d1636),0 0 0 4.5px #fff}
+.fl .p.off{opacity:.45}
+.fl .av .cr{position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:17px;height:auto}
+.fl .n{font:800 .66rem var(--body);color:var(--dim);max-width:58px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fl.tight{gap:0}.fl.tight .p{width:auto}.fl.tight .p+.p{margin-left:-8px}.fl.tight .p .av{box-shadow:0 0 0 2.5px var(--sheet,#1d1636)}.fl.tight .p.me .av{box-shadow:0 0 0 2.5px var(--sheet,#1d1636),0 0 0 4.5px #fff}.fl.tight .n{display:none}
+.fl .more .av{background:#3a2f5c;color:var(--ink);font-size:.8rem;box-shadow:0 0 0 2.5px var(--sheet,#1d1636)}
+.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.pills .pill{height:36px;border:none;border-radius:99px;background:rgba(255,255,255,.08);color:var(--ink);display:flex;align-items:center;gap:7px;padding:0 14px 0 11px;font:900 .8rem var(--body);max-width:100%;white-space:nowrap;overflow:hidden}
+.pills .pill span{color:var(--dim);font-weight:800;overflow:hidden;text-overflow:ellipsis}
+.pills .pill svg{color:var(--acc-tx,#ffc94a);flex:none;width:16px;height:16px}
+.pills div.pill{background:none}
+html.th-light .pills .pill{background:rgba(0,0,0,.06)}
+.lgo{display:flex;gap:8px}
+.lgo .btn{flex:1;min-height:54px;border-radius:16px;font-size:1.1rem}
+.lgo .cdt{flex:none;min-width:86px;min-height:54px;border:none;border-radius:16px;background:rgba(255,255,255,.08);color:var(--dim);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:0 14px;font:900 .56rem var(--body);letter-spacing:.14em;text-transform:uppercase}
+.lgo .cdt b{font:900 1.3rem/1 var(--body);color:var(--acc-tx,#ffc94a);letter-spacing:.1em}
+html.th-light .lgo .cdt{background:rgba(0,0,0,.06)}
+.lgo .dwait{flex:1;display:flex;align-items:center;justify-content:center;margin:0;color:var(--dim);font-weight:900;font-size:.9rem;text-align:center}
 </style>
 </head>
 <body>
@@ -993,7 +1019,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="6.1";
+const APPV="6.2";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1625,7 +1651,7 @@ function topbar(){
   if(!document.getElementById("topbar")){
     const M=MODES[S.mode]||MODES.trivia,lob=S.phase==="lobby";
     const right=lob?`<button id="leave">${isHost()?"End":"Leave"}</button>`:S.phase==="end"?"":`<button id="endg">${isHost()?"End":"Leave"}</button>`;
-    app.insertAdjacentHTML("afterbegin",`<header class="topbar" id="topbar"><div class="tb1"><h1>Party <span class="a">Showdown</span></h1><span class="sp"></span><button id="mute"></button><button id="cog" aria-label="Settings">${COGSVG}</button>${right}</div><div class="scorerow" id="srow" aria-label="Players"></div></header>${lob?"":`<div class="gamebar" id="gbar"></div>`}`);
+    app.insertAdjacentHTML("afterbegin",`<header class="topbar" id="topbar"><div class="tb1"><h1>Party <span class="a">Showdown</span></h1><span class="sp"></span><button id="mute"></button><button id="cog" aria-label="Settings">${COGSVG}</button>${right}</div>${lob?"":'<div class="scorerow" id="srow" aria-label="Players"></div>'}</header>${lob?"":`<div class="gamebar" id="gbar"></div>`}`);
     document.getElementById("cog").onclick=openPhone;
     document.getElementById("mute").onclick=()=>{const on=!muted();ls.set("ts-mute",on?"1":"0");if(on)stopSpeech();syncTopbar()};
     if(lob)leaveBtn();
@@ -1904,17 +1930,18 @@ function rLobby(){
     const total=sel.reduce((a,k)=>a+(T.cnt[k]||0),0);
     sheets+=sheetHTML("top","Topics",topicsBody(st),`<div class="tophint"><span><span class="count">${sel.length} of ${keys.length}</span> &nbsp;${fmt(total)} ${T.unit}</span><button class="link" id="${T.all}">${all?"Clear all":"Select all"}</button></div>`,true)}
   const catsOk=selOf(st).some(k=>topicKeys(m).includes(k));
-  const startLabel=n<need?`Need at least ${need} players`:catsOk?`Start ${MODES[m].n}`:"Pick a topic";
-  const dock=host?`<div class="dock" id="dock">
-    <div class="dockbar"><div class="di dbtns">
-      <button class="dbt" data-open="rules" aria-haspopup="dialog">${ICO.set}<span class="dbx"><b>Rules</b><span>${esc(settingsSub(st,n))}</span></span></button>
-      <button class="dbt" data-open="top" aria-haspopup="dialog">${ICO.top}<span class="dbx"><b>Topics</b><span>${esc(topicsSub(st))}</span></span></button></div></div>
-    <div class="dockbtm"><div class="di"><button class="btn wide" id="start" ${catsOk&&n>=need?"":"disabled"}>${startLabel}</button></div></div>
-  </div>`:`<div class="dock" id="dock">
-    <div class="dockbar"><div class="di"><span class="dsum"><b>${esc(MODES[m].n)}</b><span>${summaryLine(st,n)}</span></span></div></div>
-    <div class="dockbtm"><div class="di"><p class="dwait" style="width:100%">Waiting for the host to start</p></div></div></div>`;
+  const startLabel=n<need?`Need ${need}+ players`:catsOk?"Start":"Pick a topic";
+  const lp=S.players.filter(p=>p.on||p.host),tight=lp.length>5,shown=tight?lp.slice(0,lp.length>6?5:6):lp;
+  const pcol=p=>m==="teams"?(p.team==="A"?"var(--a1)":"var(--a4)"):colOf(p.id);
+  const fl=`<div class="fl ${tight?"tight":""}" aria-label="Players">${shown.map(p=>`<span class="p ${p.id===pid?"me":""} ${p.on?"":"off"}"><span class="av" style="--pc:${pcol(p)}">${p.host?CROWN:""}${esc(initial(p.name))}</span><span class="n">${esc(p.name)}</span></span>`).join("")}${lp.length>shown.length?`<span class="p more"><span class="av">+${lp.length-shown.length}</span></span>`:""}</div>`;
+  const codeT=`<button class="cdt" id="copy" aria-label="Copy invite link for code ${esc(S.code)}">Code<b>${esc(S.code)}</b></button>`;
+  const dock=host?`<div class="dock hdock ldock" id="dock">${fl}
+    <div class="pills"><button class="pill" data-open="rules" aria-haspopup="dialog">${ICO.set}${esc(settingsSub(st,n)).replace(" · ","<span>· ")}${settingsSub(st,n).includes(" · ")?"</span>":""}</button><button class="pill" data-open="top" aria-haspopup="dialog">${ICO.top}${esc(topicsSub(st))}<span>topics</span></button></div>
+    <div class="lgo">${codeT}<button class="btn" id="start" ${catsOk&&n>=need?"":"disabled"}>${startLabel}</button></div>
+  </div>`:`<div class="dock hdock ldock" id="dock">${fl}
+    <div class="pills"><div class="pill">${ICO.set}<span>${summaryLine(st,n)}</span></div></div>
+    <div class="lgo">${codeT}<p class="dwait">Waiting for the host…</p></div></div>`;
   app.innerHTML=`
-  <div class="cline"><span>Join code<b>${esc(S.code)}</b></span>${link?`<button class="copybtn" id="copy">Copy link</button>`:""}</div>
   ${picker}
   ${dock}<div id="dockspace" aria-hidden="true"></div>${sheets}`;
   ["rules","top"].forEach(k=>{const b=document.getElementById("sb-"+k);if(b&&openSheet===k)b.scrollTop=sheetScroll[k]||0});
@@ -1926,7 +1953,9 @@ function rLobby(){
   app.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>setOpen(b.dataset.open));
   app.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>setOpen(null));
   document.getElementById("scrim").onclick=()=>setOpen(null);
-const cp=document.getElementById("copy");if(cp)cp.onclick=async()=>{try{await navigator.clipboard.writeText(link);cp.textContent="Copied!"}catch(e){cp.textContent=link}};
+const cp=document.getElementById("copy");if(cp)cp.onclick=async()=>{const b=cp.querySelector("b"),txt=link||S.code;let ok=false;
+    try{await navigator.clipboard.writeText(txt);ok=true}catch(e){try{const ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();ok=document.execCommand("copy");ta.remove()}catch(e2){}}
+    cp.firstChild.textContent=ok?"Copied":"Code";beep(880,.05);setTimeout(()=>{if(cp.isConnected)cp.firstChild.textContent="Code"},1600)};
   const kept=document.getElementById("dkkeep");if(kept&&dkOld&&kept.replaceWith){kept.replaceWith(dkOld)}else wireDeck(m,host,host?(k=>{H.set.mode=k;if(k==="teams")balanceTeams(false);ls.set("ps-set2",JSON.stringify(H.set));broadcast()}):null);
   if(!host)return;
   const mo=document.getElementById("more");if(mo)mo.addEventListener("toggle",()=>timersOpen=mo.open);
