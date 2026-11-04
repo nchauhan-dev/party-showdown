@@ -1039,6 +1039,13 @@ body.inapp #vwave{display:block}
 /* quieter "this is you" ring on profile bubbles */
 .pl.me .av{box-shadow:0 0 0 2px var(--floor),0 0 0 3.5px var(--ring)!important}
 .fl .p.me .av,.fl.tight .p.me .av{box-shadow:0 0 0 2px var(--sheet,#1d1636),0 0 0 3.5px #fff!important}
+/* game name in the header, light countdown in the round row */
+.tb1 .hname{font:400 1.2rem/1.1 var(--display);color:var(--acc-tx,var(--acc));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1 auto}
+.gbrow .gcount{font:300 1.7rem/1 var(--body)!important;letter-spacing:0!important;text-transform:none!important;color:#fff!important;opacity:.8;font-variant-numeric:tabular-nums;min-height:1.7rem}
+.gbrow .gcount small{font-size:.8rem;font-weight:400;opacity:.7;margin-left:2px}
+.gbrow{align-items:flex-end}
+html.th-light .gbrow .gcount{color:#141414!important}
+.tring{display:none!important}
 </style>
 </head>
 <body>
@@ -1133,7 +1140,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="8.0";
+const APPV="8.1";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1769,7 +1776,7 @@ function topbar(){
     const M=MODES[S.mode]||MODES.trivia,lob=S.phase==="lobby";
     const right=lob?`<button id="leave">${isHost()?"End":"Leave"}</button>`:S.phase==="end"?"":`<button id="endg">${isHost()?"End":"Leave"}</button>`;
     try{document.body.classList.add("inapp");vwave()}catch(e){}
-    app.insertAdjacentHTML("afterbegin",`<header class="topbar" id="topbar"><div class="tb1"><span class="sp"></span><button id="mute"></button><button id="cog" aria-label="Settings">${COGSVG}</button>${right}</div>${lob?"":'<div class="scorerow" id="srow" aria-label="Players"></div>'}</header>${lob?"":`<div class="gamebar" id="gbar"></div>`}`);
+    app.insertAdjacentHTML("afterbegin",`<header class="topbar" id="topbar"><div class="tb1">${lob?"":`<span class="hname">${esc(M.n)}</span>`}<span class="sp"></span><button id="mute"></button><button id="cog" aria-label="Settings">${COGSVG}</button>${right}</div>${lob?"":'<div class="scorerow" id="srow" aria-label="Players"></div>'}</header>${lob?"":`<div class="gamebar" id="gbar"></div>`}`);
     document.getElementById("cog").onclick=openPhone;
     document.getElementById("mute").onclick=()=>{const on=!muted();ls.set("ts-mute",on?"1":"0");if(on)stopSpeech();syncTopbar()};
     if(lob)leaveBtn();
@@ -1829,8 +1836,8 @@ function gbProg(){const m=S.mode,ph=S.phase;if(S.ctx&&S.ctx!=="main")return null
 }
 function syncGamebar(){const g=document.getElementById("gbar");if(!g||!S)return;const p=gbProg();
   const segs=!p?"":p.n>24?`<div class="gprog cont"><i style="width:${Math.round(p.d/p.n*100)}%"></i></div>`:`<div class="gprog">${Array.from({length:p.n},(_,i)=>`<i class="${i<p.d?"on":i===p.cur?"cur":""}"></i>`).join("")}</div>`;
-  const h=`<div class="gbrow"><b>${esc((MODES[S.mode]||MODES.trivia).n)}</b><span>${esc(gbRight())}</span></div>${segs||'<div class="gprog none"></div>'}`;
-  if(g.innerHTML!==h)g.innerHTML=h}
+  const h=`<div class="gbrow"><span class="gcount" id="gcount"></span><span>${esc(gbRight())}</span></div>${segs||'<div class="gprog none"></div>'}`;
+  if(g.dataset.h!==h){g.dataset.h=h;g.innerHTML=h;countNow()}}
 const HEADPH=["bet","ddwager","fwager","cready","read","q","reveal","nq","nreveal","gq","greveal","bread","bbuzz","bans","breveal","cact","cres"];
 /* countdown as a glowing border around the card: drains from the top centre, turns red at the end */
 function addRing(bar){const qd=app.querySelector(".qwrap .qdeck");if(!qd)return;
@@ -1845,12 +1852,17 @@ function fixHead(){
   if(!S||!HEADPH.includes(S.phase))return;const qh=app.querySelector(".qhead");if(!qh)return;
   // the countdown lives in the blurred strip at the very top of the screen: just the bar, no number, no buttons
   const bar=app.querySelector(".bar");
-  if(bar&&!bar.classList.contains("idle")){bar.hidden=true;app.appendChild(bar);addRing(bar)}
+  if(bar&&!bar.classList.contains("idle")){bar.hidden=true;app.appendChild(bar)}
   else if(bar)bar.remove();
   // the host's skip button becomes the faded link under the card (see nextCard); keep the button only as the action
   const sk=app.querySelector("#skip.btn,#go.btn");if(sk){sk.hidden=true;sk.classList.add("hostskip");app.appendChild(sk)}
+  const tl=qh.querySelector("#tl");if(tl){tl.hidden=true;app.appendChild(tl);countWatch(tl)}
   qh.remove();
 }
+let cwTl=null,cwRaf=0;
+function countWatch(tl){cwTl=tl;if(!cwRaf)cwRaf=requestAnimationFrame(countTick)}
+function countNow(){const gc=document.getElementById("gcount");if(!gc)return;const v=cwTl&&cwTl.isConnected?cwTl.textContent.trim():"";const h=v?`${esc(v)}<small>s</small>`:"";if(gc.innerHTML!==h)gc.innerHTML=h}
+function countTick(){cwRaf=0;countNow();if(cwTl&&cwTl.isConnected)cwRaf=requestAnimationFrame(countTick)}
 function syncTopbar(){
   const m=document.getElementById("mute");if(m){m.textContent=muted()?"🔇":"🔊";m.setAttribute("aria-label",muted()?"Sound off":"Sound on");m.setAttribute("aria-pressed",muted())}
   const r=document.getElementById("srow");if(r){const h=scoreChips();if(r.innerHTML!==h)r.innerHTML=h}
