@@ -973,7 +973,7 @@ html.th-light .pills .pill{background:rgba(0,0,0,.06)}
 html.th-light .lgo .cdt{background:rgba(0,0,0,.06)}
 .lgo .dwait{flex:1;display:flex;align-items:center;justify-content:center;margin:0;color:var(--dim);font-weight:900;font-size:.9rem;text-align:center}
 @keyframes skIn{from{opacity:0}}
-.qwrap,.evwrap{max-width:calc(100vw - 88px)}
+.qwrap,.evwrap{width:calc(100vw - 88px)!important;max-width:none}
 .qdeck .bk.l2,.qdeck .bk.r2{display:none}
 .qdeck .bk.l1{transform:translateX(-13px) rotate(-3deg) scale(.97)}.qdeck .bk.r1{transform:translateX(13px) rotate(3deg) scale(.97)}
 /* background art pinned to the screen (iPhone ignores background-attachment:fixed, so the gradient used to stretch with the page) */
@@ -1059,7 +1059,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="7.3";
+const APPV="7.4";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1820,29 +1820,7 @@ function nextCard(){
   rb.remove();wireReady();
 }
 let lastCard={k:"",w:0},cardLock={k:"",w:0};
-function sizeCard(){
-  const w=app.querySelector(".qwrap,.evwrap");if(!w)return;
-  const vw=document.documentElement.clientWidth||window.innerWidth||0;
-  const base=Math.round(Math.min(280,vw*.72));
-  let top=0;for(let e=w;e;e=e.offsetParent)top+=e.offsetTop;
-  // measure as if the timer row is always there (round cards don't have it), so every screen gets the same size
-  {const gb=document.getElementById("gbar");if(gb){let g=0;for(let e=gb;e;e=e.offsetParent)g+=e.offsetTop;top=Math.max(top,g+gb.offsetHeight+18+40+18)}}
-  // one fixed size for the whole game: always leave room for the Next card (+ host skip link) or the answer tray,
-  // whatever is showing right now, so the card never changes size between question, reveal and ready
-  const n=S.players.filter(p=>p.on).length,trayMode=["glyph","closest"].includes(S.mode);
-  const room=Math.max(isHost()?112:84,trayMode?16+Math.min(n,5)*32+28:0);
-  const avail=(window.innerHeight||0)-top-room-16;
-  const nw0=Math.max(base,Math.min(vw-88,380,Math.floor(avail/1.475)));
-  // never let the card change size during a game: keep the smallest size this phone has needed so far
-  const lk=(S.gid||"")+":"+vw;const typing=document.activeElement&&/INPUT|TEXTAREA/.test(document.activeElement.tagName);if(cardLock.k!==lk)cardLock={k:lk,w:nw0};else if(!typing)cardLock.w=Math.min(cardLock.w,nw0);const nw=cardLock.w;
-  const qc=w.querySelector(".qc"),k=qc?qc.dataset.k:(w.className+S.phase);
-  const prev=lastCard.k===k?lastCard.w:0;lastCard={k,w:nw};
-  w.classList.remove("shr","shr0");
-  if(Math.abs((parseFloat(w.style.width)||0)-nw)<1&&!prev)return;
-  w.style.width=nw+"px";if(qc)fitCard(qc);
-  if(prev&&Math.abs(prev-nw)>3&&!matchMedia("(prefers-reduced-motion: reduce)").matches){
-    w.style.width=prev+"px";void w.offsetWidth;w.classList.add(nw<prev&&/reveal|res$/.test(S.phase)?"shr":"shr0");w.style.width=nw+"px"}
-}
+function sizeCard(){}
 /* ---- the slot under the card: answer tray -> results tray -> Next ---- */
 const TRAY_MS=2600;let trayTimer=0;
 function tRow(id,o){const p=S.players.find(x=>x.id===id)||{name:"?"};
