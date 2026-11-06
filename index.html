@@ -1441,6 +1441,13 @@ body.mchaton #app{padding-bottom:250px}
 
 body.m-mystery .gamebar,body.m-guided .gamebar{display:none}
 .mwrap>.mtrail:first-child{margin-top:2px}
+.k-guided{--btx:#2f4f8f;--bg:radial-gradient(circle at 30% 18%,rgba(160,190,255,.2),transparent 34%),linear-gradient(165deg,#2a3350,#0f121c);--fg:#e8cf95;--frame:rgba(160,190,255,.35)}
+.k-guided .dk-m b{color:#2f4f8f;border-color:#2f4f8f}
+
+#mov{bottom:-240px}#mov .how2{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 264px)}#mov .cork{bottom:0}#mov .corkb{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 264px)}#mov .movx{bottom:calc(env(safe-area-inset-bottom,0px) + 270px)}
+
+.gq small.tip{color:#e8cf95;font-weight:800}.gq small b.lie{color:#ff8a8a}
+.mg.said:disabled{opacity:1;box-shadow:inset 0 0 0 2px #c9a35b}.mg.said small{color:#7a5b00;font-weight:900}.mg.sus:disabled{opacity:1}
 </style>
 </head>
 <body>
@@ -1698,7 +1705,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="9.3";
+const APPV="9.6";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -2207,7 +2214,7 @@ function hostCResult(by){
 
 
 /* ================= HOST: Murder Mystery (each player is a guest; one of you did it) ================= */
-const MNIGHTS=3,MNIGHT_S=40,MACCUSE_S=90,GTURNS=8,GSOLVE_S=480;
+const MNIGHTS=3,MNIGHT_S=40,MACCUSE_S=90,GTURNS=10,GSOLVE_S=480;
 const mIsKiller=id=>!!(H.my&&H.my.killers&&H.my.killers.includes(id));
 const mAlive=()=>liveIds().filter(id=>H.my&&H.my.chars[id]!=null&&!H.my.out.includes(id));
 const mAliveAll=()=>ids(()=>true).filter(id=>H.my&&H.my.chars[id]!=null&&!H.my.out.includes(id));
@@ -2221,7 +2228,7 @@ function hostStartMystery(){
   H.phase="mintro";H.elig=null;newKey();broadcast();
 }
 function mSecret(id){const M=H.my;if(!M)return null;
-  if(M.kind==="g")return {t:"sec",gid:H.gid,sv:M.sv,kind:"g",sol:M.sol,stash:M.stash};
+  if(M.kind==="g")return {t:"sec",gid:H.gid,sv:M.sv,kind:"g",sol:M.sol,stash:M.stash,claim:M.claim};
   const k=mIsKiller(id);
   return {t:"sec",gid:H.gid,sv:M.sv,kind:"m",role:M.chars[id]==null?"none":k?"killer":"det",ch:M.chars[id],partners:k?M.killers.filter(x=>x!==id):[],swaps:k?(M.swaps[id]||0):0,
     results:(M.results[id]||[]).map(r=>({r:r.r,t:r.t,g:r.g})),hits:k?(M.hits||[]).filter(h=>h.by===id).map(h=>({r:h.r,id:h.id})):[]}}
@@ -2285,7 +2292,8 @@ function mFinish(){
 function hostStartGuided(){
   const story=mPickStory(),ri=n=>Math.floor(Math.random()*n),sol=[ri(6),ri(5),ri(5)];
   const innW=shuffle([0,1,2,3,4].filter(i=>i!==sol[1])),stash={};[0,1,2,3,4].filter(i=>i!==sol[2]).forEach((pl,k)=>stash[pl]=innW[k]);
-  H.my={kind:"g",story,sol,stash,ans:{},chat:[],cseq:0,pins:[],sv:1,t0:0,res:null};
+  const safe=[0,1,2,3,4].filter(i=>i!==sol[2]),claim=[0,1,2,3,4,5].map(()=>pickOne(safe));
+  H.my={kind:"g",story,sol,stash,claim,ans:{},chat:[],cseq:0,pins:[],sv:1,t0:0,res:null};
   H.phase="gcase";H.elig=null;newKey();broadcast();mSendAll();
 }
 function gSolve(){clearTimeout(H.timer);H.my.t0=Date.now();H.my.ans={};newKey();H.elig=liveIds();H.phase="gsolve";broadcast();const k=H.key;H.timer=setTimeout(()=>{if(H&&H.key===k)gReveal()},GSOLVE_S*1000)}
@@ -2455,7 +2463,7 @@ let mOv="",mBoardSeen={};
 function mOverlay(kind){mOv=kind;let o=document.getElementById("mov");
   if(!o){document.body.insertAdjacentHTML("beforeend",`<div id="mov" role="dialog" aria-modal="true"></div>`);o=document.getElementById("mov")}
   o.className="on k-"+kind;mOvFill();beep(kind==="board"?420:520,.05,"triangle")}
-function mOvClose(){mOv="";const o=document.getElementById("mov");if(o){o.className="";o.innerHTML=""}if(S)syncTools()}
+function mOvClose(){const was=mOv;mOv="";if(was==="how"&&S&&S.phase==="gcase"&&S.my)speak(mSt().hook);const o=document.getElementById("mov");if(o){o.className="";o.innerHTML=""}if(S)syncTools()}
 function mOvFill(){const o=document.getElementById("mov");if(!o||!mOv)return;if(!S||!S.my){if(mOv!=="how")return mOvClose()}
   if(mOv==="env")o.innerHTML=`<div class="movbg" data-x></div>${S.my.kind==="g"?gEnvHTML():mEnvHTML()}<p class="movx">Tap outside to tuck it away</p>`;
   else if(mOv==="board"){const ob=o.querySelector(".corkb"),sc=ob?ob.scrollTop:0;o.innerHTML=`<div class="cork"><div class="corkh"><span>📌 ${S.my.kind==="g"?"Your case board":"The board"}</span><button data-x>Close ✕</button></div><div class="corkb">${S.my.kind==="g"?gBoardHTML():mBoardHTML()}</div></div>`;
@@ -2493,14 +2501,14 @@ const HOW={mystery:[["Everyone gets a character","The story has a victim and a g
   ["In the morning, talk","Share your result in the chat with 📢, or lie about it. Compare notes. Check the 📌 board for everything that's been said, and ✉️ for your own clues.","💬"],
   ["Then vote","Tap the guest you think did it. <b>Most votes is voted out.</b> Catch the killer and the detectives win. Pick wrong and that player is out, and night falls again. Survive 3 nights and the killer wins.","🗳️"]],
   guided:[["Read the case","Something terrible happened. Six suspects, five possible weapons, five places. Your job: work out <b>who</b> did it, <b>with what</b>, and <b>where</b>.","🗂️"],
-  ["Question and search","You get <b>8 turns</b>. Question a suspect: innocent people have an alibi someone backs up. The guilty one can't. Or search a place: you'll find a weapon that's ruled out, or signs of where it happened.","🔍"],
+  ["Question and search","You get <b>10 turns</b>. <b>Question</b> a suspect to hear where they say they were. <b>Search</b> a place to rule it out, find an unused weapon, or find the crime scene and the weapon. A witness at each place says who was really there, so search where people claim to be to catch the liar.","🔍"],
   ["Accuse","When you're ready, accuse. Each right answer scores, and you get a bonus for every turn you didn't use. Playing with friends? Everyone solves the same case. Fastest right answer wins.","☝️"]]};
 function howHTML(){const c=HOW[howMode]||HOW.mystery,i=Math.min(howI,c.length-1),[h,p,e]=c[i];
   return `<div class="how2"><div class="hh"><span>How to play · ${howMode==="guided"?"Guided Mystery":"Murder Mystery"}</span><button data-x aria-label="Close">✕</button></div>
     <div class="hc"><span class="num">${i+1} of ${c.length}</span><h3>${h}</h3><p>${p}</p><div class="art">${e}</div></div>
     <div class="hd">${c.map((_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div>
     <div class="hb">${i?`<button class="btn ghost" id="howprev">Back</button>`:""}<button class="btn" id="hownext">${i+1<c.length?"Next":"Got it"}</button></div></div>`}
-function openHow(mode){howMode=mode==="guided"?"guided":"mystery";howI=0;mOverlay("how")}
+function openHow(mode){stopSpeech();howMode=mode==="guided"?"guided":"mystery";howI=0;mOverlay("how")}
 function autoHow(mode){if(ls.get("ps-how-"+mode,"")!=="1"&&mOv!=="how")setTimeout(()=>{if(S&&S.mode===mode)openHow(mode)},600)}
 /* ================= live chat (always on screen while it's open) ================= */
 let mcLast="",mcMenu=0;
@@ -2639,13 +2647,16 @@ function rM2Verdict(){
 let gS={gid:"",acts:[],tab:"q",last:null};
 function gLoad(){if(gS.gid===S.gid)return gS;try{const o=JSON.parse(ls.get("ps-gd","{}"));if(o&&o.gid===S.gid){gS=Object.assign({tab:"q",last:null},o);return gS}}catch(e){}gS={gid:S.gid,acts:[],tab:"q",last:null};return gS}
 function gSave(){ls.set("ps-gd",JSON.stringify({gid:gS.gid,acts:gS.acts}))}
-function gKnow(sec){const k={sus:{},pl:{},wp:{},s:-1,w:-1,p:-1};if(!sec)return k;
-  gS.acts.forEach(a=>{if(a.a==="q")k.sus[a.i]=a.i===sec.sol[0]?"bad":"ok";else{if(a.i===sec.sol[2])k.pl[a.i]="crime";else{k.pl[a.i]="ok";const w=sec.stash[a.i];if(w!=null)k.wp[w]="ok"}}});
-  const okS=Object.values(k.sus).filter(v=>v==="ok").length,okW=Object.keys(k.wp).length,okP=Object.values(k.pl).filter(v=>v==="ok").length;
-  const bad=Object.keys(k.sus).find(i=>k.sus[i]==="bad");k.s=bad!=null?+bad:okS===5?[0,1,2,3,4,5].find(i=>!k.sus[i]):-1;
-  k.w=okW===4?[0,1,2,3,4].find(i=>!k.wp[i]):-1;const cr=Object.keys(k.pl).find(i=>k.pl[i]==="crime");k.p=cr!=null?+cr:okP===4?[0,1,2,3,4].find(i=>!k.pl[i]):-1;return k}
+function gKnow(sec){const k={ask:{},srch:{},sus:{},pl:{},wp:{},s:-1,w:-1,p:-1};if(!sec)return k;
+  gS.acts.forEach(a=>{if(a.a==="q")k.ask[a.i]=1;else k.srch[a.i]=1});
+  Object.keys(k.srch).forEach(pi=>{pi=+pi;if(pi===sec.sol[2]){k.pl[pi]="crime";k.wp[sec.sol[1]]="hit"}else{k.pl[pi]="ok";const w=sec.stash[pi];if(w!=null)k.wp[w]="ok"}});
+  Object.keys(k.ask).forEach(i=>{i=+i;const c=sec.claim[i];if(k.srch[c])k.sus[i]=i===sec.sol[0]?"bad":"ok";else k.sus[i]="said"});
+  const okS=[0,1,2,3,4,5].filter(i=>k.sus[i]==="ok").length,okW=[0,1,2,3,4].filter(i=>k.wp[i]==="ok").length,okP=[0,1,2,3,4].filter(i=>k.pl[i]==="ok").length;
+  const bad=[0,1,2,3,4,5].find(i=>k.sus[i]==="bad");k.s=bad!=null?bad:okS===5?[0,1,2,3,4,5].find(i=>k.sus[i]!=="ok"):-1;
+  const hit=[0,1,2,3,4].find(i=>k.wp[i]==="hit");k.w=hit!=null?hit:okW===4?[0,1,2,3,4].find(i=>k.wp[i]!=="ok"):-1;
+  const cr=[0,1,2,3,4].find(i=>k.pl[i]==="crime");k.p=cr!=null?cr:okP===4?[0,1,2,3,4].find(i=>k.pl[i]!=="ok"):-1;return k}
 function rGCase(){
-  const St=mSt();sound("gc",()=>{beep(220,.4,"sawtooth",.03);speak(St.hook)});autoHow("guided");
+  const St=mSt();sound("gc",()=>{beep(220,.4,"sawtooth",.03);if(ls.get("ps-how-guided","")==="1")speak(St.hook)});autoHow("guided");
   app.innerHTML=mWrap(`<div class="mcase"><i class="mtab"></i><span class="mk">Case file · ${esc(St.tag)}</span><h2>${esc(St.n)}</h2><p class="mhook">${esc(St.hook)}</p>
     <div class="mvic"><span>Victim</span><b>${esc(St.victim)}</b></div><span class="mstamp">Open case</span></div>
     <p class="mhow"><b>${GTURNS} turns.</b> Question suspects, search places, then accuse: who, with what, and where.${S.players.filter(p=>p.on).length>1?" Everyone solves the same case. Fastest right answer wins.":""}</p>`)+readyBlock("Open the case");
@@ -2658,15 +2669,19 @@ function rGSolve(){
   if(left<=0&&gS.tab!=="a")gS.tab="a";
   const tabs=`<div class="gtabs">${[["q","🗣️ Question"],["s","🔦 Search"],["a","☝️ Accuse"]].map(([t,l])=>`<button data-tab="${t}" class="${gS.tab===t?"on":""}" ${left<=0&&t!=="a"?"disabled":""}>${l}</button>`).join("")}</div>`;
   let body="";const L=gS.last;
-  const lastCard=()=>{if(!L)return "";if(L.a==="q"){const a=St.s[L.i],bad=L.i===sec.sol[0];return `<div class="gq"><span class="e">${a[1]}</span><div><b>${esc(a[0])}</b><p>“${esc(a[4])}”</p><small class="${bad?"bad":"ok"}">${bad?"⚠ Nobody can back this up. Suspicious.":"✔ Someone backs this up. Cleared."}</small></div></div>`}
-    const pl=St.p[L.i];if(L.i===sec.sol[2])return `<div class="gq crime"><span class="e">${pl[1]}</span><div><b>${esc(pl[0])}</b><p>Signs of a struggle. Scuff marks, a knocked-over chair. <b>This is where it happened.</b></p></div></div>`;
-    const w=St.w[sec.stash[L.i]];return `<div class="gq"><span class="e">${w[1]}</span><div><b>${esc(pl[0])}: nothing happened here</b><p>But you found the ${esc(lcThing(w[0]))}. “${esc(w[2])}”</p><small class="ok">✔ ${esc(pl[0])} and the ${esc(lcThing(w[0]))} are ruled out.</small></div></div>`};
-  if(gS.tab==="q")body=mDoit("Question a suspect","Tap a suspect to hear their alibi. Innocent people have someone to back them up. The guilty one doesn't.")
-    +(L&&L.a==="q"?lastCard():"")+`<div class="mgs">${St.s.map((a,i)=>`<button class="mg ${k.sus[i]==="ok"?"dim":k.sus[i]==="bad"?"sus":""}" data-q="${i}" ${k.sus[i]?"disabled":""}><span class="e">${a[1]}</span><b>${esc(mShort(a[0]))}</b><small>${k.sus[i]==="ok"?"Cleared":k.sus[i]==="bad"?"Suspicious":esc(a[2])}</small></button>`).join("")}</div>`;
-  else if(gS.tab==="s")body=mDoit("Search a place","Search somewhere. You'll find either a weapon that wasn't used, or signs of where it happened.")
-    +(L&&L.a==="s"?lastCard():"")+`<div class="gpl">${St.p.map((a,i)=>`<button class="gp ${k.pl[i]==="ok"?"dim":k.pl[i]==="crime"?"hot":""}" data-s="${i}" ${k.pl[i]?"disabled":""}><span class="e">${a[1]}</span><b>${esc(a[0])}</b><small>${k.pl[i]==="ok"?"Ruled out":k.pl[i]==="crime"?"It happened here":"Search"}</small></button>`).join("")}</div>`;
+  const lastCard=()=>{if(!L)return "";const pn=i=>St.p[i][0],the=i=>"the "+thePlace(St.p[i][0]);
+    if(L.a==="q"){const a=St.s[L.i],c=sec.claim[L.i],v=k.sus[L.i];
+      return `<div class="gq"><span class="e">${a[1]}</span><div><b>${esc(a[0])}</b><p>“I was in ${esc(the(c))} all night. Ask anyone.”</p><small class="${v==="ok"?"ok":v==="bad"?"bad":"tip"}">${v==="ok"?`✔ The witness in ${esc(the(c))} saw them there. Cleared.`:v==="bad"?`✖ The witness in ${esc(the(c))} never saw them. They're lying!`:`Search ${esc(the(c))} to check their story.`}</small></div></div>`}
+    const pl=St.p[L.i],seen=Object.keys(k.ask).map(Number).filter(i=>sec.claim[i]===L.i);
+    const wit=seen.length?`<small class="tip">Witness: ${seen.map(i=>`${esc(mShort(St.s[i][0]))} ${i===sec.sol[0]?"<b class='lie'>was never here</b>":"was here all night"}`).join(" · ")}</small>`:`<small class="tip">A witness was here all night. Question suspects, and anyone who says they were here gets checked.</small>`;
+    if(L.i===sec.sol[2]){const w=St.w[sec.sol[1]];return `<div class="gq crime"><span class="e">${pl[1]}</span><div><b>${esc(pl[0])}: this is where it happened</b><p>Signs of a struggle, and the ${esc(lcThing(w[0]))} ${w[1]} lying right there. That's what was used.</p></div></div>`}
+    const w=St.w[sec.stash[L.i]];return `<div class="gq"><span class="e">${pl[1]}</span><div><b>${esc(pl[0])}: nothing happened here</b><p>You find the ${esc(lcThing(w[0]))} ${w[1]}, untouched. It wasn't used.</p>${wit}</div></div>`};
+  if(gS.tab==="q")body=mDoit("Question a suspect","Ask where they were. Everyone says somewhere, but one of them is lying. Search that place to check their story.")
+    +(L&&L.a==="q"?lastCard():"")+`<div class="mgs">${St.s.map((a,i)=>`<button class="mg ${k.sus[i]==="ok"?"dim":k.sus[i]==="bad"?"sus":k.sus[i]==="said"?"said":""}" data-q="${i}" ${k.ask[i]?"disabled":""}><span class="e">${a[1]}</span><b>${esc(mShort(a[0]))}</b><small>${k.sus[i]==="ok"?"Cleared":k.sus[i]==="bad"?"Lying!":k.sus[i]==="said"?"Says: "+esc(thePlace(St.p[sec.claim[i]][0])):esc(a[2])}</small></button>`).join("")}</div>`;
+  else if(gS.tab==="s")body=mDoit("Search a place","Search somewhere. Find where it happened (and the weapon), or rule a place out. The witness there checks anyone who says they were there.")
+    +(L&&L.a==="s"?lastCard():"")+`<div class="gpl">${St.p.map((a,i)=>`<button class="gp ${k.pl[i]==="ok"?"dim":k.pl[i]==="crime"?"hot":""}" data-s="${i}" ${k.pl[i]?"disabled":""}><span class="e">${a[1]}</span><b>${esc(a[0])}</b><small>${k.pl[i]==="ok"?"Ruled out":k.pl[i]==="crime"?"It happened here":(()=>{const n=Object.keys(k.ask).filter(x=>sec.claim[x]===i).length;return n?`${n} alibi${n>1?"s":""} to check`:"Search"})()}</small></button>`).join("")}</div>`;
   else{if(gS.acc==null||gS.acc.key!==S.key)gS.acc={key:S.key,g:[k.s,k.w,k.p]};const A=gS.acc.g,ready=A.every(x=>x>=0);
-    const grp=(c,list)=>`<section class="mvs"><h3>${c===0?"Who did it?":c===1?"With what?":"Where?"}</h3><div class="mchs g3">${list.map((a,i)=>{const kn=c===0?k.sus[i]==="ok":c===1?!!k.wp[i]:k.pl[i]==="ok";return `<button class="mch ${A[c]===i?"on":""} ${kn?"ko":""}" data-g${c}="${i}"><span class="me">${a[1]}</span>${esc(c===0?mShort(a[0]):a[0])}</button>`}).join("")}</div></section>`;
+    const grp=(c,list)=>`<section class="mvs"><h3>${c===0?"Who did it?":c===1?"With what?":"Where?"}</h3><div class="mchs g3">${list.map((a,i)=>{const kn=c===0?k.sus[i]==="ok":c===1?k.wp[i]==="ok":k.pl[i]==="ok";return `<button class="mch ${A[c]===i?"on":""} ${kn?"ko":""}" data-g${c}="${i}"><span class="me">${a[1]}</span>${esc(c===0?mShort(a[0]):a[0])}</button>`}).join("")}</div></section>`;
     body=mDoit(left>0?"Make your accusation":"Out of turns","You get one guess. What you've ruled out is crossed off, and anything you've worked out is already picked.")
       +grp(0,St.s)+grp(1,St.w)+grp(2,St.p)+`<div class="mfoot"><button class="btn red" id="gacc" ${ready?"":"disabled"}>${ready?`Accuse ${esc(mShort(St.s[A[0]][0]))}`:"Pick one of each"}</button></div>`}
   app.innerHTML=mWrap(mTrail(["Question","Search","Accuse"],gS.tab==="q"?0:gS.tab==="s"?1:2,`Turn ${Math.min(GTURNS,used+1)} of ${GTURNS}`)+tabs+body);
@@ -2678,8 +2693,8 @@ function rGSolve(){
   const ga=document.getElementById("gacc");if(ga)ga.onclick=()=>{const A=gS.acc.g;if(!A.every(x=>x>=0))return;beep(990,.1,"triangle");send({t:"mys",s:A[0],w:A[1],p:A[2],turns:Math.max(1,gS.acts.length)})};
 }
 function gBoardHTML(){const sec=mSec(),St=mSt();gLoad();const k=gKnow(sec);
-  const pol=St.s.map((a,i)=>`<div class="pol2 ${k.sus[i]==="ok"?"out":""}" style="--r:${[-4,3,-2,5,-3,2][i]}deg"><span class="ph">${a[1]}</span><b>${esc(mShort(a[0]))}</b><small>${esc(a[2])}</small>${k.sus[i]?`<em class="st ${k.sus[i]==="bad"?"red":"grn"}">${k.sus[i]==="bad"?"Suspicious":"Cleared"}</em>`:""}</div>`).join("");
-  const tag=(arr,kk,isP)=>arr.map((a,i)=>{const v=isP?k.pl[i]:k.wp[i];const hit=isP?v==="crime":false;return `<span class="gt ${v==="ok"?"x":hit?"hit":""}">${a[1]} ${esc(a[0])}</span>`}).join("");
+  const pol=St.s.map((a,i)=>`<div class="pol2 ${k.sus[i]==="ok"?"out":""}" style="--r:${[-4,3,-2,5,-3,2][i]}deg"><span class="ph">${a[1]}</span><b>${esc(mShort(a[0]))}</b><small>${esc(a[2])}</small>${k.sus[i]&&k.sus[i]!=="said"?`<em class="st ${k.sus[i]==="bad"?"red":"grn"}">${k.sus[i]==="bad"?"Lying":"Cleared"}</em>`:k.sus[i]==="said"?`<em class="st">Says: ${esc(thePlace(St.p[sec.claim[i]][0]))}</em>`:""}</div>`).join("");
+  const tag=(arr,kk,isP)=>arr.map((a,i)=>{const v=isP?k.pl[i]:k.wp[i];const hit=isP?v==="crime":v==="hit";return `<span class="gt ${v==="ok"?"x":hit?"hit":""}">${a[1]} ${esc(a[0])}</span>`}).join("");
   const th=[k.s>=0?mShort(St.s[k.s][0]):"?",k.w>=0?"the "+lcThing(St.w[k.w][0]):"?",k.p>=0?"the "+thePlace(St.p[k.p][0]):"?"];
   return `<div class="pols">${pol}</div><div class="notes2"><div class="note w"><small>Weapons</small><div class="gts">${tag(St.w,k,false)}</div></div><div class="note w"><small>Places</small><div class="gts">${tag(St.p,k,true)}</div></div>
     <div class="note y"><small>Your theory so far</small>${esc(th[0])}, with ${esc(th[1])}, in ${esc(th[2])}.</div></div>`}
