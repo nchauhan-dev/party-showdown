@@ -1080,7 +1080,7 @@ html.th-light .gbrow .gcount{color:#141414!important}
 .vt button{width:36px;height:28px;border:none;border-radius:99px;background:none;color:var(--dim);display:grid;place-items:center;padding:0}
 .vt button[aria-pressed=true]{background:var(--acc);color:var(--acc-ink)}
 .catbox.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.catbox.grid .cat{height:clamp(130px,calc((100svh - 470px) / 2),220px)}
+.catbox.grid .cat{height:clamp(112px,calc((100svh - 425px) / 2),250px)}
 .catbox.grid .cat:first-child,.catbox.grid .cat:last-child:nth-child(even){grid-column:span 2}
 .catbox.deck{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;width:100vw;margin-left:calc(50% - 50vw);padding:4px calc(50vw - min(39vw,170px)) 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .catbox.deck::-webkit-scrollbar{display:none}
@@ -1282,6 +1282,7 @@ html body.m-mystery{--floor:#0e0c12;--card:#1c1821;--cardbd:rgba(201,163,91,.25)
 .mbeat .mrow{margin:0}
 .maccd .mstamp{position:static;margin-top:4px}
 .mpk{margin:2px 0 0}
+.botrow{display:flex;gap:10px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -1394,16 +1395,14 @@ const CATEG={quiz:{n:"Quiz Night",sub:"Trivia · Charades · Emoji puzzles",mode
   mystery:{n:"Mystery",sub:"Murder Mystery · 3 cases",modes:["mystery"]}};
 const catOf=m=>Object.keys(CATEG).find(k=>CATEG[k].modes.includes(m))||"quiz";
 const catModes=m=>CATEG[catOf(m)].modes.filter(k=>MODES[k]);
-const catView=()=>ls.get("ps-catview","grid")==="deck"?"deck":"grid";
 let homeCat=null,homeMode=null;
 const CATART={quiz:`<span class="cart" aria-hidden="true"><i class="beam b1"></i><i class="beam b2"></i><i class="beam b3"></i><i class="floor"></i><i class="bulbs"></i><span class="mini3"><i>❓</i><i>🧩</i><i>🎭</i></span></span>`,
   mystery:`<span class="cart" aria-hidden="true"><span class="cwin"><i></i></span><span class="cboard"><svg class="cstr" viewBox="0 0 220 130"><path d="M44 30 L118 56 L176 20" stroke="#b32626" stroke-width="1.6" fill="none"/></svg><span class="cpol p1"><i>🗝️</i></span><span class="cpol p2"><i>🕯️</i></span><span class="cpin" style="left:40px;top:19px"></span><span class="cpin" style="left:114px;top:42px"></span></span></span>`};
 const VTDECK='<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="1.5" width="8" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M1.5 4v8M14.5 4v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
 const VTGRID='<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="1.5" y="9" width="5.5" height="5.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="9" y="9" width="5.5" height="5.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
-function catsHTML(){const v=catView(),ks=Object.keys(CATEG);
-  return `<div class="hcats"><div class="cathead"><span class="lbl">Pick a night</span><div class="vt" role="group" aria-label="View"><button data-cv="deck" aria-pressed="${v==="deck"}" aria-label="Deck view">${VTDECK}</button><button data-cv="grid" aria-pressed="${v==="grid"}" aria-label="Grid view">${VTGRID}</button></div></div>
-    <div class="catbox ${v}" id="catbox">${ks.map(k=>{const c=CATEG[k],n=c.modes.filter(m=>MODES[m]).length;return `<button class="cat c-${k}" data-hc="${k}" aria-label="${esc(c.n)}">${CATART[k]||""}<span class="cpill">${n} game${n>1?"s":""}</span><b class="ct">${esc(c.n)}</b><small class="cs">${esc(c.sub)}</small></button>`}).join("")}</div>
-    ${v==="deck"?`<div class="catdots" id="catdots" aria-hidden="true">${ks.map((k,i)=>`<i class="${i?"":"on"}"></i>`).join("")}</div>`:""}</div>`}
+function catsHTML(){const ks=Object.keys(CATEG);
+  return `<div class="hcats"><div class="cathead"><span class="lbl">Pick a night</span></div>
+    <div class="catbox grid" id="catbox">${ks.map(k=>{const c=CATEG[k],n=c.modes.filter(m=>MODES[m]).length;return `<button class="cat c-${k}" data-hc="${k}" aria-label="${esc(c.n)}">${CATART[k]||""}<span class="cpill">${n} game${n>1?"s":""}</span><b class="ct">${esc(c.n)}</b><small class="cs">${esc(c.sub)}</small></button>`}).join("")}</div></div>`}
 function fillHomeTop(){
   const ht=document.getElementById("htop");if(!ht)return;
   if(homeCat&&CATEG[homeCat]){
@@ -1416,11 +1415,7 @@ function fillHomeTop(){
     document.getElementById("dkback").onclick=()=>{beep(500,.04);homeCat=null;fillHomeTop()};
   }else{
     setTheme("trivia");ht.innerHTML=catsHTML();
-    ht.querySelectorAll("[data-cv]").forEach(b=>b.onclick=()=>{ls.set("ps-catview",b.dataset.cv);beep(600,.03,"triangle");fillHomeTop()});
     ht.querySelectorAll("[data-hc]").forEach(b=>b.onclick=()=>{beep(760,.05,"triangle");homeCat=b.dataset.hc;homeMode=null;fillHomeTop()});
-    const box=document.getElementById("catbox"),dots=document.getElementById("catdots");
-    if(box&&dots)box.addEventListener("scroll",()=>{const cs=[...box.children],mid=box.scrollLeft+box.clientWidth/2;let best=0,bd=1e9;
-      cs.forEach((c,i)=>{const d=Math.abs(c.offsetLeft+c.offsetWidth/2-mid);if(d<bd){bd=d;best=i}});[...dots.children].forEach((d,i)=>d.classList.toggle("on",i===best))},{passive:true});
   }
   const d=document.getElementById("dock"),sp=document.getElementById("dockspace");if(d&&sp)sp.style.height=d.offsetHeight+"px";
 }
@@ -1501,7 +1496,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="9.1";
+const APPV="9.2";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1593,7 +1588,7 @@ async function startHost(resume){
   // the other servers join in as they connect, so friends find the game on whichever one their phone reaches
   tries.forEach(p=>p.then(cl=>{if(cl===c)return;if(session!==my||!H){try{cl.end(true)}catch(e){}return}hostExtra.push(cl);wire(cl);publishState()},()=>{}));
   every(()=>{if(!H)return;const now=Date.now();let changed=false;
-    Object.entries(H.players).forEach(([id,p])=>{if(id!==pid&&p.on&&now-(p.seen||0)>16000){p.on=false;changed=true}});
+    Object.entries(H.players).forEach(([id,p])=>{if(id!==pid&&!p.bot&&p.on&&now-(p.seen||0)>16000){p.on=false;changed=true}});
     if(changed){broadcast();checkAll();hostCheckReady()}else publishState()},4000);
   keepAwake();
   if(resume)resumeTimers();
@@ -2009,7 +2004,9 @@ function hostCResult(by){
 const MNIGHTS=3,MNIGHT_S=35,MACCUSE_S=120;
 function hostStartMystery(){
   const pool=(H.set.mst||[]).filter(k=>STORIES[k]);const story=pickOne(pool.length?pool:STORYKEYS);
-  const live=shuffle(liveIds()),nk=live.length>=7?2:1,killers=live.slice(0,nk);
+  let live=shuffle(liveIds());const nk=live.length>=7?2:1;
+  if(H.testRole==="killer")live=[pid,...live.filter(x=>x!==pid)];else if(H.testRole==="det")live=[...live.filter(x=>x!==pid),pid];
+  const killers=live.slice(0,nk);
   const ri=n=>Math.floor(Math.random()*n);
   H.my={story,killers,sol:[ri(6),ri(5),ri(5)],round:0,tokens:{},pub:[],given:{},choice:{},votes:{},sv:1,res:null,tamp:[]};
   killers.forEach(id=>H.my.tokens[id]=2);
@@ -2080,6 +2077,34 @@ function mVerdict(){
   H.phase="mverdict";newKey();broadcast();
 }
 
+
+/* ================= HOST: practice bots (test a game on your own) ================= */
+const BOTN=["Ava","Ben","Cleo","Dev","Eli","Fay","Gus","Hana","Ivo","June","Kai"];
+const botIds=()=>H?ids(p=>p.bot):[];
+function addBots(n){let k=0;for(const nm of BOTN){if(k>=n||liveIds().length>=12)break;const id="bot"+nm.toLowerCase();if(H.players[id])continue;
+  H.players[id]={name:"🤖 "+nm,score:0,on:true,bot:true,seen:Date.now(),team:smallerTeam(),lives:3};k++}broadcast()}
+function dropBots(){botIds().forEach(id=>delete H.players[id]);H.testRole="";broadcast()}
+let botT=0;
+function botsAct(){
+  clearTimeout(botT);if(!H)return;const bs=botIds();if(!bs.length)return;const k=H.key,ph=H.phase,rk=H.rk;
+  botT=setTimeout(()=>{if(!H||H.phase!==ph||H.key!==k)return;const ri=n=>Math.floor(Math.random()*n);
+    if(READY.includes(ph)){bs.forEach(id=>{if(!H.ready.has(id))hostReady(id,H.rk)});return}
+    if(ph==="cready"&&H.ct&&bs.includes(H.ct.actor))return hostCTurn(H.ct.ti+1);
+    if(ph==="bpick"&&H.board&&bs.includes(H.board.picker)){const fr=[];H.board.cells.forEach((c,ci)=>c.forEach((x,r)=>{if(!x.used)fr.push([ci,r])}));if(fr.length){const [ci,r]=pickOne(fr);hostPick(H.board.picker,ci,r)}return}
+    bs.forEach(id=>{const p=H.players[id];if(!p||p.done)return;
+      if(ph==="mnight"){if(mIsKiller(id)){const d=liveIds().filter(x=>!mIsKiller(x));hostMys(id,{target:Math.random()<.75&&d.length?pickOne(d):""})}else hostMys(id,{cat:ri(3)})}
+      else if(ph==="maccuse"){const o=ids(()=>true).filter(x=>x!==id&&!(mIsKiller(id)&&mIsKiller(x)));hostMys(id,{acc:pickOne(o),s:ri(6),w:ri(5),p:ri(5)})}
+      else if(!canAct(id))return;
+      else if(ph==="q")hostAnswer(id,ri(4));
+      else if(ph==="nq"&&H.N)hostNum(id,Math.round(H.N.a*(.75+Math.random()*.5)));
+      else if(["bet","ddwager","fwager"].includes(ph))hostBet(id,Math.max(1,Math.round(maxBet(p,ph)*Math.random()*.5)));
+      else if(ph==="tbvote")hostVote(id,pickOne(["closest","sudden"]));
+    })},700+Math.random()*900)}
+function botSection(st){const nb=botIds().length,mys=st.mode==="mystery";
+  return `<section class="sq"><h3>Practice bots</h3><p class="hint">Try a game on your own. Bots tap ready, answer and vote at random.</p>
+    <div class="botrow"><button class="btn small" id="addbot">Add a bot</button>${nb?`<button class="btn small ghost" id="dropbots">Remove ${nb} bot${nb>1?"s":""}</button>`:""}</div>
+    ${mys&&nb?`<div class="setting"><span class="lbl">Your role next game</span>${segHTML("trole",["","det","killer"],H.testRole||"",v=>v===""?"Random":v==="det"?"Detective":"Killer")}</div>`:""}</section>`}
+
 /* ================= HOST: state, saving, resuming ================= */
 function hostState(){
   const rk=readyKey();if(rk!==H.rk){H.rk=rk;H.ready=new Set()}
@@ -2116,7 +2141,7 @@ function resumeTimers(){
   else if(ph==="mnight")T(mEndNight,MNIGHT_S);else if(ph==="maccuse")T(mVerdict,MACCUSE_S);
 }
 function publishState(){if(H&&S)pub(ROOT+code+"/state",{ts:Date.now(),s:S},true)}
-function broadcast(){if(!H)return;S=hostState();publishState();if(H.phase==="end"||H.phase==="lobby")ls.del("ps-host");else saveHost();render()}
+function broadcast(){if(!H)return;S=hostState();publishState();if(H.phase==="end"||H.phase==="lobby")ls.del("ps-host");else saveHost();render();botsAct()}
 
 /* ================= PLAYER ================= */
 function startJoin(c,retryUntil){
@@ -2733,19 +2758,19 @@ function rLobby(){
       <div class="shead"><span class="grab" aria-hidden="true"></span><div class="sheadrow"><h2>${title}</h2><button class="btn small" data-close>Done</button></div>${extra}</div>
       <div class="sbody" id="sb-${k}">${body}</div></div>`;
   let sheets=`<div class="scrim ${openSheet?"open":""}" id="scrim"></div>`;
-  if(host)sheets+=sheetHTML("rules","Rules",gameSection(st,n));
+  if(host)sheets+=sheetHTML("rules","Rules",gameSection(st,n)+botSection(st));
   if(host){const T=tinfo(m),keys=topicKeys(m),sel=selOf(st).filter(k=>keys.includes(k)),all=sel.length===keys.length;
     const total=sel.reduce((a,k)=>a+(T.cnt[k]||0),0);
     if(m==="mystery")sheets+=sheetHTML("top","Cases",storyBody(st),`<div class="tophint"><span>Pick one or more. One is drawn at random.</span></div>`,true);else sheets+=sheetHTML("top","Topics",topicsBody(st),`<div class="tophint"><span><span class="count">${sel.length} of ${keys.length}</span> &nbsp;${fmt(total)} ${T.unit}</span><button class="link" id="${T.all}">${all?"Clear all":"Select all"}</button></div>`,true)}
   const catsOk=selOf(st).some(k=>topicKeys(m).includes(k));
-  const startLabel=n<need?`Need ${need}+ players`:catsOk?"Start":"Pick a topic";
+  const startLabel=n<need?(host?`Add ${need-n} bot${need-n>1?"s":""} to try it`:`Need ${need}+ players`):catsOk?"Start":"Pick a topic";
   const lp=S.players.filter(p=>p.on||p.host),tight=lp.length>5,shown=tight?lp.slice(0,lp.length>6?5:6):lp;
   const pcol=p=>m==="teams"?(p.team==="A"?"var(--a1)":"var(--a4)"):colOf(p.id);
   const fl=`<div class="fl ${tight?"tight":""}" aria-label="Players">${shown.map(p=>`<span class="p ${p.id===pid?"me":""} ${p.on?"":"off"}"><span class="av" style="--pc:${pcol(p)}">${p.host?CROWN:""}${esc(initial(p.name))}</span><span class="n">${esc(p.name)}</span></span>`).join("")}${lp.length>shown.length?`<span class="p more"><span class="av">+${lp.length-shown.length}</span></span>`:""}</div>`;
   const codeT=`<button class="cdt" id="copy" aria-label="Copy invite link for code ${esc(S.code)}">Code<b>${esc(S.code)}</b></button>`;
   const dock=host?`<div class="dock hdock ldock" id="dock">${fl}
     <div class="pills"><button class="pill" data-open="rules" aria-haspopup="dialog">${ICO.set}${esc(settingsSub(st,n)).replace(" · ","<span>· ")}${settingsSub(st,n).includes(" · ")?"</span>":""}</button><button class="pill" data-open="top" aria-haspopup="dialog">${ICO.top}${esc(topicsSub(st))}<span>${m==="mystery"?"":"topics"}</span></button></div>
-    <div class="lgo">${codeT}<button class="btn" id="start" ${catsOk&&n>=need?"":"disabled"}>${startLabel}</button></div>
+    <div class="lgo">${codeT}<button class="btn" id="start" ${catsOk?"":"disabled"}>${startLabel}</button></div>
   </div>`:`<div class="dock hdock ldock" id="dock">${fl}
     <div class="pills"><div class="pill">${ICO.set}<span>${summaryLine(st,n)}</span></div></div>
     <div class="lgo">${codeT}<p class="dwait">Waiting for the host…</p></div></div>`;
@@ -2786,7 +2811,8 @@ const cp=document.getElementById("copy");if(cp)cp.onclick=async()=>{const b=cp.q
   on("[data-bc]",b=>H.set.bcols=+b.dataset.bc);on("[data-cdu]",b=>H.set.cdur=+b.dataset.cdu);
   on("[data-ms]",b=>{H.set.mst=tog(H.set.mst||[],b.dataset.ms)});on("[data-mtk]",b=>H.set.mtalk=+b.dataset.mtk);
   on("[data-sw]",b=>{const p=H.players[b.dataset.sw];if(p)p.team=p.team==="A"?"B":"A"});on("#shuf",()=>balanceTeams(true));
-  document.getElementById("start").onclick=()=>{openSheet=null;beep(990,.1,"triangle");unlockSpeech();hostStart()};
+  on("#addbot",()=>addBots(1));on("#dropbots",()=>dropBots());on("[data-trole]",b=>H.testRole=b.dataset.trole);
+  document.getElementById("start").onclick=()=>{if(n<need){beep(700,.05,"triangle");addBots(need-n);return}openSheet=null;beep(990,.1,"triangle");unlockSpeech();hostStart()};
 }
 
 /* ---- round intro / end ---- */
