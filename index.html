@@ -1669,9 +1669,10 @@ function fillHomeTop(){
     if(!ms.includes(homeMode))homeMode=ms.includes(lm)?lm:ms[0];
     ht.innerHTML=deckHTML(homeMode,true);
     const dw=document.getElementById("dkwrap");if(dw)dw.dataset.home="1";
-    const hd=ht.querySelector(".dkhead");if(hd)hd.innerHTML=`<button class="dkback" id="dkback">‹ ${esc(CATEG[homeCat].n)}</button><span class="lbl" style="letter-spacing:.06em">${ms.length>1?"Swipe · tap to flip":"Tap to flip"}</span>`;
+    const hd=ht.querySelector(".dkhead");if(hd)hd.innerHTML=`<button class="dkback" id="dkback">‹ ${esc(CATEG[homeCat].n)}</button>${(()=>{const ks=Object.keys(CATEG),nx=ks[(ks.indexOf(homeCat)+1)%ks.length];return nx!==homeCat?`<button class="dkcat" id="dkswap" aria-label="Switch to ${esc(CATEG[nx].n)}">${esc(CATEG[nx].n)} <span aria-hidden="true">⇄</span></button>`:""})()}`;
     setTheme(homeMode);wireDeck(homeMode,true,k=>{homeMode=k;setTheme(k)});try{magicCards()}catch(e){}
     document.getElementById("dkback").onclick=()=>{beep(500,.04);homeCat=null;fillHomeTop()};
+    {const sw=document.getElementById("dkswap");if(sw)sw.onclick=()=>{const ks=Object.keys(CATEG);beep(700,.05,"triangle");homeCat=ks[(ks.indexOf(homeCat)+1)%ks.length];homeMode=null;fillHomeTop()}}
   }else{
     setTheme("trivia");ht.innerHTML=catsHTML();
     ht.querySelectorAll("[data-hc]").forEach(b=>b.onclick=()=>{beep(760,.05,"triangle");homeCat=b.dataset.hc;homeMode=null;fillHomeTop()});
@@ -1755,7 +1756,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="10.0";
+const APPV="10.1";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
