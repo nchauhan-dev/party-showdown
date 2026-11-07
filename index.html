@@ -1653,6 +1653,7 @@ const lcThing=n=>/^[A-Z][a-z]+('s| [A-Z])/.test(n)?n:n.charAt(0).toLowerCase()+n
 const CATEG={quiz:{n:"Quiz Night",sub:"Trivia · Charades · Emoji puzzles",modes:["trivia","board","lives","roller","teams","closest","charades","glyph"]},
   mystery:{n:"Mystery",sub:"Murder Mystery · Guided · Manor",modes:["mystery","guided","manor"]}};
 const catOf=m=>Object.keys(CATEG).find(k=>CATEG[k].modes.includes(m))||"quiz";
+const nextCat=m=>{const ks=Object.keys(CATEG);return ks[(ks.indexOf(catOf(m))+1)%ks.length]};
 const catModes=m=>CATEG[catOf(m)].modes.filter(k=>MODES[k]);
 let homeCat=null,homeMode=null;
 const CATART={quiz:`<span class="cart" aria-hidden="true"><i class="beam b1"></i><i class="beam b2"></i><i class="beam b3"></i><i class="floor"></i><i class="bulbs"></i><span class="mini3"><i>❓</i><i>🧩</i><i>🎭</i></span></span>`,
@@ -1669,10 +1670,9 @@ function fillHomeTop(){
     if(!ms.includes(homeMode))homeMode=ms.includes(lm)?lm:ms[0];
     ht.innerHTML=deckHTML(homeMode,true);
     const dw=document.getElementById("dkwrap");if(dw)dw.dataset.home="1";
-    const hd=ht.querySelector(".dkhead");if(hd)hd.innerHTML=`<button class="dkback" id="dkback">‹ ${esc(CATEG[homeCat].n)}</button>${(()=>{const ks=Object.keys(CATEG),nx=ks[(ks.indexOf(homeCat)+1)%ks.length];return nx!==homeCat?`<button class="dkcat" id="dkswap" aria-label="Switch to ${esc(CATEG[nx].n)}">${esc(CATEG[nx].n)} <span aria-hidden="true">⇄</span></button>`:""})()}`;
+    const hd=ht.querySelector(".dkhead");if(hd)hd.innerHTML=`<button class="dkback" id="dkback" aria-label="Back to all games">‹ Back</button><span class="dkpos lbl">${esc(CATEG[homeCat].n)}</span>`;
     setTheme(homeMode);wireDeck(homeMode,true,k=>{homeMode=k;setTheme(k)});try{magicCards()}catch(e){}
     document.getElementById("dkback").onclick=()=>{beep(500,.04);homeCat=null;fillHomeTop()};
-    {const sw=document.getElementById("dkswap");if(sw)sw.onclick=()=>{const ks=Object.keys(CATEG);beep(700,.05,"triangle");homeCat=ks[(ks.indexOf(homeCat)+1)%ks.length];homeMode=null;fillHomeTop()}}
   }else{
     setTheme("trivia");ht.innerHTML=catsHTML();
     ht.querySelectorAll("[data-hc]").forEach(b=>b.onclick=()=>{beep(760,.05,"triangle");homeCat=b.dataset.hc;homeMode=null;fillHomeTop()});
@@ -1756,7 +1756,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="10.1";
+const APPV="10.4";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -2177,7 +2177,7 @@ function tbScoreNum(res){
   const best=Math.min(...alive.map(e=>tb.last[e.id].dist));
   if(Number.isFinite(best)){const w=alive.filter(e=>tb.last[e.id].dist===best);tb.alive=w.map(e=>e.id);if(w.length===1)tbWin(w[0])}
 }
-function hostLobby(){clearTimeout(H.timer);H.my=null;H.early=false;H.phase="lobby";H.tb=null;H.winner=null;H.winTeam=null;H.ct=null;H.board=null;H.bq=null;H.elig=null;newKey();broadcast()}
+function hostLobby(){clearTimeout(H.timer);lobCat=false;H.my=null;H.early=false;H.phase="lobby";H.tb=null;H.winner=null;H.winTeam=null;H.ct=null;H.board=null;H.bq=null;H.elig=null;newKey();broadcast()}
 
 /* ================= HOST: everyone taps Ready ================= */
 const READY=["rintro","reveal","nreveal","greveal","rend","breveal","tbintro","cres","mintro","mrole","mday","mvres","mverdict","gcase","gres","nintro","nrole","nday","nvres","nverdict"];
@@ -3248,7 +3248,7 @@ function fixHead(){
   if(bar&&!bar.classList.contains("idle")){bar.hidden=true;app.appendChild(bar)}
   else if(bar)bar.remove();
   // the host's skip button becomes the faded link under the card (see nextCard); keep the button only as the action
-  const sk=app.querySelector("#skip.btn,#go.btn");if(sk){sk.hidden=true;sk.classList.add("hostskip");app.appendChild(sk)}
+  const sk=[...app.querySelectorAll("#skip.btn,#go.btn")].find(b=>!b.closest(".evB"));if(sk){sk.hidden=true;sk.classList.add("hostskip");app.appendChild(sk)}
   const tl=qh.querySelector("#tl");if(tl){tl.hidden=true;app.appendChild(tl);countWatch(tl)}
   qh.remove();
 }
@@ -3526,7 +3526,7 @@ function gameSection(st,n){
   q.push(`<details class="more" id="more" ${timersOpen?"open":""}><summary>Timers</summary><div class="morein">${more}</div></details>`);
   return q.join("");
 }
-let dkOld=null;
+let dkOld=null,lobCat=false;
 function rLobby(){
   if(dkHold){dkPend=true;return}
   dkOld=document.getElementById("dkwrap");
@@ -3536,7 +3536,7 @@ function rLobby(){
   ["rules","top"].forEach(k=>{const b=document.getElementById("sb-"+k);if(b)sheetScroll[k]=b.scrollTop});
   app.querySelectorAll("[data-rail]").forEach(r=>railScroll[r.dataset.rail]=r.scrollLeft);
   if(!host)openSheet=null;
-  const picker=deckHTML(m,host);
+  if(!host)lobCat=false;const picker=lobCat?`<div class="lobcats">${catsHTML()}</div>`:deckHTML(m,host);
   const sheetHTML=(k,title,body,extra="",tall=false)=>`<div class="sheet2 ${tall?"tall":""} ${openSheet===k?"open vis":""}" id="sh-${k}" role="dialog" aria-label="${title}" aria-hidden="${openSheet!==k}">
       <div class="shead"><span class="grab" aria-hidden="true"></span><div class="sheadrow"><h2>${title}</h2><button class="btn small" data-close>Done</button></div>${extra}</div>
       <div class="sbody" id="sb-${k}">${body}</div></div>`;
@@ -3573,8 +3573,9 @@ const cp=document.getElementById("copy");if(cp)cp.onclick=async()=>{const b=cp.q
     try{await navigator.clipboard.writeText(txt);ok=true}catch(e){try{const ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();ok=document.execCommand("copy");ta.remove()}catch(e2){}}
     cp.firstChild.textContent=ok?"Copied":"Code";beep(880,.05);setTimeout(()=>{if(cp.isConnected)cp.firstChild.textContent="Code"},1600)};
   const kept=document.getElementById("dkkeep");if(kept&&dkOld&&kept.replaceWith){kept.replaceWith(dkOld)}else wireDeck(m,host,host?(k=>{H.set.mode=k;if(k==="teams")balanceTeams(false);ls.set("ps-set2",JSON.stringify(H.set));broadcast()}):null);
-  {const dc=document.getElementById("dkcat");if(dc&&host)dc.onclick=()=>{const ks=Object.keys(CATEG),cur=catOf(H.set.mode),nx=ks[(ks.indexOf(cur)+1)%ks.length];ls.set("ps-cm-"+cur,H.set.mode);
-    const back=ls.get("ps-cm-"+nx,"");H.set.mode=CATEG[nx].modes.includes(back)&&MODES[back]?back:CATEG[nx].modes[0];beep(700,.05,"triangle");ls.set("ps-set2",JSON.stringify(H.set));broadcast()}}
+  {const dc=document.getElementById("dkcat");if(dc&&host)dc.onclick=e=>{e.stopPropagation();beep(500,.04);lobCat=true;render()};
+    app.querySelectorAll("[data-hc]").forEach(b=>b.onclick=e=>{e.stopPropagation();const nx=b.dataset.hc,cur=catOf(H.set.mode);ls.set("ps-cm-"+cur,H.set.mode);lobCat=false;beep(760,.05,"triangle");
+      if(nx!==cur){const back=ls.get("ps-cm-"+nx,"");H.set.mode=CATEG[nx].modes.includes(back)&&MODES[back]?back:CATEG[nx].modes[0];ls.set("ps-set2",JSON.stringify(H.set));broadcast()}else render()})}
   if(!host)return;
   const mo=document.getElementById("more");if(mo)mo.addEventListener("toggle",()=>timersOpen=mo.open);
   const save=()=>{ls.set("ps-set2",JSON.stringify(H.set));broadcast()};
@@ -3619,7 +3620,7 @@ function deckHTML(m,host){
     <div class="face"><span class="bdg" aria-label="${dkPlayers(v)}"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><circle cx="9" cy="8" r="3.4"/><path d="M2.5 19c.6-3.6 3.3-5.6 6.5-5.6s5.9 2 6.5 5.6z"/><circle cx="17" cy="9" r="2.6" opacity=".7"/><path d="M16.2 13.6c2.8.2 4.8 2 5.3 5.4h-4.3c-.2-2-.6-3.8-1-5.4z" opacity=".7"/></svg>${v.min>1?v.min:1}+</span><div class="art">${DKART[k]||""}</div><div class="foot"><div class="nm">${esc(v.n)}</div><div class="dsc">${esc(v.d)}</div></div><span class="flp" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></svg></span></div>
     <div class="back"><div class="bk"><h4>How to play</h4><p>${esc(v.r)}</p><small>${dkPlayers(v)} · tap to flip back</small></div></div></div></div>`};
   return `<div class="dkwrap" id="dkwrap" data-mode="${m}" data-host="${!!host}">
-    <div class="dkhead">${host?`<button class="dkcat" id="dkcat">${esc(CATEG[catOf(m)].n)} <span aria-hidden="true">⇄</span></button>`:`<span class="lbl">The host is choosing a game</span>`}<span class="dkpos"><b>${cur+1}</b> / ${keys.length}</span></div>
+    <div class="dkhead">${host?`<button class="dkback" id="dkcat" aria-label="Back to all games">‹ Back</button>`:`<span class="lbl">The host is choosing a game</span>`}<span class="dkpos"><b>${cur+1}</b> / ${keys.length}</span></div>
     <div class="deck" id="deck" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Games">${keys.map(card).join("")}</div>
     <div class="dkdots3" id="dkdots" aria-hidden="true">${dkDots(cur,keys.length)}</div>
   </div>`;
