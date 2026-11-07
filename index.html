@@ -1439,7 +1439,7 @@ body.mchaton #app{padding-bottom:250px}
 .maccd{padding:14px 14px 18px;gap:4px}.maccd .ph{font-size:40px}.maccd h2{font-size:22px}.maccd .mstamp.big{font-size:20px;padding:3px 12px;border-width:3px}
 .envc.killer li.none{color:#ffd6d6}
 
-body.m-mystery .gamebar,body.m-guided .gamebar{display:none}
+body.m-mystery .gamebar,body.m-guided .gamebar,body.m-manor .gamebar{display:none}
 .mwrap>.mtrail:first-child{margin-top:2px}
 .k-guided{--btx:#2f4f8f;--bg:radial-gradient(circle at 30% 18%,rgba(160,190,255,.2),transparent 34%),linear-gradient(165deg,#2a3350,#0f121c);--fg:#e8cf95;--frame:rgba(160,190,255,.35)}
 .k-guided .dk-m b{color:#2f4f8f;border-color:#2f4f8f}
@@ -1448,6 +1448,46 @@ body.m-mystery .gamebar,body.m-guided .gamebar{display:none}
 
 .gq small.tip{color:#e8cf95;font-weight:800}.gq small b.lie{color:#ff8a8a}
 .mg.said:disabled{opacity:1;box-shadow:inset 0 0 0 2px #c9a35b}.mg.said small{color:#7a5b00;font-weight:900}.mg.sus:disabled{opacity:1}
+
+/* ================= night at the manor ================= */
+html body.m-manor{--floor:#0f0b0d;--card:#1d1518;--cardbd:rgba(214,170,110,.25);--well:#0b0809;--ink:#f6ece2;--dim:#bfa996;--acc:#d6aa6e;--acc-ink:#1a1208;--acc-sh:#6e4f28;--acc-tx:#f0d4a4;--pick:#2c2024;
+  --hdr:#0f0b0d;--base:#0f0b0d;--sheet:#181114;--badge:#181114;--glass:rgba(15,11,13,.6);--btnsh:0 5px 0 #6e4f28;--good:#d6aa6e;
+  --bgimg:radial-gradient(90% 50% at 50% -10%,rgba(255,190,110,.16),transparent 65%),radial-gradient(60% 40% at 50% 110%,rgba(120,20,40,.22),transparent 70%)}
+.k-manor{--btx:#6b1f2e;--bg:radial-gradient(circle at 50% 16%,rgba(255,200,120,.28),transparent 32%),linear-gradient(165deg,#3a2128,#120a0d);--fg:#f0d4a4;--frame:rgba(214,170,110,.4)}
+.k-manor .dk-m b{color:#6b1f2e;border-color:#6b1f2e}
+.mcase.manor{background:linear-gradient(#f6ecd9,#ecdcbc)}
+.nseats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;counter-reset:seat}
+.nst{position:relative;background:rgba(246,236,217,.07);border:1px solid rgba(214,170,110,.25);border-radius:12px;padding:8px 4px 7px;display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center;counter-increment:seat}
+.nst::before{content:counter(seat);position:absolute;top:3px;left:6px;font:900 9.5px var(--body);color:var(--dim)}
+.nst .av{width:28px;height:28px;border-radius:50%;background:var(--pc);display:grid;place-items:center;font:900 12px var(--body);color:#fff}
+.nst b{font:800 12px/1.2 var(--body);overflow-wrap:anywhere}.nst small{font:700 10.5px/1.2 var(--body);color:var(--dim);overflow-wrap:anywhere}
+.nst i{font:900 9px var(--body);letter-spacing:.06em;text-transform:uppercase;color:#e07a7a;font-style:normal}
+.nst.me{box-shadow:inset 0 0 0 2px var(--acc)}.nst.dead{opacity:.55}.nst.dead .av{background:#3a2a2e}.nst.hl{background:rgba(214,170,110,.18)}
+.nseatn{font:600 11.5px var(--body);color:var(--dim);text-align:center;margin:6px 0 0}
+.nrt{display:inline-flex;gap:4px;align-items:center;font:800 11.5px var(--body);padding:3px 8px;border-radius:99px;background:rgba(214,170,110,.16);color:#f0d4a4;white-space:nowrap}
+.nrt.evil{background:rgba(181,42,42,.25);color:#ffc2c2}
+.ndead{display:flex;gap:12px;align-items:center;background:rgba(181,42,42,.12);border:1px solid rgba(181,42,42,.45);border-radius:12px;padding:12px 14px}
+.ndead.safe{background:rgba(214,170,110,.08);border-color:rgba(214,170,110,.3)}
+.ndead .ph{font-size:34px;line-height:1}.ndead div{display:flex;flex-direction:column;gap:2px;min-width:0}.ndead b{font:900 17px var(--body)}.ndead small{font:600 12.5px/1.4 var(--body);color:var(--dim)}
+.mclue .mct p b.bad,.mc .tx b.bad,.note b.bad,.envc b.bad{color:#ff8a8a}.mclue .mct p b.ok,.mc .tx b.ok,.envc b.ok{color:#9be3a8}.note b.ok{color:#1d6b2c}.note b.bad{color:#9b1c1c}
+.mrum{background:rgba(246,236,217,.06);border:1px dashed rgba(214,170,110,.4);border-radius:10px;padding:10px 13px;display:flex;flex-direction:column;gap:4px}
+.mrum p{margin:0;font:600 13.5px/1.45 var(--body)}
+.mend{font:italic 600 15px/1.45 Georgia,serif;color:var(--acc-tx);text-align:center;margin:4px 6px 10px}
+.kcard p.kg{margin:6px 0 0;font:italic 600 12px/1.35 Georgia,serif;max-width:220px;opacity:.92}
+.kcards{flex-wrap:wrap}
+.nall{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.nrow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:rgba(246,236,217,.06);border-radius:10px;padding:7px 10px}.nrow b{font:800 13.5px var(--body)}.nrow.dead{opacity:.6}
+#mshare{max-height:min(62vh,520px);overflow-y:auto}
+.nroles{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.nrb{position:relative;border:none;background:rgba(255,255,255,.07);color:var(--ink);border-radius:10px;padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;font:inherit;font-size:20px}
+.nrb span{font:800 9.5px/1.1 var(--body);text-align:center}.nrb.on{background:var(--acc);color:var(--acc-ink)}
+.nrb.bl::after{content:"★";position:absolute;top:1px;right:4px;font-size:10px;color:#ffd66b}
+.nchips{display:flex;flex-wrap:wrap;gap:6px}
+.nch{border:none;background:rgba(255,255,255,.08);color:var(--ink);border-radius:99px;padding:7px 11px;font:800 12px var(--body)}.nch.on{background:var(--acc);color:var(--acc-ink)}
+.nchk{display:flex;gap:8px;align-items:center;font:800 13px var(--body)}.nchk input{width:18px;height:18px;accent-color:var(--acc)}
+@media (max-width:360px){.nroles{grid-template-columns:repeat(4,1fr)}.nseats{grid-template-columns:repeat(3,1fr)}}
+body:has(#mshare:not([hidden])) .mside,body:has(#mshare:not([hidden])) .mskip{display:none}
+#mchat:has(#mshare:not([hidden])) .mcl{display:none}
 </style>
 </head>
 <body>
@@ -1468,140 +1508,150 @@ const MODES={
   charades:{n:"Charades",i:"🎭",r:"Take turns acting out a secret word without talking, pointing or mouthing. Everyone else shouts guesses or types them. If someone says it out loud, the actor taps their name. The guesser and the actor each get 1 point. You can skip up to 3 words a turn.",d:"Act out a secret word. Others shout or type guesses.",min:2},
   glyph:{n:"Decode the Glyph",i:"🧩",r:"Each puzzle is a row of emojis that spells out a movie, song, TV show, saying or something from pop culture. You see the category and how many words it is. Type your answer and keep guessing as many times as you like until time runs out. Small typos are fine. Faster solves score more: 3 points in the first third of the timer, 2 in the middle, 1 at the end.",d:"Turn emoji clues into movies, songs and sayings. Type fast.",min:1},
   mystery:{n:"Murder Mystery",i:"🔪",r:"Each of you plays a guest from the story, and one of you is secretly the killer (two with 7 or more players). Each night, detectives investigate a guest and find out if they look innocent or guilty. The killer can swap one detective's result twice per game. In the morning, talk it over in the chat, then vote someone out. Catch the killer to win. If the killer survives 3 nights, they win.",d:"One of you is the killer. Investigate, bluff, accuse.",min:3},
-  guided:{n:"Guided Mystery",i:"🔍",r:"Solve the case yourself. You get 8 turns to question suspects and search places. Innocent suspects have an alibi someone backs up, and searching a place either rules out a weapon or shows where it happened. Then accuse: who, with what, and where. With friends, everyone solves the same case and the fastest right answer wins.",d:"Question suspects, search rooms, then accuse. Solo or together.",min:1}
+  guided:{n:"Guided Mystery",i:"🔍",r:"Solve the case yourself. You get 8 turns to question suspects and search places. Innocent suspects have an alibi someone backs up, and searching a place either rules out a weapon or shows where it happened. Then accuse: who, with what, and where. With friends, everyone solves the same case and the fastest right answer wins.",d:"Question suspects, search rooms, then accuse. Solo or together.",min:1},
+  manor:{n:"Night at the Manor",i:"🕯️",r:"Everyone gets a secret role with a power, like the Seer, the Guardian or the Empath. Hidden among you is the killer, and with 5 or more players, their accomplice, who poisons people so their information is wrong. At night everyone taps their phone and uses their power. From night 2, someone dies. In the morning, say who you are and what you learned (evil lies too), then vote. Vote out the killer to win. If only two guests are left, evil wins.",d:"Secret roles, night powers, bluffs. Vote out the killer.",min:4}
 };
 const LV=["Any","Easy","Medium","Hard"];
-/* ================= Murder Mystery: story packs =================
-   s: suspects [name, emoji, who they are, motive, alibi that clears them]
-   w: means    [name, emoji, line that rules it out]
-   p: places   [name, emoji, line that rules it out]
-   Every item has a clearing line, because the answer is drawn fresh each game. */
+/* ================= Mystery story packs =================
+   s: the six main suspects [name, emoji, who they are, their secret, alibi that clears them]
+   g: what you find on each of those six if they did it
+   x: six more guests [name, emoji, who, secret, alibi, guilty evidence], so up to 12 players get a character
+   w: weapons [name, emoji, ruled-out line]   p: places [name, emoji, ruled-out line]
+   The answer is drawn fresh every game, so every character has both an innocent and a guilty line. */
 const STORIES={
-  yule:{n:"The Yule Ball Hex",tag:"Harry Potter",e:"⚡",
-    hook:"The music stopped at midnight. When the candles flared back to life, Gilderoy Lockhart was lying across the dance floor, stiff as a board, quill still in hand, mid-autograph.",
-    victim:"Gilderoy Lockhart, Petrified at the Yule Ball",
-    cats:["Who","With what","Where"],
-    night:"The castle sleeps. Somewhere in the dark corridors, a wand is raised.",
-    beats:["Morning at Hogwarts. Lockhart is in the hospital wing, still frozen, still smiling. Dumbledore wants answers before the Ministry hears.",
-      "The Daily Prophet lands at breakfast: LOCKHART HEXED AT YULE BALL. Someone has been talking.",
-      "The last day before the Ministry arrives. Mrs Norris was found sniffing a scorch mark on the Grand Staircase. Time is running out."],
+  deadair:{n:"Dead Air",tag:"Late-night radio",e:"📻",
+    hook:"2:13am. Thunder, a citywide blackout, and Midnight Confessions still live on backup power. Then the host, Vic Moreau, stopped mid-sentence. Forty seconds of silence. Then a caller said: \"I know who did it.\"",
+    victim:"Vic Moreau, host of Midnight Confessions",cats:["Who","With what","Where"],
+    night:"The storm keeps the city dark. Somewhere in the station, someone is listening.",
+    beats:["The morning after. Police tape on the studio door. The station is playing reruns of Vic's best calls, and one of them sounds a lot like a threat.",
+      "A cassette turns up in the mail slot: the missing 40 seconds. Most of it is static. Most of it.",
+      "The owner wants it wrapped up before the morning news. The caller from 2:13am calls back. Twice.",
+      "The power comes back on. Every light in the building works except one: the red ON AIR sign over Studio A."],
+    tamper:["Splice the tape","Doctor one detective's evidence tonight. Whatever they find will be false."],
+    end:"Vic always said every caller has a confession. The last one was already in the building.",
+    s:[["Dana Pike","🎚️","Night producer","Vic was going to fire her on air, live, in front of everyone.","Dana was in the control booth all night. The board logs show her hands on the faders every single minute."],
+      ["Jojo Reyes","🎧","Overnight DJ","He's been secretly recording Vic's callers and selling them as a podcast.","Jojo was live on the sister station down the hall. Two thousand listeners heard him."],
+      ["Margot Hale","💼","Station owner","The station is broke, and Vic's insurance pays her two million.","Margot was on a video call with her bank in Vancouver. The bank has the recording."],
+      ["Teddy Fox","📋","Intern, first week","He isn't really an intern. He's Vic's son, and Vic never knew.","Teddy was stuck in the elevator during the blackout until 3am. The fire department let him out."],
+      ["Madame Zora","🔮","The 3am psychic","She predicted Vic's death on air last week, then bought a black dress.","Zora was doing tarot readings on the phone lines all night. Every caller confirms it."],
+      ["Lena Moreau","💍","Vic's ex-wife","She still has keys to the building, and a list of Vic's secrets.","Lena was at an all-night diner across town. The waitress refilled her coffee nine times."]],
+    g:["Dana's headset cable was cut, and the end was under Vic's desk.",
+      "Jojo's request card was in Vic's pocket: \"Play this at 2:13.\"",
+      "Margot's car was in the loading bay at 2am, engine still warm.",
+      "Teddy's lanyard was tangled in the cable from Vic's microphone.",
+      "A tarot card was tucked under Vic's coffee cup: Death, signed with a Z.",
+      "Lena's keycard opened the back door at 2:05am."],
+    x:[["Big Sal","🍕","Pizza delivery guy","He delivers every night and knows the back stairs better than the staff.","Sal was delivering across town all night. His GPS tracker logged every stop.","A pizza box with one slice missing was in the studio. Sal never leaves a slice."],
+      ["Detective Ruiz","🕵️","Off-duty cop, regular caller","Vic was about to expose a cover-up in her department.","Ruiz was at the precinct writing reports until dawn. Her sergeant saw her.","Ruiz's badge number was scribbled on Vic's notepad and circled twice."],
+      ["Kit Darling","🎤","Pop star, tonight's guest","Vic was going to play her secret demo without asking.","Kit was in makeup for her late interview the whole time. Her whole team was there.","Kit's sparkly guitar pick was stuck to the studio floor in spilled coffee."],
+      ["Gus","🧹","Night janitor","He's been finding Vic's hidden notes for months, and keeping them.","Gus was waxing floors downstairs all night. The security camera shows him.","Wet floor signs were moved to block the hallway camera from the studio door."],
+      ["Rocco Vale","📡","Station engineer","Vic owed him eight thousand dollars.","Rocco was on the roof fixing the antenna in the storm. Two neighbours saw his flashlight.","The backup generator was switched off by hand at 2:12, with Rocco's toolkit beside it."],
+      ["Penny Lane","📞","Call screener","She decides who gets on air, and she put the 2:13 call through.","Penny was screening calls all night. The phone system logged every one she answered.","The 2:13 caller's number was on a sticky note in Penny's handwriting."]],
+    w:[["Microphone cable","🎙️","The mic cable is still plugged in and untouched."],["Poisoned coffee","☕","The coffee pot tested clean. Just very strong."],["Vinyl record","💿","Every record is still in its sleeve."],["Broadcasting award","🏆","Vic's award is still bolted to the shelf."],["Stage light","💡","The stage light is cold. It hasn't been on in weeks."]],
+    p:[["Studio A","🔴","Studio A's footage covers every second."],["Control booth","🎛️","Nothing in the control booth was touched."],["Record library","📚","Dust on the record library floor hasn't been disturbed."],["Rooftop antenna","📡","The roof door was locked from the inside."],["Green room","🛋️","The green room was full of guests all night."]]},
+  flight:{n:"Flight 404",tag:"Red-eye thriller",e:"✈️",
+    hook:"The red-eye from Toronto to Tokyo. Six hours over the Pacific, the cabin lights come on for breakfast, and the passenger in seat 2A won't wake up. The captain locks the cockpit. Nobody can leave.",
+    victim:"Felix Grant, the passenger in seat 2A",cats:["Who","With what","Where"],
+    night:"The cabin lights dim. Somewhere in the dark aisle, someone isn't sleeping.",
+    beats:["Breakfast is cancelled. The crew has covered 2A with a blanket, and the captain has radioed ahead: whoever did this will be met at the gate.",
+      "Turbulence knocks open an overhead bin. Inside: a passport with Felix's photo and somebody else's name.",
+      "Two hours to landing. The captain announces they'll circle Tokyo until someone confesses.",
+      "The fuel light comes on. The tower in Tokyo wants a name before they land."],
+    tamper:["Swap the boarding pass","Mix up one detective's evidence tonight. Whatever they find will be false."],
+    end:"Felix booked seat 2A to watch someone. Someone was watching him back.",
+    s:[["Claire Bonnet","💁","Flight attendant","Felix got her fired from her last airline. She swapped shifts to be on this flight.","Claire was serving drinks in economy the whole time. Forty passengers saw her."],
+      ["Agent Novak","🕶️","Air marshal","He isn't here by chance. He was assigned to watch Felix.","Novak was in seat 14C all night. The passenger beside him couldn't sleep and watched him the whole time."],
+      ["Chase Kroft","🪙","Crypto billionaire","Felix knew where Chase hid two billion dollars.","Chase was trading on the plane wifi for hours. The airline logs show every click."],
+      ["Chef Aiko","🍣","Celebrity chef","Felix was the food critic whose review closed her first restaurant.","Aiko was in the galley teaching the crew to plate sushi. They have photos."],
+      ["Ben Hart","💑","Nervous honeymooner","His new wife thinks he's an accountant. He isn't.","Ben slept on his wife's shoulder for seven hours. She has the neck pain to prove it."],
+      ["Mr. Lowe","😶","The man in 2B","He hasn't slept, hasn't eaten, and isn't on the passenger list.","Mr. Lowe was locked in the bathroom with a nosebleed. The attendant had to knock four times."]],
+    g:["Claire's name tag was found under seat 2A.",
+      "Novak's sleeve is torn, and the missing button is in 2A's cup holder.",
+      "A crypto wallet code was written on Felix's napkin, in Chase's handwriting.",
+      "The dessert on 2A's tray was Aiko's own recipe. She made it specially.",
+      "Ben's wedding ring was in 2A's seat pocket.",
+      "Mr. Lowe's gloves have a smear of the same ink as Felix's fountain pen."],
+    x:[["Captain Reyes","👩‍✈️","Pilot","Felix filed a complaint that could end her career.","The captain never left the cockpit. The flight recorder agrees.","The cockpit door log shows it opened for two minutes at 3:14am."],
+      ["Gran Pearl","🧶","Knitting grandma in 3C","She used to be a spy, and Felix recognised her.","Pearl knitted a whole scarf over the Pacific. Three rows of passengers watched.","A knitting needle is missing from Pearl's bag, and the yarn trails to 2A."],
+      ["Leo Park","🎮","Teen gamer","Felix took his tablet at the gate in a fight that went viral.","Leo was streaming his game on the plane wifi. His viewers have the timestamps.","Leo's headphones were around Felix's neck."],
+      ["Dr. Voss","🩺","Doctor on board","She signed Felix's fake medical papers last year.","Dr. Voss was treating a panic attack in row 30 for an hour.","An empty syringe from Dr. Voss's bag was under 2A."],
+      ["Marco Bell","🎸","Rock star in first class","Felix was suing him over every song he ever wrote.","Marco was asleep in an eye mask and earplugs, snoring so loudly that row 3 complained.","A guitar string was coiled in 2A's blanket."],
+      ["Iris Kwan","📸","Travel influencer","She's been filming Felix the whole flight for a \"story\".","Iris was filming a sunrise time-lapse at her window for three hours.","Iris's phone was in 2A's seat pocket, still recording."]],
+    w:[["Poisoned champagne","🥂","The champagne bottle tested clean."],["Seatbelt","💺","The seatbelt is undamaged."],["Fountain pen","🖋️","The fountain pen hasn't lost a drop of ink."],["Knitting needle","🪡","Every knitting needle is accounted for."],["Sleeping pills","💊","The pill bottle is still sealed."]],
+    p:[["Galley","🍳","The galley was full of crew all night."],["Cockpit door","🚪","The cockpit door log is clean."],["Lavatory","🚻","The lavatory queue never stopped."],["Cargo hold","🧳","The cargo hold hatch is sealed."],["Crew rest area","🛏️","The crew rest area was locked."]]},
+  escape:{n:"The Escape Room",tag:"Birthday party",e:"🔐",
+    hook:"A birthday party at Lockbox Escape Rooms. Sixty minutes on the clock. Then the lights go out. When they come back, the game master is dead, the door won't open, and the timer is still counting down.",
+    victim:"Morgan Steel, the game master",cats:["Who","With what","Where"],
+    night:"The room goes dark again. The timer keeps ticking. Someone moves.",
+    beats:["The emergency lights flicker on. Morgan's walkie-talkie keeps crackling: \"Morgan, are you there?\"",
+      "A hidden drawer pops open by itself. Inside is Morgan's notebook, with a page about everyone in this room.",
+      "Ten minutes left on the clock. The final puzzle unlocks. It reads: \"The answer is the person who did it.\"",
+      "The timer hits zero. The door clicks, but it still won't open."],
+    tamper:["Plant a fake clue","Slip a fake puzzle piece to one detective tonight. Whatever they find will be false."],
+    end:"Morgan built every puzzle in this room. The last one solved itself.",
+    s:[["Bella Marsh","🎂","Birthday girl","She booked this room on purpose. Morgan used to be her best friend.","Bella was blowing out candles on a livestream. Every second is online."],
+      ["Becca Marsh","👯","Bella's twin","She's been pretending to be Bella all night, and nobody noticed.","Becca was stuck in the locked-closet puzzle for 20 minutes. Everyone heard her banging."],
+      ["Tasha Lin","😒","Jealous best friend","She wasn't invited. She came anyway.","Tasha was in the hallway arguing with the front desk about the booking the whole time."],
+      ["Ryan Cole","💐","The new boyfriend","He dated Morgan first, and never mentioned it.","Ryan was stuck on the cipher wheel with two other players. They couldn't get him to stop talking."],
+      ["Vince Lockwood","🗝️","Escape room owner","The business is failing, and Morgan was about to quit and take the best puzzles.","Vince was fixing the card machine in the lobby. The receipt printer timestamped it."],
+      ["Sam Doyle","🎫","Stranger who booked the same slot","It wasn't an accident. Sam has been following Morgan for weeks.","Sam was in the bathroom on a 30-minute phone call. The call log proves it."]],
+    g:["Bella's birthday sash was tied around the broken door handle.",
+      "A fingerprint on the light switch matches Becca, not Bella.",
+      "Tasha's earring was inside the puzzle box Morgan was holding.",
+      "Ryan's phone has a text to Morgan: \"Meet me when the lights go out.\"",
+      "The master key on Vince's belt is the only one that opens the control room.",
+      "Sam's ticket was printed a month ago, for this room, at this exact time."],
+    x:[["Nana Rose","👵","Bella's grandmother","She's the best puzzler in the family, and Morgan once cheated her at bingo.","Nana Rose was asleep on the beanbag. Her snoring is all over the security mic.","Nana's knitting bag was full of the room's missing puzzle pieces."],
+      ["DJ Kev","🎧","Party DJ","Morgan wouldn't let him play music in the room.","Kev was blasting music in the party room next door the whole hour.","Kev's speaker cable runs under the door into the control room."],
+      ["Priya Shah","🧩","Puzzle champion","She wanted Morgan's job, badly.","Priya set a record on the jigsaw wall. It's on the leaderboard with a timestamp.","Priya had the exit code written backwards on her hand."],
+      ["Officer Dan","👮","Mall security guard","Morgan reported him for sleeping on duty.","Dan was buying a pretzel in the food court. The mall cameras have him.","Dan's flashlight was right where the lights went out."],
+      ["Lily Park","📱","Influencer filming the party","She needed something to go viral. This went viral.","Lily was filming a dance in the lobby. The video has a timestamp and two million views.","Lily's ring light was unplugged from the wall at the exact moment of the blackout."],
+      ["Theo Quinn","🍰","Cake delivery guy","Morgan's cake order was fake. Theo baked it anyway.","Theo was double-parked outside arguing with a parking officer. He has the ticket.","A cake knife is missing from Theo's van."]],
+    w:[["Puzzle box","📦","The puzzle box is still locked."],["Rope from the rope puzzle","🪢","The rope is still knotted to the puzzle."],["Poisoned birthday cake","🎂","The cake tested clean. Just very sweet."],["Fake skull prop","💀","The skull prop hasn't moved from its shelf."],["Padlock","🔒","The padlock is still on its chain."]],
+    p:[["Control room","🖥️","The control room door never opened."],["Library set","📚","The library set's books are all in order."],["Closet puzzle","🚪","The closet puzzle was solved and empty."],["Lobby","🛎️","The lobby was full of people."],["Party room","🎈","The party room was packed all night."]]},
+  maze:{n:"The Triwizard Maze",tag:"Harry Potter",e:"⚡",
+    hook:"The final task of the Triwizard Tournament. The champions enter the hedge maze at dusk. An hour later, Cedric Diggory is carried out Petrified, and the Goblet of Fire, which should be empty, spits out a fourth name.",
+    victim:"Cedric Diggory, Petrified inside the maze",cats:["Who","With what","Where"],
+    night:"Fog creeps out of the maze and over the castle. Somewhere in the dark, a wand is raised.",
+    beats:["Morning at Hogwarts. Cedric is in the hospital wing, frozen mid-step. The Ministry wants answers before the papers find out.",
+      "A Howler explodes at breakfast in a voice nobody recognises: \"One of you lied about the maze.\"",
+      "The Marauder's Map goes blank for an hour, then shows a name in the trophy room where nobody should be. The Minister arrives tonight.",
+      "The Goblet of Fire flares blue one last time and spits out a scorched scrap of parchment."],
     tamper:["Confundus Charm","Confuse one detective tonight. Whatever they find will be false."],
-    s:[["Draco Malfoy","🐍","Slytherin, fourth year","Lockhart humiliated him in front of the whole Duelling Club.","Crabbe and Goyle swear Draco spent the whole night sulking with them in the Slytherin common room."],
-      ["Severus Snape","🧪","Potions Master","He has wanted the Defence Against the Dark Arts job for years.","Snape was patrolling the rose garden with Karkaroff when the music stopped. They both say so, and they hate each other."],
-      ["Argus Filch","🐈","Caretaker","Lockhart's fan mail has been flooding his corridors all week.","Filch was mopping up after Peeves on the seventh floor all night, with Mrs Norris at his feet."],
-      ["Sybill Trelawney","🔮","Divination professor","She predicted this exact attack, and Lockhart laughed in her face.","Trelawney never came down from her tower. Three students saw her lamp burning up there all night."],
-      ["Moaning Myrtle","👻","Ghost of the girls' bathroom","\"He promised me a signed photo. He LIED.\"","Myrtle was wailing in her bathroom so loudly that half the castle heard her. She never left."],
-      ["Rita Skeeter","🪲","Daily Prophet reporter","She needed a front-page scandal by morning.","Rita was caught interviewing a portrait in the Entrance Hall at midnight. The portrait gave her an alibi, grudgingly."]],
-    w:[["Petrificus Totalus","🪄","Professor Flitwick checked every wand at the ball. Not one had cast Petrificus Totalus that night."],
-      ["Basilisk's reflection","🪞","Every mirror in the Great Hall was checked. Nothing in them but Lockhart admiring himself."],
-      ["Cursed opal necklace","📿","The cursed opal necklace was found still locked in its case at Borgin and Burkes."],
-      ["Spiked butterbeer","🍺","Madam Pomfrey tested Lockhart's goblet. Ordinary butterbeer, just far too much of it."],
-      ["Rogue Bludger","⚫","Madam Hooch counted the Bludgers. Both were still chained in their crate in the broom shed."]],
-    p:[["Great Hall","🕯️","The Great Hall was packed with dancers all night. Nobody could have done it there unseen."],
-      ["Astronomy Tower","🔭","The Astronomy Tower door was charmed shut for the ball. Nobody went up."],
-      ["Room of Requirement","🚪","The Room of Requirement never appeared that night. The wall stayed a wall."],
-      ["Potions dungeon","⚗️","The Potions dungeon was locked tight, and the ingredient cupboard hadn't been touched."],
-      ["Myrtle's bathroom","🚽","Myrtle's bathroom was flooded ankle-deep. Anyone in there would have left wet footprints, and there were none."]]},
-  mirror:{n:"The Mirrorball Murder",tag:"Dancing with the Stars",e:"🪩",
-    hook:"Horror Movie Night. Fog machines, zombie makeup, fake blood everywhere. Nobody noticed the real thing until the cameras cut to the Skybox, and three-time Mirrorball champion Sasha Petrov wasn't getting up.",
-    victim:"Sasha Petrov, three-time Mirrorball champion",
-    cats:["Who","With what","Where"],
-    night:"The ballroom lights go down. Somewhere backstage, someone is rewriting the story.",
-    beats:["The morning after Horror Night. Fake blood is still being mopped off the dance floor, and the producers have decided the show must go on.",
-      "Disney Night rehearsals. Someone left a single sequin on Sasha's empty chair in the Skybox. The press is camped outside.",
-      "Grammy Night. One week to the finale. The Mirrorball is gleaming, and the killer is still dancing."],
-    tamper:["Edit the footage","Slip one detective doctored footage tonight. Whatever they find will be false."],
-    s:[["Tank Rivera","🏈","Retired NFL linebacker","Sasha mocked his footwork on live TV after Super Bowl Night.","Tank was warming up in the rehearsal studio the whole time. The camera shows him tripping over the same step 40 times."],
-      ["Lexi Starr","🌟","Former teen-sitcom star","She overheard Sasha asking the producers for a better partner.","Lexi was on stage mid-interview with the co-host, in front of millions of viewers, when it happened."],
-      ["Marco Bellini","🕺","Rival pro dancer","He has never won a Mirrorball. With Sasha gone, his couple is the favourite.","Marco was in the makeup chair getting zombie prosthetics glued on. It took three people and an hour."],
-      ["Judge Penelope Grant","⚖️","Head judge","She was secretly dating Sasha, and still gave him a 4 last week.","Penelope never left the judges' table. Two other judges and 400 audience members can vouch for her."],
-      ["Dex Cole","😎","Reality-TV villain","The fans keep voting him through. Sasha was about to expose how.","Dex was in the parking lot filming a 'surprise' video for his fans. His phone timestamps prove it."],
-      ["Ruby Vance","✂️","Costume designer","Sasha tore up her Disney Night designs in front of everyone.","Ruby was sewing sequins back onto a zombie bride costume, with four assistants watching."]],
-    w:[["Mirrorball trophy","🏆","The Mirrorball trophy never left its locked glass case, and security has the only key."],
-      ["Rhinestone stiletto","👠","Every stiletto was counted after the show. All pairs complete and spotless."],
-      ["Feather boa","🪶","The feather boa was still wrapped around a mannequin, every feather in place."],
-      ["Dry ice","🌫️","The fog machine burned through all its dry ice during the opening number. There was none left by the end."],
-      ["Poisoned spray tan","🧴","The lab tested the spray tan. Just a very orange, very legal shade called Ballroom Bronze."]],
-    p:[["Ballroom floor","💃","The ballroom floor was under 30 spotlights and 12 cameras. Nothing happened there unseen."],
-      ["Rehearsal studio","🪞","The rehearsal studio footage is complete. Only rehearsing couples went in or out."],
-      ["Costume department","🧵","The costume department was full of assistants all night. Nobody could have slipped in."],
-      ["Judges' table","📋","The judges' table was on camera for every second of the broadcast."],
-      ["Spray-tan booth","🟠","The spray-tan booth was locked for cleaning after the last couple at 9pm."]]},
-  forks:{n:"Thunder Over Forks",tag:"Twilight",e:"🍎",
-    hook:"Thunder rolled over Forks, the only weather the Cullens can play baseball in. By morning, Mike Newton was found unconscious at the edge of the woods, right on the treaty line between vampire land and wolf land.",
-    victim:"Mike Newton, found unconscious on the treaty line",
-    cats:["Who","How","Where"],
-    night:"Fog rolls in off the Sound. Somewhere in the trees, something is wide awake.",
-    beats:["Morning in Forks. It's raining, obviously. Mike is in the hospital and remembers nothing but cold hands and something big moving through the trees.",
-      "The treaty is on the line. The Cullens and the pack meet at the border, and nobody is backing down.",
-      "The Volturi have heard. They arrive at sunset, and they will want someone to blame."],
-    tamper:["Sudden decision","Alice can't see choices made on impulse. One detective's clue tonight will be false."],
-    s:[["Edward Cullen","🧛","Vampire, forever 17","Mike asked Bella to prom. Again.","Edward was at a late-night concert in Seattle. His ticket stub is timestamped."],
-      ["Jacob Black","🐺","Quileute shapeshifter","Mike called him 'the kid with the motorbike' one too many times.","Jacob was running patrol with Sam and Paul. The whole pack could hear his thoughts all night."],
-      ["Alice Cullen","🔮","Vampire who sees the future","She saw something in Mike's future that she didn't like.","Alice was in Seattle buying Bella a dress she will never wear. The receipts are timestamped."],
-      ["Rosalie Hale","🌹","Vampire","Mike saw her lift a car off a classmate and won't stop talking about it.","Rosalie was rebuilding a Jeep engine all night with the radio blasting. Esme heard it until dawn."],
-      ["Victoria","🔥","Nomad vampire with a grudge","She has been circling Forks for months, looking for revenge.","The wolves chased Victoria to the Canadian border at sunset. She never came back across."],
-      ["Charlie Swan","👮","Chief of police","He caught Mike sneaking Bella out past curfew.","Charlie fell asleep in his recliner watching the Mariners. The neighbours heard him snoring all night."]],
-    w:[["Venom bite","🦷","Carlisle examined Mike. No bite marks, no venom. Just a very bad scare."],
-      ["Wolf claws","🐾","No claw marks on Mike, and no wolf tracks within a mile of where he was found."],
-      ["Baseball bat","⚾","Emmett's baseball bat was in the Cullens' trunk, bone dry. It never went out in the storm."],
-      ["Bella's red truck","🛻","Bella's truck wouldn't even start that night. Charlie had to jump it the next morning."],
-      ["Falling tree","🌲","The rangers checked the woods. No trees came down near the treaty line in the storm."]],
-    p:[["The meadow","🌼","The meadow was full of fresh, unbroken flowers. Nobody walked through it that night."],
-      ["La Push beach","🌊","The pack was on La Push beach all night. Nothing happened there."],
-      ["The Cullen house","🏠","Esme was home all night painting. Nobody else came near the Cullen house."],
-      ["Forks High parking lot","🏫","The school's security light shows the Forks High parking lot empty all night."],
-      ["Baseball clearing","⚡","Lightning kept the baseball clearing smoking all night. Nobody could have stood there, and there are no footprints."]]}
+    end:"Everyone thought the maze was the danger. The danger walked in holding a wand.",
+    s:[["Draco Malfoy","🐍","Slytherin student","He bet his father's gold that Cedric would lose.","Draco was booing so loudly in the stands that McGonagall gave him detention on the spot."],
+      ["Severus Snape","🧪","Potions Master","Someone stole Boomslang skin from his private stores this week.","Snape was patrolling the edge of the maze with Professor Flitwick. They argued the whole time."],
+      ["Rubeus Hagrid","🧔","Gamekeeper","He hid a creature in the maze that wasn't on the official list.","Hagrid was guarding the entrance with Madame Maxime. Half of Beauxbatons saw them."],
+      ["Luna Lovegood","🌙","Ravenclaw student","She snuck into the maze to look for a Crumple-Horned Snorkack.","Luna was selling copies of The Quibbler in the stands. She sold eleven."],
+      ["Rita Skeeter","🪲","Daily Prophet reporter","She's an unregistered Animagus. Nobody knows she can turn into a beetle.","Rita was interviewing the Minister for Magic in the judges' box the whole time."],
+      ["Mad-Eye Moody","👁️","Defence professor","He isn't who he says he is.","Moody was with the other professors. His magical eye never left the maze."]],
+    g:["A green-and-silver scarf was caught on the hedge right where Cedric fell.",
+      "Cedric's lips smell of a potion only a Potions Master could brew.",
+      "Huge muddy boot prints lead into the maze from a gap in the hedge.",
+      "A radish earring was in the hedge, right next to Cedric's wand.",
+      "An acid-green quill was found in the maze, still writing on its own.",
+      "Moody's hip flask was found in the maze, and it smells like Polyjuice Potion."],
+    x:[["Hermione Granger","📚","Gryffindor student","She worked out who put the fourth name in the Goblet, and told no one.","Hermione was in the stands timing every champion with a stopwatch. She wrote down every time.","A library book on Petrifying charms was in the maze, with Hermione's notes in the margins."],
+      ["Ron Weasley","🧹","Gryffindor student","He bet his whole savings on the result.","Ron was selling fireworks under the stands. Dozens of students bought them.","Bits of old frilly dress robes were caught on a thorn near Cedric."],
+      ["Viktor Krum","🦅","Durmstrang champion","Everyone already blames him for everything that happens in the maze.","Krum was found stunned in a dead end on the far side, and the judges pulled him out first.","Krum's wand was the last to cast a spell in the maze, and it wasn't a Stunner."],
+      ["Fleur Delacour","🌸","Beauxbatons champion","She was attacked in the maze too, and never said by whom.","Fleur sent up red sparks early and was in the medical tent before it happened. The nurses confirm it.","A silver hair from Fleur's head was wrapped around Cedric's wrist."],
+      ["Neville Longbottom","🌱","Gryffindor student","He's been studying the plants in the maze hedges for weeks.","Neville was watering Mandrakes in the greenhouse with Professor Sprout all evening.","Gillyweed was on the path to where Cedric fell. Neville is the only one who grows it."],
+      ["Peeves","🃏","Poltergeist","He's been moving the maze walls around for fun.","The Bloody Baron kept Peeves trapped in a suit of armour all evening.","Someone heard cackling just before Cedric fell, and there were water balloons everywhere."]],
+    w:[["Petrifying hex","🪄","No wand at the task cast a Petrifying hex."],["Basilisk's reflection","🪞","No mirror was found anywhere near the maze."],["Cursed Portkey","🏆","The Portkey cup is still sitting in its stand."],["Blast-Ended Skrewt","🦂","The Skrewt is still asleep in its crate."],["Spiked pumpkin juice","🎃","The pumpkin juice tested clean."]],
+    p:[["Maze centre","🏆","The maze centre was watched by the judges."],["Hedge dead end","🌿","The dead end's hedges are untouched."],["Judges' box","🎟️","The judges' box was full all night."],["Medical tent","⛺","The medical tent was full of nurses."],["Trophy room","🏅","The trophy room was locked."]]}
 };
 const STORYKEYS=Object.keys(STORIES);
 const mItem=(st,c,i)=>{const S0=STORIES[st];const a=c===0?S0.s[i]:c===1?S0.w[i]:S0.p[i];return a?{n:a[0],e:a[1],d:c===0?a[2]:"",m:c===0?a[3]:"",clr:c===0?a[4]:a[2]}:{n:"?",e:"?",d:"",m:"",clr:""}};
 const mCount=c=>c===0?6:5;
-/* Murder Mystery: what an investigator finds on each suspect if they did it (g), and six more guests per story (x)
-   so up to 12 players each get a character. x: [name, emoji, who, motive, alibi, guilty evidence] */
-STORIES.yule.g=["A torn green-and-silver cufflink was found next to Lockhart. Draco is missing one.",
-  "Lockhart's goblet smells of a potion only a Potions Master could brew.",
-  "Wet mop marks lead away from the scene, straight to Filch's office.",
-  "Lockhart was gripping a tarot card, The Tower, from Trelawney's own deck.",
-  "There was a cold puddle around Lockhart, and sobbing coming from inside the walls.",
-  "An acid-green quill was in Lockhart's pocket, still scribbling on its own."];
-STORIES.yule.x=[["Rubeus Hagrid","🧔","Gamekeeper","Lockhart told the whole school Hagrid couldn't handle a pixie.","Hagrid was by the lake with Madame Maxime all night. Half of Beauxbatons saw them.","Huge muddy boot prints lead from the dance floor straight to Hagrid's hut."],
-  ["Peeves","🃏","Poltergeist","Lockhart once tried to banish him with a hairbrush.","The Bloody Baron trapped Peeves inside a suit of armour from ten o'clock on.","Someone heard cackling just before the lights went out, and there were water balloons everywhere."],
-  ["Luna Lovegood","🌙","Ravenclaw, fourth year","Lockhart called The Quibbler 'utter rubbish' at dinner.","Luna was in the Owlery all night writing to her father. The owls didn't mind.","A radish earring was found right next to Lockhart's quill."],
-  ["Neville Longbottom","🌱","Gryffindor, fourth year","Lockhart made him dance first, alone, in front of everyone.","Neville was repotting Mandrakes in Greenhouse Three with Professor Sprout until one in the morning.","Neville's cactus was under the table, and the floor was sticky with Stinksap."],
-  ["Hermione Granger","📚","Gryffindor, fourth year","Lockhart's books were full of lies, and she'd read every one.","Hermione was dancing with Viktor Krum in front of the whole school when it happened.","A library book on advanced jinxes was found by Lockhart, with Hermione's notes in the margins."],
-  ["Ron Weasley","🧹","Gryffindor, fourth year","Lockhart's spell backfired and made him burp slugs for a day.","Ron was sulking on the stairs in his frilly dress robes. Harry sat with him the whole time.","Bits of old lace from frilly dress robes were caught on Lockhart's sleeve."]];
-STORIES.mirror.g=["A shoulder pad from a football jersey was found next to Sasha in the Skybox.",
-  "Lexi's signature pink glitter was smeared all over Sasha's jacket.",
-  "Zombie makeup was smudged on Sasha's collar, the exact shade of Marco's prosthetics.",
-  "A judge's paddle with a 4 on it was found under the Skybox couch.",
-  "Dex's phone has a deleted video filmed in the Skybox at the moment it happened.",
-  "A tiny pair of costume scissors engraved R.V. was found beside Sasha."];
-STORIES.mirror.x=[["Jules Carter","🎤","Show co-host","Sasha kept stealing Jules's lines on live TV.","Jules was live on air reading the phone-vote numbers. Millions watched.","Jules's earpiece was found in the Skybox, still switched on."],
-  ["Mia Torres","🩰","Choreographer","Sasha took credit for her best routine.","Mia was teaching tomorrow's group number to twelve dancers in the big rehearsal hall.","Rosin dust from Mia's dance shoes was all over the Skybox floor."],
-  ["Leo Park","🎧","Stage manager","Sasha got him written up for a missed cue.","Leo was in the control booth calling camera cues for the whole broadcast.","The Skybox door log shows Leo's keycard swiped in during the commercial break."],
-  ["Kiki Blaze","🎸","Guest pop star","Sasha said her new single 'sounds like a dial tone'.","Kiki was on stage performing her new single, with a live band behind her.","Kiki's lightning-bolt guitar pick was found on Sasha's chair."],
-  ["Bo Quinn","💇","Hairstylist","Sasha made him redo a wig six times in one night.","Bo was backstage teasing fourteen wigs for the zombie number. There was no time to leave.","The Skybox reeked of hairspray, the exact brand Bo uses."],
-  ["Gwen Hale","🎬","Executive producer","Sasha's contract was eating the whole budget.","Gwen was in the producers' truck yelling at the ratings all night. Three assistants saw her.","An email on Gwen's phone says: Sasha has to go before the finale."]];
-STORIES.forks.g=["Mike's jacket smells faintly of expensive cologne and old books. Very Edward.",
-  "Huge paw prints and a torn pair of cutoff jeans were left at the treaty line.",
-  "Tiny footprints in designer boots circle the spot where Mike was found.",
-  "A red rose petal was stuck to Mike's sleeve.",
-  "Strands of fiery red hair were caught on a branch right above where Mike fell.",
-  "Charlie's flashlight was in the bushes, and his cruiser was parked nearby."];
-STORIES.forks.x=[["Bella Swan","📖","Clumsy new girl","Mike won't stop asking her out.","Bella spent the night at the hospital after tripping over a curb. The nurses have the paperwork.","Mike's phone shows a text from Bella: Meet me by the trees. Alone."],
-  ["Carlisle Cullen","🩺","Town doctor, also a vampire","Mike nearly saw him run at vampire speed.","Carlisle worked a double shift at Forks hospital. Twelve patients saw him.","Carlisle's medical bag was found open in the woods."],
-  ["Emmett Cullen","💪","Vampire, very strong","Mike beat him at arm wrestling, somehow.","Emmett was arm-wrestling the Forks High football team at the diner all night. Nobody won.","A boulder the size of a car was moved off the trail. Only Emmett could lift that."],
-  ["Jasper Hale","🎖️","Vampire, calms the room","He has never trusted humans this close.","Jasper was hunting in the Olympic Mountains, far from town, until sunrise.","Everyone near the woods felt a sudden wave of calm right before Mike collapsed. That's Jasper's gift."],
-  ["Billy Black","🦅","Quileute elder","He wants Mike far away from La Push.","Billy was telling the old legends at the La Push bonfire until dawn. Twenty people listened.","Billy's truck was seen parked near the treaty line at midnight."],
-  ["Jessica Stanley","💅","Forks High junior","Mike asked Bella to prom instead of her.","Jessica was at a sleepover in Port Angeles, posting selfies all night.","Jessica's lip gloss was on Mike's collar, and she was furious about prom."]];
+/* helpers for the mystery story packs */
 /* a guest in Murder Mystery: 0-5 are the main suspects, 6-11 the extras */
 const mChar=(st,i)=>{const S0=STORIES[st];if(i<6){const a=S0.s[i];return {n:a[0],e:a[1],d:a[2],m:a[3],alibi:a[4],guilty:S0.g[i]}}const a=S0.x[i-6]||S0.x[0];return {n:a[0],e:a[1],d:a[2],m:a[3],alibi:a[4],guilty:a[5]}};
-const mShort=n=>{const p=String(n).split(" ");return ["Judge","Professor","Mr.","Moaning","Rubeus"].includes(p[0])?p[p.length-1]:p[0]};
+const mShort=n=>{const p=String(n).split(" ");return ["Judge","Professor","Mr.","Moaning","Rubeus","Chef","Agent","Detective","Captain","Gran","Dr.","Officer","Nana","DJ","Madame","Big","Mad-Eye"].includes(p[0])?p[p.length-1]:p[0]};
 const thePlace=n=>String(n).replace(/^The ([a-z])/,"$1").replace(/^The /,"");
 const lcThing=n=>/^[A-Z][a-z]+('s| [A-Z])/.test(n)?n:n.charAt(0).toLowerCase()+n.slice(1);
 /* ================= start page: categories ================= */
 const CATEG={quiz:{n:"Quiz Night",sub:"Trivia · Charades · Emoji puzzles",modes:["trivia","board","lives","roller","teams","closest","charades","glyph"]},
-  mystery:{n:"Mystery",sub:"Murder Mystery · Guided Mystery",modes:["mystery","guided"]}};
+  mystery:{n:"Mystery",sub:"Murder Mystery · Guided · Manor",modes:["mystery","guided","manor"]}};
 const catOf=m=>Object.keys(CATEG).find(k=>CATEG[k].modes.includes(m))||"quiz";
 const catModes=m=>CATEG[catOf(m)].modes.filter(k=>MODES[k]);
 let homeCat=null,homeMode=null;
@@ -1705,7 +1755,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="9.6";
+const APPV="10.0";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -1771,7 +1821,7 @@ function cleanup(){
 function waitScreen(title,sub,leave=true){app.dataset.view="";app.innerHTML=`<div class="waiting"><div class="pulse"></div><h2>${esc(title)}</h2>${sub?`<p class="dim">${esc(sub)}</p>`:""}${leave?`<button class="btn ghost" id="cancel">Leave</button>`:""}</div>`;const c=document.getElementById("cancel");if(c)c.onclick=()=>{ls.del("ps-last");home()}}
 
 /* ================= HOST: setup ================= */
-const DEF={gper:10,gdur:30,gcats:Object.keys(GCATS),mode:"trivia",cats:Object.keys(CATS),diff:"medium",rounds:2,per:8,read:10,dur:15,bcols:4,ccats:Object.keys(CCATS),cdiff:"2",cturns:2,cdur:60,mst:["yule","mirror","forks"],mtalk:120};
+const DEF={gper:10,gdur:30,gcats:Object.keys(GCATS),mode:"trivia",cats:Object.keys(CATS),diff:"medium",rounds:2,per:8,read:10,dur:15,bcols:4,ccats:Object.keys(CCATS),cdiff:"2",cturns:2,cdur:60,mst:["deadair","flight","escape","maze"],mtalk:120};
 function loadSettings(){let s={};try{s=JSON.parse(ls.get("ps-set2","{}"))||{}}catch(e){}
   if(!["easy","medium","hard"].includes(s.diff))delete s.diff;if(!["1","2","3"].includes(s.cdiff))delete s.cdiff;
   const o=Object.assign({},DEF,s);o.cats=(Array.isArray(o.cats)?o.cats:[]).filter(c=>CATS[c]);if(!o.cats.length)o.cats=Object.keys(CATS);
@@ -1845,7 +1895,7 @@ function checkAll(){
   if(H.phase==="q")go(revealMC);else if(H.phase==="nq")go(revealNum);else if(H.phase==="gq")go(revealGlyph);
   else if(["bet","ddwager","fwager"].includes(H.phase))go(endBet);
   else if(H.phase==="tbvote")go(tallyVote);
-  else if(H.phase==="mnight")go(mEndNight);else if(H.phase==="mvote")go(mVoteEnd);else if(H.phase==="gsolve")go(gReveal);
+  else if(H.phase==="mnight")go(mEndNight);else if(H.phase==="mvote")go(mVoteEnd);else if(H.phase==="gsolve")go(gReveal);else if(H.phase==="nnight")go(nEndNight);else if(H.phase==="nvote")go(nVoteEnd);
 }
 
 /* ================= HOST: picking questions ================= */
@@ -1878,6 +1928,7 @@ function hostStart(){
   Object.values(H.players).forEach(p=>{p.score=m==="roller"?10:0;p.lives=3;p.bet=0;p.freeze=0;p.streak=0;p.done=false});
   if(m==="mystery")return hostStartMystery();
   if(m==="guided")return hostStartGuided();
+  if(m==="manor")return hostStartManor();
   if(m==="charades")return hostStartCharades();
   if(m==="board")return buildBoard();
   if(m==="teams")balanceTeams(false);
@@ -2128,7 +2179,7 @@ function tbScoreNum(res){
 function hostLobby(){clearTimeout(H.timer);H.my=null;H.early=false;H.phase="lobby";H.tb=null;H.winner=null;H.winTeam=null;H.ct=null;H.board=null;H.bq=null;H.elig=null;newKey();broadcast()}
 
 /* ================= HOST: everyone taps Ready ================= */
-const READY=["rintro","reveal","nreveal","greveal","rend","breveal","tbintro","cres","mintro","mrole","mday","mvres","mverdict","gcase","gres"];
+const READY=["rintro","reveal","nreveal","greveal","rend","breveal","tbintro","cres","mintro","mrole","mday","mvres","mverdict","gcase","gres","nintro","nrole","nday","nvres","nverdict"];
 function readyKey(){return [H.phase,H.key,H.round,H.qi,H.ct?H.ct.ti:""].join(":")}
 function hostReady(id,rk){if(!H||!READY.includes(H.phase)||rk!==H.rk)return;H.ready.add(id);broadcast();hostCheckReady()}
 function hostCheckReady(){
@@ -2151,6 +2202,11 @@ function hostAdvance(){
   else if(ph==="mvres"){if(H.my.over)mFinish();else mNight(H.my.round+1)}
   else if(ph==="mverdict"||ph==="gres")endGame();
   else if(ph==="gcase")gSolve();
+  else if(ph==="nintro"){H.phase="nrole";newKey();broadcast();mSendAll()}
+  else if(ph==="nrole")nNight(0);
+  else if(ph==="nday"){if(H.my.over)nFinish();else nVote()}
+  else if(ph==="nvres"){if(H.my.over)nFinish();else nNight(H.my.round+1)}
+  else if(ph==="nverdict")endGame();
 }
 function afterReveal(){
   const m=H.set.mode;
@@ -2228,6 +2284,7 @@ function hostStartMystery(){
   H.phase="mintro";H.elig=null;newKey();broadcast();
 }
 function mSecret(id){const M=H.my;if(!M)return null;
+  if(M.kind==="n")return nSecret(id);
   if(M.kind==="g")return {t:"sec",gid:H.gid,sv:M.sv,kind:"g",sol:M.sol,stash:M.stash,claim:M.claim};
   const k=mIsKiller(id);
   return {t:"sec",gid:H.gid,sv:M.sv,kind:"m",role:M.chars[id]==null?"none":k?"killer":"det",ch:M.chars[id],partners:k?M.killers.filter(x=>x!==id):[],swaps:k?(M.swaps[id]||0):0,
@@ -2242,6 +2299,7 @@ function hostMys(id,d){
   const M=H.my,p=H.players[id];if(!M||!p)return;
   if(d.t==="mchat")return mChatIn(id,d);
   if(d.t==="mpin"){const m=M.chat.find(x=>x.i===+d.i);if(!m)return;const at=M.pins.indexOf(m.i);if(at>=0)M.pins.splice(at,1);else{M.pins.push(m.i);if(M.pins.length>12)M.pins.shift()}broadcast();return}
+  if(M.kind==="n"){if(H.phase==="nnight")nAct(id,d);else if(H.phase==="nvote")nVoteIn(id,d);return}
   if(M.kind==="g"){if(H.phase==="gsolve"&&!p.done){const g=[+d.s,+d.w,+d.p];if(!(g[0]>=0&&g[0]<6&&g[1]>=0&&g[1]<5&&g[2]>=0&&g[2]<5))return;
       M.ans[id]={g,turns:Math.max(1,Math.min(GTURNS,+d.turns||GTURNS)),ms:Date.now()-M.t0};p.done=true;broadcast();checkAll()}return}
   if(H.phase==="mnight"&&!p.done&&canAct(id)){
@@ -2252,9 +2310,10 @@ function hostMys(id,d){
     M.votes[id]=a;p.done=true;broadcast();checkAll();return}
 }
 function mChatIn(id,d){
-  const M=H.my;if(!["mday","mvote","mvres","gsolve","gres"].includes(H.phase))return;const now=Date.now();M.last=M.last||{};if(now-(M.last[id]||0)<700)return;M.last[id]=now;
+  const M=H.my;if(!["mday","mvote","mvres","gsolve","gres","nday","nvote","nvres"].includes(H.phase))return;const now=Date.now();M.last=M.last||{};if(now-(M.last[id]||0)<700)return;M.last[id]=now;
   const m={i:++M.cseq,id,ts:now};
   if(d.cl&&M.kind==="m"){const t=String(d.cl.t||"");if(!H.players[t]||M.chars[t]==null)return;m.cl={t,g:!!d.cl.g};M.pins.push(m.i);if(M.pins.length>12)M.pins.shift()}
+  else if(d.rc&&M.kind==="n"){const c=nClaimIn(id,d.rc);if(!c)return;m.rc=c;M.pins.push(m.i);if(M.pins.length>16)M.pins.shift()}
   else{const tx=String(d.tx||"").replace(/\s+/g," ").trim().slice(0,140);if(!tx)return;m.tx=tx}
   M.chat.push(m);if(M.chat.length>60)M.chat.shift();broadcast();
 }
@@ -2324,6 +2383,7 @@ function botsAct(){
         if(s===0){if(mIsKiller(id)){const d=mAliveAll().filter(x=>x!==id&&!mIsKiller(x));if(d.length)mChatIn(id,{cl:{t:pickOne(d),g:true}})}else{const r=(M.results[id]||[]).slice(-1)[0];if(r)mChatIn(id,{cl:{t:r.t,g:r.g}})}}
         else{const r=(M.results[id]||[]).slice(-1)[0];const lines=mIsKiller(id)?["Don't look at me 👀","I was nowhere near it, honestly","Someone's lying and it isn't me"]:r&&r.g?[`I'm telling you, it's ${nm(r.t)}`,`${nm(r.t)} is our killer`]:r?[`${nm(r.t)} is clean, trust me`,"Who else has a result?"]:["Hmm…"];mChatIn(id,{tx:pickOne(lines)})}});
       if(said)return;bs.forEach(id=>{if(!H.ready.has(id))hostReady(id,H.rk)});return}
+    if(ph==="nday"&&H.my&&H.my.kind==="n"){if(nBotDay(bs))return;bs.forEach(id=>{if(!H.ready.has(id))hostReady(id,H.rk)});return}
     if(READY.includes(ph)){bs.forEach(id=>{if(!H.ready.has(id))hostReady(id,H.rk)});return}
     bs.forEach(id=>{const p=H.players[id];if(!p||p.done)return;
       if(ph==="mnight"){if(!canAct(id))return;const al=mAliveAll();if(mIsKiller(id)){const d=al.filter(x=>!mIsKiller(x));hostMys(id,{target:Math.random()<.75&&d.length?pickOne(d):""})}else{const o=al.filter(x=>x!==id);if(o.length)hostMys(id,{inv:pickOne(o)})}}
@@ -2331,16 +2391,155 @@ function botsAct(){
         M.chat.forEach(m=>{if(m.cl&&sc[m.cl.t]!=null&&m.id!==id)sc[m.cl.t]+=m.cl.g?1:-.6});if(!mIsKiller(id))(M.results[id]||[]).forEach(r=>{if(sc[r.t]!=null)sc[r.t]+=r.g?2:-2});
         hostMys(id,{acc:Object.keys(sc).sort((a,b)=>sc[b]-sc[a])[0]})}
       else if(ph==="gsolve"&&H.my&&H.my.kind==="g"){const s=H.my.sol,ri2=n=>Math.floor(Math.random()*n),pk=(c,n)=>Math.random()<.55?s[c]:ri2(n);hostMys(id,{s:pk(0,6),w:pk(1,5),p:pk(2,5),turns:4+ri2(5)})}
+      else if(ph==="nnight"&&H.my&&H.my.kind==="n"){if(!canAct(id))return;const M=H.my,R=M.roles[id],act=(NROLES[R]||{}).act,o=nAlive().filter(x=>x!==id),r=M.round,gd=o.filter(x=>!nEvil(x));
+        if(act==="kill")hostMys(id,r>0&&gd.length?{a:pickOne(gd)}:{skip:1});
+        else if(R==="accomp")hostMys(id,gd.length?{a:pickOne(gd)}:{skip:1});
+        else if(act==="pick1"||act==="pick1o"&&r>0)hostMys(id,o.length?{a:pickOne(o)}:{skip:1});
+        else if(act==="pick2"){const s=shuffle(o.slice()).slice(0,2);hostMys(id,s.length===2?{a:s[0],b:s[1]}:{skip:1})}
+        else hostMys(id,{skip:1})}
+      else if(ph==="nvote"&&H.my&&H.my.kind==="n"){if(!canAct(id))return;const M=H.my,dead=M.dead.includes(id),sc=nSuspicion(id);
+        Object.values(M.votes).forEach(a=>{if(a&&sc[a]!=null)sc[a]+=.6});let ks=Object.keys(sc);if(nEvil(id))ks=ks.filter(x=>!nEvil(x));ks.sort((a,b)=>sc[b]-sc[a]);const t=ks[0];
+        hostMys(id,{acc:!t?"":dead?(sc[t]>2.5&&Math.random()<.6?t:""):(sc[t]>.9||nEvil(id)&&Math.random()<.7?t:"")})}
       else if(!canAct(id))return;
       else if(ph==="q")hostAnswer(id,ri(4));
       else if(ph==="nq"&&H.N)hostNum(id,Math.round(H.N.a*(.75+Math.random()*.5)));
       else if(["bet","ddwager","fwager"].includes(ph))hostBet(id,Math.max(1,Math.round(maxBet(p,ph)*Math.random()*.5)));
       else if(ph==="tbvote")hostVote(id,pickOne(["closest","sudden"]));
     })},700+Math.random()*900)}
-function botSection(st){const nb=botIds().length,mys=st.mode==="mystery";
+function botSection(st){const nb=botIds().length,mys=st.mode==="mystery"||st.mode==="manor";
   return `<section class="sq"><h3>Practice bots</h3><p class="hint">Try a game on your own. Bots tap ready, answer and vote at random.</p>
     <div class="botrow"><button class="btn small" id="addbot">Add a bot</button>${nb?`<button class="btn small ghost" id="dropbots">Remove ${nb} bot${nb>1?"s":""}</button>`:""}</div>
-    ${mys&&nb?`<div class="setting"><span class="lbl">Your role next game</span>${segHTML("trole",["","det","killer"],H.testRole||"",v=>v===""?"Random":v==="det"?"Detective":"Killer")}</div>`:""}</section>`}
+    ${mys&&nb?`<div class="setting"><span class="lbl">Your role next game</span>${segHTML("trole",["","det","killer"],H.testRole||"",v=>v===""?"Random":v==="det"?(st.mode==="manor"?"Good":"Detective"):"Killer")}</div>`:""}</section>`}
+
+
+/* ================= Night at the Manor: roles (shared by host and players) ================= */
+const NROLES={
+  killer:{n:"The Killer",e:"🔪",t:"evil",act:"kill",d:"From night 2, choose someone to kill each night. Pretend to be a good role. Don't get voted out."},
+  accomp:{n:"The Accomplice",e:"🧪",t:"evil",act:"pick1",d:"Each night, poison one player. Their information is wrong that night, and any protection fails. Keep the killer alive."},
+  seer:{n:"The Seer",e:"🔮",t:"good",act:"pick2",d:"Each night, pick two players. You learn whether either of them is the killer."},
+  empath:{n:"The Empath",e:"💞",t:"good",act:"none",d:"Each night, you learn how many of your two living neighbours are evil."},
+  invest:{n:"The Investigator",e:"🔍",t:"good",act:"none",d:"On the first night, you learn that one of two players is the Accomplice."},
+  wash:{n:"The Gossip",e:"🗣️",t:"good",act:"none",d:"On the first night, you learn that one of two players has a particular good role."},
+  chef:{n:"The Chef",e:"🍳",t:"good",act:"none",d:"On the first night, you learn how many pairs of evil players are sitting next to each other."},
+  guard:{n:"The Guardian",e:"🛡️",t:"good",act:"pick1o",d:"From night 2, protect one other player each night. The killer can't get them."},
+  under:{n:"The Undertaker",e:"⚰️",t:"good",act:"none",d:"Each night, you learn the true role of whoever was voted out that day."},
+  watch:{n:"The Watcher",e:"🦉",t:"good",act:"pick1",d:"Each night, watch one player. If the killer gets you that night, you learn the role of the player you watched."},
+  soldier:{n:"The Soldier",e:"🪖",t:"good",act:"none",d:"The killer can't kill you at night."},
+  towny:{n:"The Witness",e:"👀",t:"good",act:"none",d:"No power at night. Listen, think, and vote well."}};
+const NGOOD=["seer","empath","invest","guard","wash","chef","under","watch","soldier"],NMAXR=8;
+/* ================= HOST: Night at the Manor ================= */
+const NNIGHT_S=45,NVOTE_S=90;
+const nAlive=()=>H.my.seats.filter(id=>!H.my.dead.includes(id));
+const nRole=id=>H.my.roles[id];
+const nEvil=id=>{const r=nRole(id);return r==="killer"||r==="accomp"};
+function hostStartManor(){
+  const story=mPickStory();let live=shuffle(liveIds());const n=live.length,ne=n>=5?2:1;
+  if(H.testRole==="killer")live=[pid,...live.filter(x=>x!==pid)];else if(H.testRole==="det")live=[...live.filter(x=>x!==pid),pid];
+  const roles={},goods=shuffle(NGOOD.slice());roles[live[0]]="killer";if(ne>1)roles[live[1]]="accomp";
+  live.slice(ne).forEach((id,i)=>roles[id]=goods[i]||"towny");
+  const order=shuffle(Array.from({length:12},(_,i)=>i)),chars={};shuffle(live.slice()).forEach((id,i)=>chars[id]=order[i]);
+  const used=Object.values(roles),bluffs=shuffle(NGOOD.filter(r=>!used.includes(r))).slice(0,3);
+  H.my={kind:"n",story,chars,roles,seats:shuffle(live.slice()),bluffs,dead:[],how:{},ghost:{},round:0,choice:{},info:{},deaths:[],exec:[],
+    chat:[],cseq:0,pins:[],log:[],votes:{},vres:null,res:null,sv:1,said:{},good:{},killers:live.slice(0,ne),out:[]};
+  Object.values(H.players).forEach(p=>p.score=p.score||0);
+  H.phase="nintro";H.elig=null;newKey();broadcast();
+}
+function nSecret(id){const M=H.my,r=M.roles[id];if(!r)return {t:"sec",gid:H.gid,sv:M.sv,kind:"n",role:"none",ch:null,info:[]};
+  const ev=r==="killer"||r==="accomp";
+  return {t:"sec",gid:H.gid,sv:M.sv,kind:"n",role:r,ch:M.chars[id],partners:ev?Object.keys(M.roles).filter(x=>x!==id&&(M.roles[x]==="killer"||M.roles[x]==="accomp")).map(x=>({id:x,role:M.roles[x]})):[],
+    bluffs:r==="killer"?M.bluffs:[],info:(M.info[id]||[])}}
+function nNight(r){clearTimeout(H.timer);const M=H.my;M.round=r;M.choice={};M.said={};newKey();H.elig=nAlive().filter(id=>H.players[id]);H.phase="nnight";broadcast();
+  const k=H.key;H.timer=setTimeout(()=>{if(H&&H.key===k)nEndNight()},NNIGHT_S*1000)}
+function nAct(id,d){
+  const M=H.my,p=H.players[id],r=M.round,R=nRole(id);if(!p||p.done||!R||M.dead.includes(id))return;
+  const al=nAlive(),ok=x=>al.includes(x),a=String(d.a||""),b=String(d.b||"");const act=NROLES[R].act;
+  if(d.skip){M.choice[id]={}}
+  else if(act==="kill"){if(r===0||!ok(a)||a===id||nEvil(a))return;M.choice[id]={a}}
+  else if(act==="pick1"){if(!ok(a)||a===id)return;M.choice[id]={a}}
+  else if(act==="pick1o"){if(r===0)M.choice[id]={};else{if(!ok(a)||a===id)return;M.choice[id]={a}}}
+  else if(act==="pick2"){if(!ok(a)||!ok(b)||a===b)return;M.choice[id]={a,b}}
+  else M.choice[id]={};
+  p.done=true;broadcast();checkAll();
+}
+function nEndNight(){
+  if(!H||H.phase!=="nnight")return;clearTimeout(H.timer);const M=H.my,r=M.round,R=M.roles,al=nAlive(),ri=n=>Math.floor(Math.random()*n);
+  const who=k=>al.find(id=>R[id]===k),kil=Object.keys(R).find(id=>R[id]==="killer"),acc=Object.keys(R).find(id=>R[id]==="accomp");
+  const P=acc&&al.includes(acc)&&M.choice[acc]?M.choice[acc].a:null,pois=id=>!!P&&id===P;
+  const G=who("guard"),prot=r>0&&G&&!pois(G)&&M.choice[G]?M.choice[G].a:null;
+  const K=r>0&&al.includes(kil)&&M.choice[kil]?M.choice[kil].a:null;let died=[];
+  if(K&&K!==prot&&!(R[K]==="soldier"&&!pois(K)))died=[K];
+  const after=al.filter(x=>!died.includes(x));
+  const others=(id,n)=>shuffle(M.seats.filter(x=>x!==id)).slice(0,n);
+  const wrongRole=t=>pickOne(Object.keys(NROLES).filter(k=>k!==R[t]&&k!=="towny"));
+  const push=(id,o)=>{(M.info[id]=M.info[id]||[]).push(Object.assign({r},o))};
+  al.forEach(id=>{const role=R[id],ps=pois(id);
+    if(role==="seer"&&M.choice[id]&&M.choice[id].a){const {a,b}=M.choice[id],t=a===kil||b===kil;push(id,{k:"seer",a,b,v:ps?!t:t})}
+    if(role==="empath"&&after.includes(id)){const s=M.seats.filter(x=>after.includes(x)),i=s.indexOf(id),n=s.length;let v=0;
+      if(n>1){const L=s[(i-1+n)%n],Rr=s[(i+1)%n];v=(nEvil(L)?1:0)+(Rr!==L&&nEvil(Rr)?1:0)}if(ps)v=(v+1+ri(2))%3;push(id,{k:"empath",v})}
+    if(r===0&&role==="invest"){if(!acc)push(id,{k:"invest",none:true});else{let pr=ps?shuffle(M.seats.filter(x=>x!==id&&!nEvil(x))).slice(0,2):shuffle([acc,pickOne(M.seats.filter(x=>x!==id&&x!==acc))]);if(pr.length===2)push(id,{k:"invest",a:pr[0],b:pr[1]})}}
+    if(r===0&&role==="wash"){const gs=M.seats.filter(x=>x!==id&&!nEvil(x)&&R[x]!=="towny");if(gs.length){const g=pickOne(gs),x=pickOne(M.seats.filter(y=>y!==id&&y!==g)),pr=shuffle([g,x]);push(id,{k:"wash",a:pr[0],b:pr[1],role:ps?wrongRole(g):R[g]})}}
+    if(r===0&&role==="chef"){const s=M.seats,n=s.length;let v=0;for(let i=0;i<n&&n>2;i++)if(nEvil(s[i])&&nEvil(s[(i+1)%n]))v++;if(ps)v=v===0?1:v-1;push(id,{k:"chef",v})}
+    if(r>0&&role==="under"&&M.exec[r-1]){const t=M.exec[r-1];push(id,{k:"under",a:t,role:ps?wrongRole(t):R[t]})}
+    if(role==="watch"&&died.includes(id)&&M.choice[id]&&M.choice[id].a){const t=M.choice[id].a;push(id,{k:"watch",a:t,role:ps?wrongRole(t):R[t]})}
+  });
+  died.forEach(id=>{M.dead.push(id);M.how[id]="n"+r});M.deaths[r]=died;M.out=M.dead.slice();
+  M.log.push({r,k:"night",died});
+  if(nAlive().length<=2)M.over="evil";
+  M.sv++;H.elig=null;H.phase="nday";newKey();broadcast();mSendAll();
+}
+function nVote(){clearTimeout(H.timer);const M=H.my;M.votes={};newKey();H.elig=M.seats.filter(id=>H.players[id]&&(!M.dead.includes(id)||!M.ghost[id]));H.phase="nvote";broadcast();
+  const k=H.key;H.timer=setTimeout(()=>{if(H&&H.key===k)nVoteEnd()},NVOTE_S*1000)}
+function nVoteIn(id,d){const M=H.my,p=H.players[id];if(!p||p.done||!canAct(id))return;const a=String(d.acc||"");
+  if(a&&(!nAlive().includes(a)||a===id))return;if(a&&M.dead.includes(id))M.ghost[id]=1;M.votes[id]=a;p.done=true;broadcast();checkAll()}
+function nVoteEnd(){
+  if(!H||H.phase!=="nvote")return;clearTimeout(H.timer);const M=H.my,r=M.round,kil=Object.keys(M.roles).find(id=>M.roles[id]==="killer");
+  const tally={};Object.values(M.votes).forEach(a=>{if(a)tally[a]=(tally[a]||0)+1});
+  const top=Math.max(0,...Object.values(tally)),lead=Object.keys(tally).filter(k=>tally[k]===top),need=Math.ceil(nAlive().length/2);
+  const ex=lead.length===1&&top>=need?lead[0]:null;
+  Object.entries(M.votes).forEach(([v,a])=>{if(a===kil&&!nEvil(v))M.good[v]=(M.good[v]||0)+1});
+  if(ex){M.dead.push(ex);M.how[ex]="x"+r;M.exec[r]=ex}M.out=M.dead.slice();
+  M.log.push({r,k:"vote",ex,top,need,tie:lead.length>1});
+  M.vres={tally,votes:{...M.votes},ex,top,need,tie:lead.length>1,caught:ex===kil};
+  M.over=ex===kil?"good":nAlive().length<=2?"evil":r+1>=NMAXR?"evil":null;
+  H.elig=null;H.phase="nvres";newKey();broadcast();
+}
+function nFinish(){
+  const M=H.my,gw=M.over==="good",pts={};M.seats.forEach(id=>pts[id]=0);
+  M.seats.forEach(id=>{if(nEvil(id))pts[id]+=gw?0:4;else pts[id]+=(gw?3:0)+(M.good[id]||0)});
+  Object.entries(pts).forEach(([id,v])=>{if(H.players[id])H.players[id].score=(H.players[id].score||0)+v});
+  M.res={gw,pts,roles:M.roles,how:M.how,info:M.info};
+  H.winner=M.seats.filter(id=>gw?!nEvil(id):nEvil(id));H.winTeam=null;H.phase="nverdict";newKey();broadcast();
+}
+/* bots for the manor: honest good players, bluffing evil ones, all through structured claims */
+function nFakeInfo(id,role){const M=H.my,al=nAlive(),good=al.filter(x=>!nEvil(x)&&x!==id),F=good.length?pickOne(good):pickOne(al.filter(x=>x!==id));
+  const other=x=>pickOne(al.filter(y=>y!==x&&y!==id))||x;
+  if(role==="seer")return {k:"seer",a:F,b:other(F),v:true};
+  if(role==="empath")return {k:"empath",v:1};
+  if(role==="invest")return {k:"invest",a:F,b:other(F)};
+  if(role==="chef")return {k:"chef",v:0};
+  if(role==="wash"){const g=pickOne(al.filter(x=>nEvil(x)&&x!==id))||F;return {k:"wash",a:g,b:other(g),role:pickOne(NGOOD)}}
+  if(role==="under"&&M.exec[M.round-1])return {k:"under",a:M.exec[M.round-1],role:"towny"};
+  return null}
+function nBotDay(bs){const M=H.my;let said=false;
+  bs.forEach(id=>{if(said||M.dead.includes(id)||!M.roles[id])return;const s=M.said[id]||0;if(s>=1)return;said=true;M.said[id]=1;
+    const R=M.roles[id];let role=R,inf=(M.info[id]||[]).slice(-1)[0]||null;
+    if(R==="killer"){role=M.bluffs[0]||"towny";inf=nFakeInfo(id,role)}else if(R==="accomp"){M.abluff=M.abluff||pickOne(NGOOD.filter(x=>x!==M.bluffs[0]));role=M.abluff;inf=nFakeInfo(id,role)}
+    if(inf&&inf.r==null)inf.r=M.round;
+    nChatClaim(id,role,inf)});
+  return said}
+function nChatClaim(id,role,inf){const M=H.my,m={i:++M.cseq,id,ts:Date.now(),rc:{role,inf:inf||null}};M.chat.push(m);M.pins.push(m.i);if(M.pins.length>16)M.pins.shift();if(M.chat.length>60)M.chat.shift();broadcast()}
+function nSuspicion(id){const M=H.my,al=nAlive(),sc={};al.forEach(x=>sc[x]=Math.random()*.3);const seen={};
+  M.chat.forEach(m=>{if(!m.rc)return;const c=m.rc,inf=c.inf,w=m.id===id?2:1;if(c.role&&c.role!=="towny"){(seen[c.role]=seen[c.role]||[]).push(m.id)}if(!inf)return;
+    const add=(x,v)=>{if(sc[x]!=null)sc[x]+=v*w};
+    if(inf.k==="seer"){add(inf.a,inf.v?1.5:-1);add(inf.b,inf.v?1.5:-1)}
+    if(inf.k==="invest"){add(inf.a,1);add(inf.b,1)}
+    if(inf.k==="wash"){add(inf.a,-.7);add(inf.b,-.7)}
+    if((inf.k==="under"||inf.k==="watch")&&(inf.role==="killer"||inf.role==="accomp"))add(inf.a,3);
+    if(inf.k==="empath"&&inf.v>0){const s=M.seats.filter(x=>al.includes(x)),i=s.indexOf(m.id),n=s.length;if(i>=0&&n>2){add(s[(i-1+n)%n],inf.v*.8);add(s[(i+1)%n],inf.v*.8)}}});
+  Object.values(seen).forEach(l=>{if(l.length>1)l.forEach(x=>{if(sc[x]!=null)sc[x]+=1.5})});
+  al.forEach(x=>{if(!M.chat.some(m=>m.rc&&m.id===x))sc[x]+=.5});
+  if(!nEvil(id))(M.info[id]||[]).forEach(inf=>{if(inf.k==="seer"&&!inf.v){if(sc[inf.a]!=null)sc[inf.a]-=3;if(sc[inf.b]!=null)sc[inf.b]-=3}});
+  delete sc[id];return sc}
 
 /* ================= HOST: state, saving, resuming ================= */
 function hostState(){
@@ -2360,7 +2559,7 @@ function hostState(){
   if(ph==="reveal"&&H.ctx==="dd"&&H.bq)s.bq={val:H.bq.val};
   if(H.tb&&["tbvote","tbintro","read","q","reveal","nq","nreveal","end"].includes(ph)&&(ph==="tbvote"||ph==="tbintro"||H.ctx==="tb"||ph==="end"))s.tb={ents:H.tb.ents,alive:H.tb.alive,n:H.tb.n,method:H.tb.method,last:H.tb.last,shared:H.tb.shared,votes:H.tb.votes,random:H.tb.random};
   if(H.ct&&["cready","cact","cres"].includes(ph)){const ct=H.ct;s.ct={ti:ct.ti,total:ct.turns.length,actor:ct.actor,cat:ct.cat,key:ct.key,skips:ct.skips,feed:ct.feed,res:ct.res}}
-  if((m==="mystery"||m==="guided")&&H.my&&ph!=="lobby"){const M=H.my;s.my=M.kind==="g"?{kind:"g",story:M.story,sv:M.sv,res:["gres","end"].includes(ph)?M.res:null}
+  if((m==="mystery"||m==="guided"||m==="manor")&&H.my&&ph!=="lobby"){const M=H.my;s.my=M.kind==="n"?{kind:"n",story:M.story,round:M.round,chars:M.chars,seats:M.seats,out:M.out,how:M.how,ghost:M.ghost,chat:M.chat.slice(-30),pins:M.pins,log:M.log,sv:M.sv,ne:M.killers.length,over:M.over,vres:["nvres","nverdict","end"].includes(ph)?M.vres:null,res:["nverdict","end"].includes(ph)?M.res:null}:M.kind==="g"?{kind:"g",story:M.story,sv:M.sv,res:["gres","end"].includes(ph)?M.res:null}
     :{kind:"m",story:M.story,round:M.round,chars:M.chars,out:M.out,chat:M.chat.slice(-30),pins:M.pins,log:M.log,sv:M.sv,nk:M.killers.length,over:M.over,vres:["mvres","mverdict","end"].includes(ph)?M.vres:null,res:["mverdict","end"].includes(ph)?M.res:null}}
   return s;
 }
@@ -2376,7 +2575,7 @@ function resumeTimers(){
   if(ph==="read")T(openMC,H.set.read||3);else if(ph==="q")T(revealMC,H.set.dur+2);else if(ph==="nq")T(revealNum,H.set.dur+5);
   else if(["bet","ddwager","fwager"].includes(ph))T(endBet,20);else if(ph==="bread")T(openBuzz,3);else if(ph==="bbuzz")T(boardReveal,10);
   else if(ph==="bans")T(()=>boardWrong(null),9);else if(ph==="cact")T(()=>hostCResult(null),H.set.cdur);else if(ph==="gq"){if(H.G)H.G.open=Date.now()-1000;T(revealGlyph,H.set.gdur)}
-  else if(ph==="mnight")T(mEndNight,MNIGHT_S);else if(ph==="mvote")T(mVoteEnd,MACCUSE_S);else if(ph==="gsolve")T(gReveal,GSOLVE_S);
+  else if(ph==="mnight")T(mEndNight,MNIGHT_S);else if(ph==="mvote")T(mVoteEnd,MACCUSE_S);else if(ph==="gsolve")T(gReveal,GSOLVE_S);else if(ph==="nnight")T(nEndNight,NNIGHT_S);else if(ph==="nvote")T(nVoteEnd,NVOTE_S);
 }
 function publishState(){if(H&&S)pub(ROOT+code+"/state",{ts:Date.now(),s:S},true)}
 function broadcast(){if(!H)return;S=hostState();publishState();if(H.phase==="end"||H.phase==="lobby")ls.del("ps-host");else saveHost();render();botsAct()}
@@ -2439,10 +2638,11 @@ function sendAward(to){if(!S||!S.ct)return;beep(1100,.1,"triangle");if(H)hostAwa
 
 /* ================= PLAYER: mystery screens ================= */
 let mySec=null,mpick={key:"",v:""},mDone={key:""};
-const isMys=()=>!!(S&&(S.mode==="mystery"||S.mode==="guided")&&S.my);
+const MYSM=["mystery","guided","manor"];
+const isMys=()=>!!(S&&MYSM.includes(S.mode)&&S.my);
 function mSec(){if(H&&H.my&&(!mySec||mySec.sv!==H.my.sv||mySec.gid!==H.gid))mySec=mSecret(pid);return mySec&&S&&S.my&&mySec.gid===S.gid?mySec:null}
-const mNeedSec=()=>!!(S&&(S.mode==="mystery"||S.mode==="guided")&&S.my&&S.phase!=="lobby"&&S.phase!=="end"&&(!mySec||mySec.gid!==S.gid||mySec.sv!==S.my.sv));
-const mSt=()=>STORIES[S.my&&S.my.story]||STORIES.yule;
+const mNeedSec=()=>!!(S&&MYSM.includes(S.mode)&&S.my&&S.phase!=="lobby"&&S.phase!=="end"&&(!mySec||mySec.gid!==S.gid||mySec.sv!==S.my.sv));
+const mSt=()=>STORIES[S.my&&S.my.story]||STORIES[STORYKEYS[0]];
 const mWrap=(inner,cls="")=>`<div class="mwrap st-${esc(S.my.story)} ${cls}">${inner}</div>`;
 const gOf=id=>S.my.chars&&S.my.chars[id]!=null?mChar(S.my.story,S.my.chars[id]):null;
 const mIn=()=>S.players.filter(p=>S.my.chars&&S.my.chars[p.id]!=null);
@@ -2465,15 +2665,15 @@ function mOverlay(kind){mOv=kind;let o=document.getElementById("mov");
   o.className="on k-"+kind;mOvFill();beep(kind==="board"?420:520,.05,"triangle")}
 function mOvClose(){const was=mOv;mOv="";if(was==="how"&&S&&S.phase==="gcase"&&S.my)speak(mSt().hook);const o=document.getElementById("mov");if(o){o.className="";o.innerHTML=""}if(S)syncTools()}
 function mOvFill(){const o=document.getElementById("mov");if(!o||!mOv)return;if(!S||!S.my){if(mOv!=="how")return mOvClose()}
-  if(mOv==="env")o.innerHTML=`<div class="movbg" data-x></div>${S.my.kind==="g"?gEnvHTML():mEnvHTML()}<p class="movx">Tap outside to tuck it away</p>`;
-  else if(mOv==="board"){const ob=o.querySelector(".corkb"),sc=ob?ob.scrollTop:0;o.innerHTML=`<div class="cork"><div class="corkh"><span>📌 ${S.my.kind==="g"?"Your case board":"The board"}</span><button data-x>Close ✕</button></div><div class="corkb">${S.my.kind==="g"?gBoardHTML():mBoardHTML()}</div></div>`;
+  if(mOv==="env")o.innerHTML=`<div class="movbg" data-x></div>${S.my.kind==="g"?gEnvHTML():S.my.kind==="n"?nEnvHTML():mEnvHTML()}<p class="movx">Tap outside to tuck it away</p>`;
+  else if(mOv==="board"){const ob=o.querySelector(".corkb"),sc=ob?ob.scrollTop:0;o.innerHTML=`<div class="cork"><div class="corkh"><span>📌 ${S.my.kind==="g"?"Your case board":"The board"}</span><button data-x>Close ✕</button></div><div class="corkb">${S.my.kind==="g"?gBoardHTML():S.my.kind==="n"?nBoardHTML():mBoardHTML()}</div></div>`;
     mBoardSeen[S.gid]=mBoardCount();const nb=o.querySelector(".corkb");if(nb)nb.scrollTop=sc}
   else if(mOv==="how")o.innerHTML=howHTML();
   o.querySelectorAll("[data-x]").forEach(x=>x.onclick=mOvClose);
   if(mOv==="how"){const n=o.querySelector("#hownext");if(n)n.onclick=()=>{howI++;if(howI>=HOW[howMode].length){ls.set("ps-how-"+howMode,"1");howI=0;mOvClose()}else mOvFill()};
     const pv=o.querySelector("#howprev");if(pv)pv.onclick=()=>{howI=Math.max(0,howI-1);mOvFill()}}
 }
-const mBoardCount=()=>S&&S.my&&S.my.kind==="m"?(S.my.pins||[]).length+(S.my.log||[]).length:0;
+const mBoardCount=()=>S&&S.my&&(S.my.kind==="m"||S.my.kind==="n")?(S.my.pins||[]).length+(S.my.log||[]).length:0;
 function syncTools(){const n=document.getElementById("tbn");if(!n||!S||!S.my)return;const c=Math.max(0,mBoardCount()-(mBoardSeen[S.gid]||0));n.hidden=!c;n.textContent=c}
 function mEnvHTML(){const sec=mSec(),St=mSt();if(!sec||sec.ch==null)return `<div class="envc"><p class="msm">${sec?"You joined after the game started, so you're watching this one.":"Opening your envelope…"}</p></div>`;
   const g=mChar(S.my.story,sec.ch),k=sec.role==="killer";
@@ -2503,37 +2703,42 @@ const HOW={mystery:[["Everyone gets a character","The story has a victim and a g
   guided:[["Read the case","Something terrible happened. Six suspects, five possible weapons, five places. Your job: work out <b>who</b> did it, <b>with what</b>, and <b>where</b>.","🗂️"],
   ["Question and search","You get <b>10 turns</b>. <b>Question</b> a suspect to hear where they say they were. <b>Search</b> a place to rule it out, find an unused weapon, or find the crime scene and the weapon. A witness at each place says who was really there, so search where people claim to be to catch the liar.","🔍"],
   ["Accuse","When you're ready, accuse. Each right answer scores, and you get a bonus for every turn you didn't use. Playing with friends? Everyone solves the same case. Fastest right answer wins.","☝️"]]};
+HOW.manor=[["A secret role for everyone","Each of you gets a role with a power. Most of you are <b>good</b>. Hidden among you is <b>the killer</b>, and with 5 or more players, their <b>accomplice</b>. Only evil knows who's evil.","🎭"],
+  ["At night, use your power","Everyone taps their phone, so nobody can tell who's doing what. The <b>Seer</b> checks two players, the <b>Guardian</b> protects someone, the <b>Empath</b> senses evil next to them, and more. From night 2, <b>the killer kills someone</b>.","🌙"],
+  ["Watch out for poison","The accomplice poisons a player each night. <b>A poisoned player's information is wrong</b>, and they don't know it. So don't trust any one clue too much.","🧪"],
+  ["In the morning, talk","Tap 📢 to say which role you are and what you learned. <b>Evil players lie</b> and pretend to be good roles. If two people say they're the Seer, one of them is lying. Everything said is pinned on the 📌 board.","💬"],
+  ["Then vote","Vote someone out, or nobody. It takes <b>half the living players</b> to vote someone out. Vote out the killer and good wins. If only two guests are left alive, evil wins. Dead players keep talking, and get one ghost vote.","🗳️"]];
 function howHTML(){const c=HOW[howMode]||HOW.mystery,i=Math.min(howI,c.length-1),[h,p,e]=c[i];
-  return `<div class="how2"><div class="hh"><span>How to play · ${howMode==="guided"?"Guided Mystery":"Murder Mystery"}</span><button data-x aria-label="Close">✕</button></div>
+  return `<div class="how2"><div class="hh"><span>How to play · ${howMode==="guided"?"Guided Mystery":howMode==="manor"?"Night at the Manor":"Murder Mystery"}</span><button data-x aria-label="Close">✕</button></div>
     <div class="hc"><span class="num">${i+1} of ${c.length}</span><h3>${h}</h3><p>${p}</p><div class="art">${e}</div></div>
     <div class="hd">${c.map((_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div>
     <div class="hb">${i?`<button class="btn ghost" id="howprev">Back</button>`:""}<button class="btn" id="hownext">${i+1<c.length?"Next":"Got it"}</button></div></div>`}
-function openHow(mode){stopSpeech();howMode=mode==="guided"?"guided":"mystery";howI=0;mOverlay("how")}
+function openHow(mode){stopSpeech();howMode=HOW[mode]?mode:"mystery";howI=0;mOverlay("how")}
 function autoHow(mode){if(ls.get("ps-how-"+mode,"")!=="1"&&mOv!=="how")setTimeout(()=>{if(S&&S.mode===mode)openHow(mode)},600)}
 /* ================= live chat (always on screen while it's open) ================= */
 let mcLast="",mcMenu=0;
-const CHATPH=["mday","mvote","mvres"];
+const CHATPH=["mday","mvote","mvres","nday","nvote","nvres"];
 function mChatSync(){
-  let c=document.getElementById("mchat");const on=!!(S&&S.mode==="mystery"&&S.my&&S.my.kind==="m"&&CHATPH.includes(S.phase)&&mOv!=="how");
+  let c=document.getElementById("mchat");const on=!!(S&&(S.mode==="mystery"&&S.my&&S.my.kind==="m"||S.mode==="manor"&&S.my&&S.my.kind==="n")&&CHATPH.includes(S.phase)&&mOv!=="how");
   document.body.classList.toggle("mchaton",on);
   if(!on){if(c)c.hidden=true;return}
   if(!c){document.body.insertAdjacentHTML("beforeend",`<div id="mchat"><div class="mcl" id="mcl" aria-live="polite"></div><div id="mshare" hidden></div>
-    <form class="mcb" id="mcf" autocomplete="off"><button type="button" class="sh" id="mcs" aria-label="Share my result">📢</button><input id="mci" maxlength="140" placeholder="Say something…" enterkeyhint="send" aria-label="Chat message"><button class="go" aria-label="Send">➤</button></form></div>`);
+    <form class="mcb" id="mcf" autocomplete="off"><button type="button" class="sh" id="mcs" aria-label="Share">📢</button><input id="mci" maxlength="140" placeholder="Say something…" enterkeyhint="send" aria-label="Chat message"><button class="go" aria-label="Send">➤</button></form></div>`);
     c=document.getElementById("mchat");
     document.getElementById("mcf").onsubmit=e=>{e.preventDefault();const i=document.getElementById("mci"),v=i.value.trim();if(!v)return;i.value="";mSendChat({tx:v})};
-    document.getElementById("mcs").onclick=()=>mShareOpen()}
+    document.getElementById("mcs").onclick=()=>S&&S.my&&S.my.kind==="n"?nShareOpen():mShareOpen()}
   c.hidden=false;
   const tall=(window.innerHeight||800)>=760,msgs=(S.my.chat||[]).slice(S.phase==="mday"?(tall?-4:-2):(tall?-2:-1)),pins=new Set(S.my.pins||[]);
   const h=msgs.map((m,k)=>{const age=msgs.length-1-k,g=gName(m.id);
-    return `<button class="mc ${age>=3?"f1":age>=2?"f2":""} ${m.id===pid?"me":""} ${pins.has(m.i)?"pin":""} ${mcMenu===m.i?"sel":""}" data-mi="${m.i}"><span class="av" style="--pc:${colOf(m.id)}">${esc(initial(nameOf(m.id)))}</span><span class="tx"><small>${esc(nameOf(m.id))} · ${esc(g)}</small>${m.cl?`investigated <b>${esc(gName(m.cl.t))}</b> <span class="mrt ${m.cl.g?"bad":"good"}">${m.cl.g?"guilty":"innocent"}</span>`:esc(m.tx)}</span>${pins.has(m.i)?'<i class="pn">📌</i>':""}</button>`}).join("")
+    return `<button class="mc ${age>=3?"f1":age>=2?"f2":""} ${m.id===pid?"me":""} ${pins.has(m.i)?"pin":""} ${mcMenu===m.i?"sel":""}" data-mi="${m.i}"><span class="av" style="--pc:${colOf(m.id)}">${esc(initial(nameOf(m.id)))}</span><span class="tx"><small>${esc(nameOf(m.id))}${S.my.kind==="n"?"":" · "+esc(g)}</small>${m.rc?`I'm ${nR(m.rc.role).e} <b>${esc(nR(m.rc.role).n.replace(/^The /,"the "))}</b>${m.rc.inf?`. ${nInfoText(m.rc.inf)}`:""}`:m.cl?`investigated <b>${esc(gName(m.cl.t))}</b> <span class="mrt ${m.cl.g?"bad":"good"}">${m.cl.g?"guilty":"innocent"}</span>`:esc(m.tx)}</span>${pins.has(m.i)?'<i class="pn">📌</i>':""}</button>`}).join("")
     +(mcMenu?`<div class="mcm"><button id="mcpin">📌 ${pins.has(mcMenu)?"Unpin":"Pin to board"}</button><button id="mcx">✕</button></div>`:"")
-    +(msgs.length?"":`<div class="mc sys">${S.phase==="mday"?"Share what you found with 📢, or say something.":"Chat is open."}</div>`);
+    +(msgs.length?"":`<div class="mc sys">${S.phase==="mday"?"Share what you found with 📢, or say something.":S.phase==="nday"?"Tap 📢 to say who you are and what you learned.":"Chat is open."}</div>`);
   const cl=document.getElementById("mcl");if(cl.dataset.h!==h){cl.dataset.h=h;cl.innerHTML=h;
     cl.querySelectorAll("[data-mi]").forEach(b=>b.onclick=()=>{mcMenu=mcMenu===+b.dataset.mi?0:+b.dataset.mi;mChatSync()});
     const pn=document.getElementById("mcpin");if(pn)pn.onclick=()=>{const i=mcMenu;mcMenu=0;beep(900,.05,"triangle");if(H)hostMys(pid,{t:"mpin",i});else up({t:"mpin",i});mChatSync()};
     const mx=document.getElementById("mcx");if(mx)mx.onclick=()=>{mcMenu=0;mChatSync()}}
   const last=(S.my.chat||[]).slice(-1)[0];if(last&&last.i+":"+S.gid!==mcLast){if(mcLast&&last.id!==pid)beep(1050,.04,"triangle");mcLast=last.i+":"+S.gid}
-  document.getElementById("mcs").hidden=!(mSec()&&mSec().ch!=null);
+  document.getElementById("mcs").hidden=!(mSec()&&mSec().ch!=null&&!(S.my.kind==="n"&&mOut(pid)));
 }
 function mSendChat(o){if(!S)return;const m=Object.assign({t:"mchat"},o);if(H)hostMys(pid,m);else up(m)}
 let mShareSel={t:"",g:null};
@@ -2599,8 +2804,9 @@ function rM2Day(){
   else if(sec.ch==null||mOut(pid))card=mDoit(mOut(pid)?"You're out 👻":"Watching","You can still chat and help the others.");
   else if(k)card=`<div class="mclue kil"><div class="mpol"><i class="tape"></i><span>${mChar(S.my.story,sec.ch).e}</span></div><div class="mct"><span class="mk">You're the killer</span><p>Nobody knows yet. Read the claims, share a fake one with 📢, and point them at someone else.</p></div></div>`;
   else card=mine.map(x=>{const t=gOf(x.t);return `<div class="mclue"><div class="mpol"><i class="tape"></i><span>${t?t.e:"?"}</span></div><div class="mct"><span class="mk">You investigated ${esc(t?mShort(t.n):"?")} · ${esc(nameOf(x.t))}</span><p>“${esc(t?(x.g?t.guilty:t.alibi):"")}”</p>${mRes(x.g)}</div></div>`}).join("")||`<div class="mclue none"><p>No clue for you this morning.</p></div>`;
+  const al=mIn().filter(p=>!mOut(p.id)),rum=al.length?al[(r*5+(S.gid||"").length)%al.length]:null,rg=rum?gOf(rum.id):null;
   app.innerHTML=mWrap(mTrail(MSTEPS(r),1)+`<div class="mbeat"><div class="mrow"><span class="mk">☀️ Morning ${r+1}</span><span class="mtalk">Talk · <b id="mtk"></b></span></div><p>${esc(St.beats[r]||"")}</p></div>`
-    +card)+mSide("Ready to vote");
+    +(rg?`<div class="mrum"><span class="mk">🤫 Overheard this morning</span><p><b>${esc(mShort(rg.n))}</b> (${esc(nameOf(rum.id))}): ${esc(rg.m)}</p></div>`:"")+card)+mSide("Ready to vote");
   wireSide();mCountdown("mtk",(S.cfg&&S.cfg.mtalk)||120,t0);
 }
 function rM2Vote(){
@@ -2635,11 +2841,11 @@ function rM2VRes(){
 function rM2Verdict(){
   const R=S.my.res;if(!R)return;const kill=R.killers,mineK=kill.includes(pid),won=R.detWin?!mineK:mineK;
   sound("mvd",()=>{beep(R.detWin?1200:200,.4,R.detWin?"triangle":"sawtooth");speak(R.detWin?"The detectives win!":`The killer got away. It was ${kill.map(nameOf).join(" and ")}.`)});
-  const ks=kill.map(id=>{const g=gOf(id);return `<div class="kcard"><span class="ph">${g.e}</span><b>${esc(g.n)}</b><small>${esc(nameOf(id))}</small></div>`}).join("");
+  const ks=kill.map(id=>{const g=gOf(id);return `<div class="kcard"><span class="ph">${g.e}</span><b>${esc(g.n)}</b><small>${esc(nameOf(id))}</small><p class="kg">“${esc(g.guilty)}”</p></div>`}).join("");
   const hits=(R.hits||[]).map(h=>`<li>Night ${h.r+1}: <b>${esc(nameOf(h.by))}</b> swapped <b>${esc(nameOf(h.id))}</b>'s result.</li>`).join("");
   const pts=S.players.filter(p=>R.pts[p.id]!=null).sort((a,b)=>(R.pts[b.id]||0)-(R.pts[a.id]||0)).map(p=>`<li class="${p.id===pid?"me":""}"><span class="av" style="--pc:${colOf(p.id)}">${esc(initial(p.name))}</span><span class="nm">${esc(p.name)} <small>${esc(gName(p.id))}</small>${kill.includes(p.id)?' <i class="kk">killer</i>':""}</span><b>+${R.pts[p.id]||0}</b></li>`).join("");
   app.innerHTML=mWrap(`<h2 class="mwin ${won?"good":"bad"}">${R.detWin?"Detectives win!":"The killer got away!"}</h2>
-    <span class="mk mctr">${kill.length>1?"The killers were":"The killer was"}</span><div class="kcards">${ks}</div>
+    <p class="mend">${esc(mSt().end)}</p><span class="mk mctr">${kill.length>1?"The killers were":"The killer was"}</span><div class="kcards">${ks}</div>
     ${hits?`<ul class="mtamp">${hits}</ul>`:""}<ul class="mpts">${pts}</ul>`)+readyBlock("Final scores");
   wireReady();const k=S.key;if(mFx!==k){mFx=k;setTimeout(()=>{const c=app.querySelector(".kcards");if(!c)return;if(won)FX.fireworks(c);else FX.smoke(c)},400)}
 }
@@ -2709,6 +2915,190 @@ function rGRes(){
   wireReady();const k=S.key;if(mFx!==k){mFx=k;setTimeout(()=>{const c=app.querySelector(".msol");if(!c)return;if(all)FX.fireworks(c);else if(mine)FX.smoke(c)},400)}
 }
 
+/* ================= PLAYER: Night at the Manor ================= */
+const NSTEPS=r=>[`Night ${r+1}`,"Morning","Vote"];
+const nR=k=>NROLES[k]||NROLES.towny;
+const nRoleTag=k=>`<span class="nrt ${nR(k).t}">${nR(k).e} ${esc(nR(k).n.replace(/^The /,""))}</span>`;
+const nAliveC=()=>(S.my.seats||[]).filter(id=>!mOut(id));
+const nNeed=()=>Math.ceil(nAliveC().length/2);
+const nNb=id=>{const s=nAliveC(),i=s.indexOf(id),n=s.length;return i<0||n<3?[]:[s[(i-1+n)%n],s[(i+1)%n]]};
+function nInfoText(inf){if(!inf)return "";const N=id=>`<b>${esc(nameOf(id))}</b>`,RN=r=>`<b>${esc(nR(r).n.replace(/^The /,"the "))}</b>`;
+  switch(inf.k){
+    case "seer":return inf.v?`${N(inf.a)} or ${N(inf.b)}: one of them <b class="bad">is the killer</b>`:`${N(inf.a)} and ${N(inf.b)}: <b class="ok">neither is the killer</b>`;
+    case "empath":return `<b>${inf.v}</b> of my living neighbours ${inf.v===1?"is":"are"} evil`;
+    case "invest":return inf.none?"There's no Accomplice in this game":`${N(inf.a)} or ${N(inf.b)} is <b class="bad">the Accomplice</b>`;
+    case "wash":return `${N(inf.a)} or ${N(inf.b)} is ${RN(inf.role)}`;
+    case "chef":return `<b>${inf.v}</b> pair${inf.v===1?"":"s"} of evil players sit side by side`;
+    case "under":return `${N(inf.a)}, voted out, was ${RN(inf.role)}`;
+    case "watch":return `The killer got me. ${N(inf.a)} is ${RN(inf.role)}`}
+  return ""}
+function nSeatsHTML(o={}){const s=S.my.seats||[];
+  return `<div class="nseats">${s.map((id,i)=>{const g=gOf(id),d=mOut(id),hw=(S.my.how||{})[id]||"";return `<div class="nst ${d?"dead":""} ${id===pid?"me":""} ${o.hl&&o.hl.includes(id)?"hl":""}"><span class="av" style="--pc:${colOf(id)}">${d?"☠":esc(initial(nameOf(id)))}</span><b>${esc(nameOf(id))}</b><small>${g?g.e+" "+esc(mShort(g.n)):""}</small>${d?`<i>${hw[0]==="n"?"Killed":"Voted out"}</i>`:""}</div>`}).join("")}</div>
+    <p class="nseatn">Seated in a circle: the last guest sits next to the first.</p>`}
+/* ---- envelope ---- */
+function nEnvHTML(){const sec=mSec();if(!sec||!sec.role||sec.role==="none")return `<div class="envc"><p class="msm">${sec?"You joined after the game started, so you're watching this one.":"Opening your envelope…"}</p></div>`;
+  const D=nR(sec.role),g=sec.ch!=null?mChar(S.my.story,sec.ch):null,ev=D.t==="evil";
+  const info=(sec.info||[]).map(x=>`<li><b>Night ${x.r+1}</b><span class="t">${nInfoText(x)}</span></li>`).join("");
+  const nb=nNb(pid);
+  return `<div class="envc ${ev?"killer":""}"><div class="er"><span class="e">${D.e}</span><div><span class="k">You are ${g?esc(g.n)+", and":""}</span><h3>${esc(D.n)}</h3><span class="rl">${ev?"Evil team":"Good team"}</span></div></div>
+    <p class="eg">${esc(D.d)}</p>
+    ${sec.partners.length?`<p class="eg">Your evil partner: ${sec.partners.map(x=>`<b>${esc(nameOf(x.id))}</b> (${esc(nR(x.role).n)})`).join(", ")}</p>`:""}
+    ${sec.bluffs&&sec.bluffs.length?`<p class="eg">Safe to pretend to be (nobody has these): ${sec.bluffs.map(nRoleTag).join(" ")}</p>`:""}
+    ${sec.role==="empath"&&nb.length?`<p class="eg">Your neighbours: <b>${esc(nameOf(nb[0]))}</b> and <b>${esc(nameOf(nb[1]))}</b></p>`:""}
+    ${ev?"":`<span class="k">What you've learned</span><ul>${info||`<li class="none">Nothing yet. ${D.act==="none"&&["soldier","towny"].includes(sec.role)?"Your power isn't information. Listen to the others.":"Your first information comes in the morning."}</li>`}</ul>`}</div>`}
+/* ---- the board ---- */
+function nClaims(){const c={};(S.my.chat||[]).forEach(m=>{if(m.rc)c[m.id]=m.rc});return c}
+function nBoardHTML(){const St=mSt(),M=S.my,cl=nClaims(),cnt={};Object.values(cl).forEach(c=>cnt[c.role]=(cnt[c.role]||0)+1);const R=M.res;
+  const pol=(M.seats||[]).map((id,i)=>{const g=gOf(id),d=mOut(id),c=cl[id],hw=(M.how||{})[id]||"";
+    return `<div class="pol2 ${d?"out":""}" style="--r:${[-4,3,-2,5,-3,2][i%6]}deg"><span class="ph">${g?g.e:"?"}</span><b>${esc(nameOf(id))}</b><small>${g?esc(mShort(g.n)):""}</small>
+      ${R?`<em class="st ${nR(R.roles[id]).t==="evil"?"red":"grn"}">${esc(nR(R.roles[id]).n.replace(/^The /,""))}</em>`:c?`<em class="st ${cnt[c.role]>1?"red":""}">Says ${esc(nR(c.role).n.replace(/^The /,""))}${cnt[c.role]>1?" ⚠":""}</em>`:""}
+      ${d?`<em class="st">${hw[0]==="n"?"Killed · night "+(+hw.slice(1)+1):"Voted out · day "+(+hw.slice(1)+1)}</em>`:""}</div>`}).join("");
+  const byI={};(M.chat||[]).forEach(m=>byI[m.i]=m);
+  const pins=(M.pins||[]).map(i=>byI[i]).filter(Boolean).reverse().map((m,k)=>`<div class="note ${["y","p","g","b"][k%4]}" style="--r:${[-2,2,-1,3][k%4]}deg"><small>${esc(nameOf(m.id))}</small>${m.rc?`I'm ${esc(nR(m.rc.role).n)}${m.rc.inf?`. Night ${m.rc.inf.r+1}: ${nInfoText(m.rc.inf)}`:""}`:esc(m.tx)}</div>`).join("");
+  const log=(M.log||[]).map(l=>`<div class="note w"><small>${l.k==="night"?"Night "+(l.r+1):"Vote · day "+(l.r+1)}</small>${l.k==="night"?(l.died.length?l.died.map(x=>`${esc(nameOf(x))} was killed.`).join(" "):"Nobody died."):l.ex?`${esc(nameOf(l.ex))} was voted out (${l.top} votes).`:l.tie?"Tied vote. Nobody was voted out.":`Nobody got enough votes (needed ${l.need}).`}</div>`).join("");
+  const dup=Object.entries(cnt).filter(([k,v])=>v>1).map(([k])=>nR(k).n);
+  return `<div class="pols">${pol}</div><div class="notes2"><div class="note w vic"><small>Victim</small>${esc(St.victim)}</div>
+    ${dup.length?`<div class="note p"><small>Something's off</small>More than one guest says they're ${dup.map(esc).join(", ")}. Somebody is lying.</div>`:""}${log}${pins}</div>${pins?"":`<p class="corkh2">Role claims pin themselves here. Tap any chat message to pin it.</p>`}`}
+/* ---- 📢 share: say who you are (true or not) and what you learned ---- */
+const NINF={seer:{p:2,yn:1},empath:{n:1},invest:{p:2},wash:{p:2,role:1},chef:{n:1},under:{p:1,role:1},watch:{p:1,role:1}};
+let nSh={role:"",on:false,a:"",b:"",v:0,yn:true,r2:"seer"};
+function nShareOpen(){const sh=document.getElementById("mshare"),sec=mSec();if(!sh)return;if(!sh.hidden){sh.hidden=true;return}
+  const ev=sec&&nR(sec.role).t==="evil",role=ev?(sec.bluffs&&sec.bluffs[0])||"towny":sec?sec.role:"towny";nShPrefill(role);sh.hidden=false;nShareFill()}
+function nShPrefill(role){const sec=mSec(),real=sec&&sec.role===role?(sec.info||[]).slice(-1)[0]:null;
+  nSh={role,on:!!real,a:"",b:"",v:0,yn:true,r2:"towny"};
+  if(real){nSh.a=real.a||"";nSh.b=real.b||"";nSh.v=typeof real.v==="number"?real.v:0;nSh.yn=real.v===true;nSh.r2=real.role||"towny";nSh.real=1}}
+function nShareFill(){const sh=document.getElementById("mshare");if(!sh)return;const sec=mSec(),F=NINF[nSh.role],ev=sec&&nR(sec.role).t==="evil";
+  const roles=[...NGOOD,"towny"].map(k=>`<button class="nrb ${nSh.role===k?"on":""} ${sec&&sec.bluffs&&sec.bluffs.includes(k)?"bl":""}" data-nr="${k}">${nR(k).e}<span>${esc(nR(k).n.replace(/^The /,""))}</span></button>`).join("");
+  const others=nAliveC().concat((S.my.seats||[]).filter(mOut)).filter(x=>x!==pid);
+  const pick=(f)=>`<div class="nchips">${others.map(id=>`<button class="nch ${nSh[f]===id?"on":""}" data-nf="${f}" data-nv="${esc(id)}">${esc(nameOf(id))}</button>`).join("")}</div>`;
+  let form="";
+  if(F&&nSh.on){if(F.p)form+=`<span class="lb">${F.p>1?"First player":"Player"}</span>${pick("a")}`;if(F.p>1)form+=`<span class="lb">Second player</span>${pick("b")}`;
+    if(F.yn)form+=`<div class="shb"><button class="btn red ${nSh.yn?"on":""}" data-yn="1">One is the killer</button><button class="btn gr ${!nSh.yn?"on":""}" data-yn="0">Neither is</button></div>`;
+    if(F.n)form+=`<span class="lb">The number</span><div class="nchips">${[0,1,2].map(v=>`<button class="nch ${nSh.v===v?"on":""}" data-num="${v}">${v}</button>`).join("")}</div>`;
+    if(F.role)form+=`<span class="lb">Their role</span><div class="nchips">${["killer","accomp",...NGOOD,"towny"].map(k=>`<button class="nch ${nSh.r2===k?"on":""}" data-r2="${k}">${nR(k).e} ${esc(nR(k).n.replace(/^The /,""))}</button>`).join("")}</div>`}
+  const ok=!F||!nSh.on||((!F.p||nSh.a)&&(F.p<2||nSh.b&&nSh.b!==nSh.a));
+  sh.innerHTML=`<div class="shh"><b>📢 Tell everyone who you are</b><button id="shx">✕</button></div><span class="lb">I'm…</span><div class="nroles">${roles}</div>
+    ${F?`<label class="nchk"><input type="checkbox" id="shon" ${nSh.on?"checked":""}> …and here's what I learned</label>${form}`:""}
+    <p class="note2">${nSh.real?"Filled in with your real information. Change it if you want to lie.":ev?"You're evil. Pick a role to pretend to be (★ ones are safe: nobody has them) and make up what you learned.":sec&&sec.role!==nSh.role?"That's not your real role. You can bluff, but your team needs the truth.":"Share it so the good team can work it out."}</p>
+    <button class="btn" id="shgo" ${ok?"":"disabled"}>${ok?"Share":"Fill in what you learned"}</button>`;
+  sh.querySelector("#shx").onclick=()=>{sh.hidden=true};
+  sh.querySelectorAll("[data-nr]").forEach(b=>b.onclick=()=>{nShPrefill(b.dataset.nr);nShareFill()});
+  const on=sh.querySelector("#shon");if(on)on.onchange=()=>{nSh.on=on.checked;nShareFill()};
+  sh.querySelectorAll("[data-nf]").forEach(b=>b.onclick=()=>{nSh[b.dataset.nf]=b.dataset.nv;nSh.real=0;nShareFill()});
+  sh.querySelectorAll("[data-yn]").forEach(b=>b.onclick=()=>{nSh.yn=b.dataset.yn==="1";nSh.real=0;nShareFill()});
+  sh.querySelectorAll("[data-num]").forEach(b=>b.onclick=()=>{nSh.v=+b.dataset.num;nSh.real=0;nShareFill()});
+  sh.querySelectorAll("[data-r2]").forEach(b=>b.onclick=()=>{nSh.r2=b.dataset.r2;nSh.real=0;nShareFill()});
+  sh.querySelector("#shgo").onclick=()=>{let inf=null;if(F&&nSh.on){inf={k:nSh.role};if(F.p)inf.a=nSh.a;if(F.p>1)inf.b=nSh.b;if(F.yn)inf.v=nSh.yn;if(F.n)inf.v=nSh.v;if(F.role)inf.role=nSh.r2}
+    mSendChat({rc:{role:nSh.role,inf}});beep(1000,.06,"triangle");sh.hidden=true}}
+/* host: check a claim before it goes in the chat */
+function nClaimIn(id,rc){const M=H.my;if(!rc||!M.seats.includes(id))return null;const role=String(rc.role||"");if(!NGOOD.includes(role)&&role!=="towny")return null;
+  let inf=null;const i=rc.inf;if(i&&NINF[role]&&i.k===role){const F=NINF[role],st=x=>M.seats.includes(String(x));inf={k:role,r:M.round};
+    if(F.p){if(!st(i.a))return null;inf.a=String(i.a)}if(F.p>1){if(!st(i.b)||i.b===i.a)return null;inf.b=String(i.b)}
+    if(F.yn)inf.v=!!i.v;if(F.n)inf.v=Math.max(0,Math.min(2,Math.round(+i.v||0)));if(F.role){if(!NROLES[i.role])return null;inf.role=String(i.role)}}
+  return {role,inf}}
+/* ---- screens ---- */
+function rNIntro(){
+  const St=mSt(),n=(S.my.seats||[]).length,ne=S.my.ne;
+  sound("ni",()=>{beep(200,.45,"sawtooth",.03);speak(St.hook)});
+  app.innerHTML=mWrap(`<div class="mcase manor"><i class="mtab"></i><span class="mk">Night at the Manor · ${esc(St.tag)}</span><h2>${esc(St.n)}</h2><p class="mhook">${esc(St.hook)}</p>
+    <div class="mvic"><span>Victim</span><b>${esc(St.victim)}</b></div><span class="mstamp">Invitation</span></div>
+    <p class="mhow">Everyone gets a secret role with a power. <b>${ne>1?"A killer and an accomplice are":"A killer is"} among you.</b> Every night, someone may die. Vote out the killer before it's too late.</p>`)+readyBlock("Get my role");
+  wireReady();
+}
+function rNRole(){
+  const sec=mSec(),St=mSt(),ok=sec&&sec.role&&sec.role!=="none";
+  sound("nr",()=>beep(330,.2,"triangle"));autoHow("manor");
+  app.innerHTML=mWrap(`${mDoit("Your secret role","Your role is in the envelope. Tap it to open. Don't show anyone. You can check it any time from ✉️ at the top.")}
+    <button class="bigenv ${sec?"":"wait"}" id="benv" aria-label="Open your envelope"><span class="fl"></span><i class="seal">${ok?nR(sec.role).e:St.e}</i><span class="lb">${sec?"Tap to open":"Loading…"}</span></button>
+    <span class="mk mctr">Around the table</span>${nSeatsHTML()}`)+readyBlock("Start night 1");
+  wireReady();const b=document.getElementById("benv");if(b&&sec)b.onclick=()=>mOverlay("env");
+}
+function rNNight(){
+  const St=mSt(),sec=mSec(),r=S.my.round,dead=mOut(pid),done=me().done||mpick.key===S.key&&mpick.sent;
+  sound("nn",()=>{beep(170,.5,"sine",.04);speak(`Night ${r+1}. Everyone, close your eyes and tap your phone.`)});
+  if(mpick.key!==S.key)mpick={key:S.key,v:"",v2:"",sent:false};
+  const t0=seenAt("nn");let body;const R=sec&&sec.role,D=nR(R),act=D.act;
+  const head=`<div class="mnight"><span class="mmoon" aria-hidden="true"></span><h2>${esc(St.night)}</h2><span class="mclock" id="mclk"></span></div>`;
+  const grid=(list,o={})=>`<div class="mgs">${list.map(id=>mGuest(id,{sel:mpick.v===id||mpick.v2===id,attr:`data-pk="${esc(id)}"`,tag:o.tag&&o.tag(id)})).join("")}</div>`;
+  const others=nAliveC().filter(x=>x!==pid),partners=sec?(sec.partners||[]).map(x=>x.id):[];
+  let need=0,btn="",red=false,txt="";
+  if(!sec)body=`<div class="mdone"><div class="pulse"></div><p>Loading…</p></div>`;
+  else if(R==="none"||dead)body=mDoit(dead?"You're dead 👻":"Watching",dead?"You can't use your power any more, but you can still talk in the morning, and you get one ghost vote.":"You joined after the game started. Watch this one.")+`<div class="mdone"><p>Waiting for the night to end…</p></div>`;
+  else if(done)body=`<div class="mdone"><div class="pulse"></div><p>Eyes closed. Waiting for everyone else…</p><small>${S.players.filter(p=>p.on&&!p.done&&S.elig&&S.elig.includes(p.id)).length} still choosing</small></div>`;
+  else{
+    if(act==="kill"&&r>0){need=1;red=true;txt="Choose someone to kill tonight.";btn=v=>`Kill ${esc(nameOf(v))}`}
+    else if(act==="kill")txt=`The first night is quiet. No killing tonight. ${partners.length?`Your accomplice is <b>${names(partners)}</b>.`:""} Check ✉️ for roles that are safe to pretend to be.`;
+    else if(R==="accomp"){need=1;red=true;txt=`Choose someone to poison. Whatever they learn tonight is wrong, and protection fails. The killer is <b>${names(partners)}</b>.`;btn=v=>`Poison ${esc(nameOf(v))}`}
+    else if(act==="pick2"){need=2;txt="Pick two players. You'll learn if either of them is the killer.";btn=()=>`Check ${esc(nameOf(mpick.v))} and ${esc(nameOf(mpick.v2))}`}
+    else if(act==="pick1o"&&r>0){need=1;txt="Choose someone to protect tonight. The killer can't get them.";btn=v=>`Protect ${esc(nameOf(v))}`}
+    else if(act==="pick1o")txt="Nothing to do on the first night. From tomorrow, you protect someone each night.";
+    else if(R==="watch"){need=1;txt="Choose someone to watch. If the killer comes for you tonight, you'll learn their role.";btn=v=>`Watch ${esc(nameOf(v))}`}
+    else txt={empath:"You'll sense how many of your neighbours are evil in the morning.",invest:r?"Your work is done. Listen and vote well.":"In the morning you'll learn that one of two players is the Accomplice.",wash:r?"Your work is done. Listen and vote well.":"In the morning you'll learn a role and two players, one of whom has it.",chef:r?"Your work is done. Listen and vote well.":"In the morning you'll learn how many evil players sit side by side.",under:r?"In the morning you'll learn the role of whoever was voted out.":"Nothing to learn yet. You learn the role of anyone voted out.",soldier:"You can't be killed at night. Sleep well.",towny:"No power. Close your eyes and get some rest."}[R]||"Close your eyes.";
+    const list=R==="accomp"||act==="kill"?others.filter(x=>!partners.includes(x)):others;
+    const ready=need===0||need===1&&mpick.v||need===2&&mpick.v&&mpick.v2;
+    body=mDoit(`You're ${esc(D.n)} · night ${r+1}`,txt,red)+(need?grid(list,{tag:act==="kill"?null:null}):"")
+      +`<div class="mfoot"><button class="btn ${red?"red":""}" id="mgo" ${ready?"":"disabled"}>${need&&ready?btn(mpick.v):need?(need>1?"Pick two players":"Pick a player"):"Close my eyes"}</button></div>`}
+  app.innerHTML=mWrap(mTrail(NSTEPS(r),0)+head+body,"dark");
+  app.querySelectorAll("[data-pk]").forEach(b=>b.onclick=()=>{const v=b.dataset.pk;
+    if(need===2){if(mpick.v===v)mpick.v=mpick.v2,mpick.v2="";else if(mpick.v2===v)mpick.v2="";else if(!mpick.v)mpick.v=v;else mpick.v2=v}else mpick.v=v;beep(600,.03,"triangle");render()});
+  const go=document.getElementById("mgo");if(go)go.onclick=()=>{mpick.sent=true;beep(red?300:700,.08,red?"sawtooth":"triangle");send(need===2?{t:"mys",a:mpick.v,b:mpick.v2}:need?{t:"mys",a:mpick.v}:{t:"mys",skip:1});render()};
+  mCountdown("mclk",NNIGHT_S,t0);
+}
+function rNDay(){
+  const St=mSt(),sec=mSec(),r=S.my.round,lg=(S.my.log||[]).filter(l=>l.k==="night"&&l.r===r)[0],died=lg?lg.died:[];
+  sound("nd",()=>{beep(880,.15,"triangle");speak(`Morning. ${died.length?died.map(nameOf).join(" and ")+" didn't wake up.":"Everyone survived the night."}`)});
+  const t0=seenAt("nd"),mine=sec&&sec.info?sec.info.filter(x=>x.r===r):[];
+  const dd=died.map(id=>{const g=gOf(id);return `<div class="ndead"><span class="ph">${g?g.e:"?"}</span><div><span class="mk">Found dead</span><b>${esc(nameOf(id))}</b><small>${g?esc(g.n)+". "+esc(g.m):""}</small></div></div>`}).join("")||`<div class="ndead safe"><span class="ph">🕯️</span><div><span class="mk">Morning ${r+1}</span><b>Everyone survived the night</b></div></div>`;
+  let card="";
+  if(!sec)card=`<div class="mclue none"><p>Loading…</p></div>`;
+  else if(sec.role&&sec.role!=="none"&&nR(sec.role).t==="evil")card=`<div class="mclue kil"><div class="mct"><span class="mk">You're ${esc(nR(sec.role).n)}</span><p>Tell everyone you're a good role with 📢 and make up what you learned. Push the vote toward someone good.</p></div></div>`;
+  else if(mine.length)card=mine.map(x=>`<div class="mclue"><div class="mct"><span class="mk">${nR(sec.role).e} What you learned last night</span><p>${nInfoText(x)}</p></div></div>`).join("");
+  const over=S.my.over;
+  app.innerHTML=mWrap(mTrail(NSTEPS(r),1)+dd+`<div class="mbeat"><div class="mrow"><span class="mk">☀️ Morning ${r+1}</span><span class="mtalk">Talk · <b id="mtk"></b></span></div><p>${esc(St.beats[r%St.beats.length]||"")}</p></div>`
+    +(over?mDoit("It's over","Only two guests are left alive. Evil wins.",true):card))+mSide(over?"See the verdict":"Ready to vote",over?"⚖️":"🗳️");
+  wireSide();mCountdown("mtk",(S.cfg&&S.cfg.mtalk)||120,t0);
+}
+function rNVote(){
+  const sec=mSec(),r=S.my.round,dead=mOut(pid),done=me().done,can=S.elig&&S.elig.includes(pid),need=nNeed();
+  sound("nv",()=>{beep(520,.2,"triangle");speak("Time to vote.")});
+  if(mpick.key!==S.key)mpick={key:S.key,v:"",sent:false};
+  const left=S.players.filter(p=>p.on&&S.elig&&S.elig.includes(p.id)&&!p.done).length;let body;
+  if(!sec||sec.role==="none")body=mDoit("Watching the vote","You joined after the game started.")+`<div class="mdone"><div class="pulse"></div><p>${left} still voting…</p></div>`;
+  else if(!can)body=mDoit("Watching the vote","You're dead and you've used your ghost vote. Keep talking!")+`<div class="mdone"><div class="pulse"></div><p>${left} still voting…</p></div>`;
+  else if(done)body=mDoit("Vote locked in",`Waiting for ${left} more vote${left===1?"":"s"}…`)+`<div class="mdone"><div class="pulse"></div></div>`;
+  else{const os=nAliveC().filter(x=>x!==pid);
+    body=mDoit(dead?"Your ghost vote":"The vote",`${dead?"You're dead, but you get <b>one vote for the rest of the game</b>. Use it now, or save it. ":""}Pick who to vote out, or nobody. It takes <b>${need} vote${need>1?"s":""}</b> to vote someone out. If they're the killer, good wins.${sec&&nR(sec.role).t==="evil"?" <b>You're evil: vote like you're good.</b>":""}`)
+      +`<div class="mgs">${os.map(id=>mGuest(id,{sel:mpick.v===id,attr:`data-pk="${esc(id)}"`})).join("")}</div>
+      <div class="mfoot"><button class="btn" id="mgo" ${mpick.v?"":"disabled"}>${mpick.v?`Vote out ${esc(nameOf(mpick.v))}`:"Pick a player"}</button><button class="btn ghost" id="mnone">${dead?"Save my ghost vote":"Vote for nobody"}</button></div>`}
+  app.innerHTML=mWrap(mTrail(NSTEPS(r),2,`${S.players.filter(p=>S.elig&&S.elig.includes(p.id)&&p.done).length} of ${(S.elig||[]).length} voted`)+body);
+  app.querySelectorAll("[data-pk]").forEach(b=>b.onclick=()=>{mpick.v=b.dataset.pk;beep(600,.03,"triangle");render()});
+  const go=document.getElementById("mgo");if(go)go.onclick=()=>{if(!mpick.v)return;beep(990,.1,"triangle");send({t:"mys",acc:mpick.v})};
+  const no=document.getElementById("mnone");if(no)no.onclick=()=>{beep(500,.05);send({t:"mys",acc:""})};
+}
+function rNVRes(){
+  const V=S.my.vres||{},r=S.my.round,ex=V.ex,g=ex?gOf(ex):null,over=S.my.over;
+  sound("nvr",()=>{beep(V.caught?1200:300,.35,V.caught?"triangle":"sawtooth");speak(ex?(V.caught?`${nameOf(ex)} was the killer!`:`${nameOf(ex)} is voted out.`):"Nobody is voted out.")});
+  const bal=Object.entries(V.votes||{}).filter(([v,a])=>a).map(([v,a],i)=>`<div class="mbal" style="--r:${(i%2?2:-3)+i%3}deg"><b>${esc(nameOf(v))}${mOut(v)&&v!==ex?" 👻":""}</b><span>→ ${esc(nameOf(a))}</span></div>`).join("");
+  const msg=ex?(V.caught?`${esc(nameOf(ex))} was the killer!`:`${esc(nameOf(ex))} is voted out with ${V.top} votes.`):V.tie?"It's a tie, so nobody is voted out.":V.top?`Only ${V.top} vote${V.top>1?"s":""}. It needed ${V.need}, so nobody is voted out.`:"Nobody voted anyone out.";
+  const next=over==="good"?"The good team caught the killer.":over==="evil"?"Too few guests are left. Evil wins.":ex?"The game goes on, so they weren't the killer. Night falls again.":"Night falls again.";
+  app.innerHTML=mWrap(mTrail(NSTEPS(r),2)+`<span class="mk mctr">The votes are in</span><div class="mbals">${bal||'<p class="msm">No votes</p>'}</div>
+    <div class="maccd">${g?`<span class="ph">${g.e}</span><h2>${esc(nameOf(ex))}</h2><small>${esc(g.n)}</small><span class="mstamp big ${V.caught?"":"gray"}">${V.caught?"The killer":"Voted out"}</span>`:`<h2>No one</h2><span class="mstamp big gray">${V.tie?"Tied vote":"Not enough votes"}</span>`}</div>
+    <p class="mvmsg">${msg}<br><span>${next}</span></p>`)+mSide(over?"See the verdict":`Night ${r+2}`,over?"⚖️":"🌙");
+  wireSide();const k=S.key;if(mFx!==k){mFx=k;setTimeout(()=>{const c=app.querySelector(".maccd");if(!c)return;if(V.caught)FX.fireworks(c);else if(ex)FX.smoke(c)},500)}
+}
+function rNVerdict(){
+  const R=S.my.res;if(!R)return;const St=mSt(),ev=id=>nR(R.roles[id]).t==="evil",won=R.gw?!ev(pid):ev(pid);
+  sound("nvd",()=>{beep(R.gw?1200:200,.4,R.gw?"triangle":"sawtooth");speak(R.gw?"The good team wins!":"Evil wins the night.")});
+  const seats=S.my.seats||[];
+  const ks=seats.filter(ev).map(id=>{const g=gOf(id);return `<div class="kcard"><span class="ph">${nR(R.roles[id]).e}</span><b>${esc(nameOf(id))}</b><small>${esc(nR(R.roles[id]).n)}${g?" · "+esc(mShort(g.n)):""}</small></div>`}).join("");
+  const all=seats.filter(id=>!ev(id)).map(id=>`<span class="nrow ${mOut(id)?"dead":""}">${nRoleTag(R.roles[id])}<b>${esc(nameOf(id))}</b></span>`).join("");
+  const pts=S.players.filter(p=>R.pts[p.id]!=null).sort((a,b)=>(R.pts[b.id]||0)-(R.pts[a.id]||0)).map(p=>`<li class="${p.id===pid?"me":""}"><span class="av" style="--pc:${colOf(p.id)}">${esc(initial(p.name))}</span><span class="nm">${esc(p.name)} <small>${esc(nR(R.roles[p.id]).n)}</small>${ev(p.id)?' <i class="kk">evil</i>':""}</span><b>+${R.pts[p.id]||0}</b></li>`).join("");
+  app.innerHTML=mWrap(`<h2 class="mwin ${won?"good":"bad"}">${R.gw?"The good team wins!":"Evil wins the night!"}</h2>
+    <p class="mend">${esc(St.end)}</p><span class="mk mctr">The evil team</span><div class="kcards">${ks}</div>
+    <span class="mk mctr">Everyone else</span><div class="nall">${all}</div><ul class="mpts">${pts}</ul>`)+readyBlock("Final scores");
+  wireReady();const k=S.key;if(mFx!==k){mFx=k;setTimeout(()=>{const c=app.querySelector(".kcards");if(!c)return;if(won)FX.fireworks(c);else FX.smoke(c)},400)}
+}
+
 /* ================= RENDER ================= */
 const isHost=()=>!!H;
 const P=id=>S.players.find(p=>p.id===id);
@@ -2721,7 +3111,7 @@ const amElig=()=>!S.elig||S.elig.includes(pid);
 const me=()=>P(pid)||{};
 function seenAt(tag){const k=S.key+":"+tag;if(!seen[k]){seen[k]=performance.now();const ks=Object.keys(seen);if(ks.length>60)delete seen[ks[0]]}return seen[k]}
 function view(key,build){if(app.dataset.view===key)return false;app.dataset.view=key;build();return true}
-const THEMECOL={mystery:"#0e0c12",guided:"#0d0f16",glyph:"#0a0d26",trivia:"#140c24",board:"#050c2b",lives:"#10060a",roller:"#061a11",teams:"#0c0b1b",closest:"#03161e",charades:"#15050b"};
+const THEMECOL={manor:"#0f0b0d",mystery:"#0e0c12",guided:"#0d0f16",glyph:"#0a0d26",trivia:"#140c24",board:"#050c2b",lives:"#10060a",roller:"#061a11",teams:"#0c0b1b",closest:"#03161e",charades:"#15050b"};
 const THEMES={classic:{n:"Classic"},aurora:{n:"Aurora",c:"#120f28"},light:{n:"Clean Light",c:"#141414"},midnight:{n:"Midnight Glass",c:"#0a0d1a"},noir:{n:"Black & Gold",c:"#0b0b0c"}};
 const FONTS={classic:{n:"Classic"},clean:{n:"Clean",f:"Poppins:wght@700"}};
 const myFont=()=>ls.get("ps-font","clean")==="classic"?"classic":"clean";
@@ -2738,7 +3128,7 @@ function render(){
   setTheme(S.phase==="lobby"&&S.set?S.set.mode:S.mode);
   if(pending&&pending.key!==S.key)pending=null;
   const f={lobby:rLobby,rintro:rRIntro,read:rRead,q:rQuestion,reveal:rReveal,rend:rREnd,nq:rNQ,nreveal:rNReveal,bet:rBet,ddwager:rBet,fwager:rBet,
-    gq:rGQ,greveal:rGReveal,bpick:rBPick,bread:rBQ,bbuzz:rBQ,bans:rBQ,breveal:rBReveal,tbvote:rTBVote,tbintro:rTBIntro,end:rEnd,cready:rCReady,cact:rCAct,cres:rCRes,mintro:rM2Intro,mrole:rM2Role,mnight:rM2Night,mday:rM2Day,mvote:rM2Vote,mvres:rM2VRes,mverdict:rM2Verdict,gcase:rGCase,gsolve:rGSolve,gres:rGRes}[S.phase];
+    gq:rGQ,greveal:rGReveal,bpick:rBPick,bread:rBQ,bbuzz:rBQ,bans:rBQ,breveal:rBReveal,tbvote:rTBVote,tbintro:rTBIntro,end:rEnd,cready:rCReady,cact:rCAct,cres:rCRes,mintro:rM2Intro,mrole:rM2Role,mnight:rM2Night,mday:rM2Day,mvote:rM2Vote,mvres:rM2VRes,mverdict:rM2Verdict,gcase:rGCase,gsolve:rGSolve,gres:rGRes,nintro:rNIntro,nrole:rNRole,nnight:rNNight,nday:rNDay,nvote:rNVote,nvres:rNVRes,nverdict:rNVerdict}[S.phase];
   if(!["cact","bbuzz","bread","bans","nq","bet","ddwager","fwager","gq"].includes(S.phase))app.dataset.view="";
   const old=app.querySelector(".qc"),oldK=old&&old.dataset.k,oldR=old&&old.getBoundingClientRect();
   f&&f();
@@ -2765,7 +3155,8 @@ function gameBadge(m){const n=esc((MODES[m]||MODES.trivia).n);
     charades:tk("--c:#f2a33a;--hi:#ffd27d;--dk:#8a5212;--ink:#3a1c00","ADMIT ONE"),
     glyph:`<span class="gbw"><span class="gb t8"><i>✦</i><span class="gbn">${n}</span></span></span>`,
     mystery:`<span class="gbw"><span class="gb t9"><i>🔪</i><span class="gbn">${n}</span></span></span>`,
-    guided:`<span class="gbw"><span class="gb t9"><i>🔍</i><span class="gbn">${n}</span></span></span>`};
+    guided:`<span class="gbw"><span class="gb t9"><i>🔍</i><span class="gbn">${n}</span></span></span>`,
+    manor:`<span class="gbw"><span class="gb t9"><i>🕯️</i><span class="gbn">${n}</span></span></span>`};
   return `<span class="gbadge" aria-label="${n}">${B[m]||B.trivia}</span>`}
 const VLINE=`<div class="vline" id="vline" aria-hidden="true"><div class="amp"><svg viewBox="0 0 480 24" preserveAspectRatio="none"><polyline points="0,12.0 4,15.3 8,17.9 12,19.6 16,20.0 20,18.9 24,16.7 28,13.7 32,10.3 36,7.3 40,5.1 44,4.0 48,4.4 52,6.1 56,8.7 60,12.0 64,15.3 68,17.9 72,19.6 76,20.0 80,18.9 84,16.7 88,13.7 92,10.3 96,7.3 100,5.1 104,4.0 108,4.4 112,6.1 116,8.7 120,12.0 124,15.3 128,17.9 132,19.6 136,20.0 140,18.9 144,16.7 148,13.7 152,10.3 156,7.3 160,5.1 164,4.0 168,4.4 172,6.1 176,8.7 180,12.0 184,15.3 188,17.9 192,19.6 196,20.0 200,18.9 204,16.7 208,13.7 212,10.3 216,7.3 220,5.1 224,4.0 228,4.4 232,6.1 236,8.7 240,12.0 244,15.3 248,17.9 252,19.6 256,20.0 260,18.9 264,16.7 268,13.7 272,10.3 276,7.3 280,5.1 284,4.0 288,4.4 292,6.1 296,8.7 300,12.0 304,15.3 308,17.9 312,19.6 316,20.0 320,18.9 324,16.7 328,13.7 332,10.3 336,7.3 340,5.1 344,4.0 348,4.4 352,6.1 356,8.7 360,12.0 364,15.3 368,17.9 372,19.6 376,20.0 380,18.9 384,16.7 388,13.7 392,10.3 396,7.3 400,5.1 404,4.0 408,4.4 412,6.1 416,8.7 420,12.0 424,15.3 428,17.9 432,19.6 436,20.0 440,18.9 444,16.7 448,13.7 452,10.3 456,7.3 460,5.1 464,4.0 468,4.4 472,6.1 476,8.7 480,12.0"/></svg></div></div>`;
 function topbar(){
@@ -2787,7 +3178,7 @@ function topbar(){
 }
 function litSet(){
   if(READY.includes(S.phase))return new Set(S.ready||[]);
-  if(["q","nq","gq","bet","ddwager","fwager","tbvote","mnight","mvote","gsolve"].includes(S.phase))return new Set(S.players.filter(p=>p.done).map(p=>p.id));
+  if(["q","nq","gq","bet","ddwager","fwager","tbvote","mnight","mvote","gsolve","nnight","nvote"].includes(S.phase))return new Set(S.players.filter(p=>p.done).map(p=>p.id));
   return new Set();
 }
 const CROWN='<svg class="cr" viewBox="0 0 24 16" role="img" aria-label="host"><path d="M2 14 1 3l6 5 5-7 5 7 6-5-1 11z" fill="#ffc94a"/></svg>';
@@ -2818,6 +3209,7 @@ function scoreChips(){
 /* ---- fixed game header: title left, round right, progress, countdown ---- */
 function gbRight(){const m=S.mode;
   if(m==="guided")return S.phase==="gsolve"?"Solve the case":"The case";
+  if(m==="manor"){const s=S.my&&S.my.seats||[];return ["nintro","nrole"].includes(S.phase)?"The manor":S.phase==="nverdict"?"The verdict":`${s.filter(id=>!(S.my.out||[]).includes(id)).length} alive`}
   if(m==="mystery"){const ph=S.phase,r=S.my?S.my.round+1:1,al=S.my&&S.my.chars?Object.keys(S.my.chars).filter(id=>!(S.my.out||[]).includes(id)).length:0;return ph==="mnight"||ph==="mday"||ph==="mvote"||ph==="mvres"?`${al} guests left`:ph==="mverdict"?"The verdict":"The case"}
   if(S.ctx==="tb")return "Tiebreaker";if(S.ctx==="final")return "Final question";if(S.ctx==="dd")return "Daily Double";
   if(m==="lives")return `${S.players.filter(p=>p.lives>0).length} left`;
@@ -2827,7 +3219,7 @@ function gbRight(){const m=S.mode;
   return S.cfg?`Round ${S.round+1} of ${S.cfg.rounds}`:"";
 }
 const AFTER=["reveal","nreveal","greveal","breveal","cres","rend"];
-function gbProg(){const m=S.mode,ph=S.phase;if(m==="guided")return null;if(m==="mystery")return S.my&&S.my.kind==="m"?{n:MNIGHTS,d:S.my.round+(["mvres","mverdict"].includes(ph)?1:0),cur:S.my.round}:null;if(S.ctx&&S.ctx!=="main")return null;
+function gbProg(){const m=S.mode,ph=S.phase;if(m==="guided"||m==="manor")return null;if(m==="mystery")return S.my&&S.my.kind==="m"?{n:MNIGHTS,d:S.my.round+(["mvres","mverdict"].includes(ph)?1:0),cur:S.my.round}:null;if(S.ctx&&S.ctx!=="main")return null;
   if(m==="board"&&S.board){const g=S.board.grid.flat();return {n:g.length,d:g.filter(x=>!x).length,cur:-1}}
   if(m==="charades"&&S.ct)return {n:S.ct.total,d:S.ct.ti+(AFTER.includes(ph)?1:0),cur:S.ct.ti};
   if(m==="lives"||!S.total)return null;
@@ -3004,7 +3396,7 @@ const qMode=m=>["trivia","roller","teams","closest"].includes(m);
 let QC=null,NC,CC,GC;
 function counts(){if(!QC){QC={};NC={};CC={};BANK.forEach(x=>QC[x.c]=(QC[x.c]||0)+1);NBANK.forEach(x=>NC[x.c]=(NC[x.c]||0)+1);CBANK.forEach(x=>CC[x.c]=(CC[x.c]||0)+1);GC={};GBANK.forEach(x=>GC[x.c]=(GC[x.c]||0)+1)}}
 function tinfo(m){counts();
-  if(m==="mystery"||m==="guided")return{src:Object.fromEntries(STORYKEYS.map(k=>[k,STORIES[k].n])),key:"mst",attr:"ms",cnt:{},unit:"cases",shelves:[["Cases",STORYKEYS]],cls:()=>"t-gen",all:"msall"};
+  if(m==="mystery"||m==="guided"||m==="manor")return{src:Object.fromEntries(STORYKEYS.map(k=>[k,STORIES[k].n])),key:"mst",attr:"ms",cnt:{},unit:"cases",shelves:[["Cases",STORYKEYS]],cls:()=>"t-gen",all:"msall"};
   if(m==="charades")return{src:CCATS,key:"ccats",attr:"cc",cnt:CC,unit:"words",shelves:SHELVES.charades,cls:k=>CARDCLS[k]||"t-gen",all:"call"};
   if(m==="glyph")return{src:GCATS,key:"gcats",attr:"gc",cnt:GC,unit:"puzzles",shelves:SHELVES.glyph,cls:k=>GCARD[k]||"t-gen",all:"gall"};
   return{src:CATS,key:"cats",attr:"c",cnt:m==="closest"?NC:QC,unit:"questions",shelves:SHELVES.trivia,cls:k=>"t-"+k,all:"all"}}
@@ -3014,6 +3406,7 @@ function estMin(st,players){
   const m=st.mode,n=Math.max(2,players||3);let s;
   if(m==="mystery")return Math.max(5,Math.round((MNIGHTS*(MNIGHT_S+(st.mtalk||120)*.8+60)+90)/60));
   if(m==="guided")return 5;
+  if(m==="manor")return Math.max(10,Math.round((5*(NNIGHT_S+(st.mtalk||120)*.8+60+30))/60));
   if(m==="charades")s=st.cturns*n*(st.cdur*0.75+15);
   else if(m==="board")s=st.bcols*5*(st.read+18)+60;
   else if(m==="lives")return 0;
@@ -3021,8 +3414,8 @@ function estMin(st,players){
   else s=st.rounds*st.per*(st.read+Math.min(st.dur,10)+(m==="roller"?14:9))+st.rounds*15;
   return Math.max(2,Math.round(s/60));
 }
-function topicsSub(st){if(st.mode==="mystery"||st.mode==="guided"){const s=(st.mst||[]).filter(k=>STORIES[k]);return s.length===1?STORIES[s[0]].n:s.length===STORYKEYS.length?"Any case":`${s.length} cases`}const keys=topicKeys(st.mode),sel=selOf(st).filter(k=>keys.includes(k)).length;return sel===keys.length?`All ${keys.length}`:`${sel} of ${keys.length}`}
-function topicsText(st){if(st.mode==="mystery"||st.mode==="guided")return topicsSub(st);const keys=topicKeys(st.mode),sel=selOf(st).filter(k=>keys.includes(k)).length;return sel===keys.length?"All topics":`${sel} topic${sel===1?"":"s"}`}
+function topicsSub(st){if(st.mode==="mystery"||st.mode==="guided"||st.mode==="manor"){const s=(st.mst||[]).filter(k=>STORIES[k]);return s.length===1?STORIES[s[0]].n:s.length===STORYKEYS.length?"Any case":`${s.length} cases`}const keys=topicKeys(st.mode),sel=selOf(st).filter(k=>keys.includes(k)).length;return sel===keys.length?`All ${keys.length}`:`${sel} of ${keys.length}`}
+function topicsText(st){if(st.mode==="mystery"||st.mode==="guided"||st.mode==="manor")return topicsSub(st);const keys=topicKeys(st.mode),sel=selOf(st).filter(k=>keys.includes(k)).length;return sel===keys.length?"All topics":`${sel} topic${sel===1?"":"s"}`}
 function hardName(st){if(st.mode==="charades")return ["Medium","Easy","Medium","Hard"][+st.cdiff]||"Medium";return {easy:"Easy",medium:"Medium",hard:"Hard",ramp:"Gets harder",mixed:"Mixed"}[st.diff]||"Medium"}
 function setBits(st,players){
   const m=st.mode,bits=[];
@@ -3032,6 +3425,7 @@ function setBits(st,players){
   else if(m==="glyph")bits.push(`${st.gper} puzzles`);
   else if(m==="mystery")bits.push(`${MNIGHTS} nights`,`${Math.round((st.mtalk||120)/60)} min talks`);
   else if(m==="guided")bits.push(`${GTURNS} turns`);
+  else if(m==="manor")bits.push("Secret roles",`${Math.round((st.mtalk||120)/60)} min talks`);
   else bits.push(`${st.rounds*st.per} questions`,hardName(st));
   return bits;
 }
@@ -3105,6 +3499,8 @@ function aboutSection(){
   ${standalone()?"":`<p class="hint">${isIOS?"Install it: tap Share, then <b>Add to Home Screen</b>.":"Install it on your phone for faster loading."}</p>${installEvt?`<button class="btn small" id="inst">Install</button>`:""}`}</section>`}
 function gameSection(st,n){
   const m=st.mode,q=[];
+  if(m==="manor")return `<section class="sq"><h3>How it goes</h3><p class="hint">Everyone gets a secret role with a night power. One of you is the killer (with an accomplice at 5+ players). Each morning, say who you are and what you learned. Evil lies too. Vote out the killer before only two guests are left. Best with 5 to 10 players.</p></section>
+    <section class="sq"><h3>Talk time each morning</h3>${segHTML("mtk",[60,120,180],st.mtalk,v=>v/60+" min")}<p class="tot">about ${estMin(st,n)} min</p></section>`;
   if(m==="guided")return `<section class="sq"><h3>How it goes</h3><p class="hint">Everyone gets the same case and ${GTURNS} turns. Question suspects and search places, then accuse: who, with what and where. Fastest right answer wins. Works solo too.</p></section>`;
   if(m==="mystery")return `<section class="sq"><h3>How it goes</h3><p class="hint">Each player is a guest. One of you is the killer (two with 7+ players). Detectives investigate at night, everyone talks in the morning chat, then you vote someone out. Catch the killer within ${MNIGHTS} nights to win.</p></section>
     <section class="sq"><h3>Talk time each morning</h3>${segHTML("mtk",[60,120,180],st.mtalk,v=>v/60+" min")}<p class="tot">about ${estMin(st,n)} min</p></section>`;
@@ -3147,7 +3543,7 @@ function rLobby(){
   if(host)sheets+=sheetHTML("rules","Rules",gameSection(st,n)+botSection(st));
   if(host){const T=tinfo(m),keys=topicKeys(m),sel=selOf(st).filter(k=>keys.includes(k)),all=sel.length===keys.length;
     const total=sel.reduce((a,k)=>a+(T.cnt[k]||0),0);
-    if(m==="mystery"||m==="guided")sheets+=sheetHTML("top","Cases",storyBody(st),`<div class="tophint"><span>Pick one or more. One is drawn at random.</span></div>`,true);else sheets+=sheetHTML("top","Topics",topicsBody(st),`<div class="tophint"><span><span class="count">${sel.length} of ${keys.length}</span> &nbsp;${fmt(total)} ${T.unit}</span><button class="link" id="${T.all}">${all?"Clear all":"Select all"}</button></div>`,true)}
+    if(m==="mystery"||m==="guided"||m==="manor")sheets+=sheetHTML("top","Cases",storyBody(st),`<div class="tophint"><span>Pick one or more. One is drawn at random.</span></div>`,true);else sheets+=sheetHTML("top","Topics",topicsBody(st),`<div class="tophint"><span><span class="count">${sel.length} of ${keys.length}</span> &nbsp;${fmt(total)} ${T.unit}</span><button class="link" id="${T.all}">${all?"Clear all":"Select all"}</button></div>`,true)}
   const catsOk=selOf(st).some(k=>topicKeys(m).includes(k));
   const startLabel=n<need?(host?`Add ${need-n} bot${need-n>1?"s":""} to try it`:`Need ${need}+ players`):catsOk?"Start":"Pick a topic";
   const lp=S.players.filter(p=>p.on||p.host),tight=lp.length>5,shown=tight?lp.slice(0,lp.length>6?5:6):lp;
@@ -3155,7 +3551,7 @@ function rLobby(){
   const fl=`<div class="fl ${tight?"tight":""}" aria-label="Players">${shown.map(p=>`<span class="p ${p.id===pid?"me":""} ${p.on?"":"off"}"><span class="av" style="--pc:${pcol(p)}">${p.host?CROWN:""}${esc(initial(p.name))}</span><span class="n">${esc(p.name)}</span></span>`).join("")}${lp.length>shown.length?`<span class="p more"><span class="av">+${lp.length-shown.length}</span></span>`:""}</div>`;
   const codeT=`<button class="cdt" id="copy" aria-label="Copy invite link for code ${esc(S.code)}">Code<b>${esc(S.code)}</b></button>`;
   const dock=host?`<div class="dock hdock ldock" id="dock">${fl}
-    <div class="pills"><button class="pill" data-open="rules" aria-haspopup="dialog">${ICO.set}${esc(settingsSub(st,n)).replace(" · ","<span>· ")}${settingsSub(st,n).includes(" · ")?"</span>":""}</button><button class="pill" data-open="top" aria-haspopup="dialog">${ICO.top}${esc(topicsSub(st))}<span>${m==="mystery"||m==="guided"?"":"topics"}</span></button></div>
+    <div class="pills"><button class="pill" data-open="rules" aria-haspopup="dialog">${ICO.set}${esc(settingsSub(st,n)).replace(" · ","<span>· ")}${settingsSub(st,n).includes(" · ")?"</span>":""}</button><button class="pill" data-open="top" aria-haspopup="dialog">${ICO.top}${esc(topicsSub(st))}<span>${m==="mystery"||m==="guided"||m==="manor"?"":"topics"}</span></button></div>
     <div class="lgo">${codeT}<button class="btn" id="start" ${catsOk?"":"disabled"}>${startLabel}</button></div>
   </div>`:`<div class="dock hdock ldock" id="dock">${fl}
     <div class="pills"><div class="pill">${ICO.set}<span>${summaryLine(st,n)}</span></div></div>
@@ -3209,6 +3605,7 @@ const DKART={trivia:`<div class="dk-q">?</div>`,
   roller:`<div class="dk-dice"><div class="dk-die d5">${"<i></i>".repeat(9)}</div><div class="dk-die d3">${"<i></i>".repeat(9)}</div></div>`,
   teams:`<div class="dk-vs">VS</div>`,closest:`<div class="dk-t"></div>`,charades:`<div class="dk-c"><i></i><b></b></div>`,
   mystery:`<div class="dk-m"><span class="cpol p1"><i>🔪</i></span><span class="cpol p2"><i>🎭</i></span><b>WHO?</b></div>`,
+  manor:`<div class="dk-m"><span class="cpol p1"><i>🕯️</i></span><span class="cpol p2"><i>🔮</i></span><b>ROLES</b></div>`,
   guided:`<div class="dk-m"><span class="cpol p1"><i>🔍</i></span><span class="cpol p2"><i>🗂️</i></span><b>SOLVE</b></div>`,
   glyph:`<div class="dk-g"><span>🎬</span><span>🎵</span><span>☂️</span><span>☀️</span><span>❓</span><span>🌸</span></div>`};
 const dkPlayers=v=>v.min>1?`${v.min}+ players`:"Any size";
@@ -3734,6 +4131,7 @@ function rEnd(){
   sound("end",()=>{beep(1200,.3,"triangle");if(w.length)speak(S.winTeam?teamName(S.winTeam)+" wins!":`${w.map(nameOf).join(" and ")} win${w.length>1?"":"s"}!`)});
   let sub=S.early?"The host ended the game early.":S.tb?(S.tb.shared?"Nobody broke the tie, so it's a shared win.":`Won in a ${S.tb.method==="closest"?"Closest Wins":"Sudden Death"} tiebreaker.`):S.mode==="lives"?"Last one standing!":"";
   if(S.mode==="mystery"&&S.my&&S.my.res&&S.my.kind==="m"&&!S.early){const R0=S.my.res;title=R0.detWin?"Detectives win!":"The killer got away!";sub=`${names(R0.killers)} ${R0.killers.length>1?"were the killers":"was the killer"}.`}
+  if(S.mode==="manor"&&S.my&&S.my.res&&S.my.kind==="n"&&!S.early){const R0=S.my.res,ev=Object.keys(R0.roles).filter(id=>NROLES[R0.roles[id]].t==="evil");title=R0.gw?"The good team wins!":"Evil wins the night!";sub=`${names(ev)} ${ev.length>1?"were evil":"was the killer"}.`}
   if(S.mode==="guided"&&S.my&&S.my.res&&!S.early){const St=STORIES[S.my.story],x=S.my.res.sol;sub=`It was ${St.s[x[0]][0]}, with the ${lcThing(St.w[x[1]][0])}, in the ${thePlace(St.p[x[2]][0])}.`;if(!w.length)title="Nobody solved it"}
   app.innerHTML=`
   <div class="panel center"><span class="lbl">Game over</span>
