@@ -1844,7 +1844,7 @@ let client=null,hostExtra=[],trying=[],H=null,S=null,code="",session=0,loops=[],
 let seen={},myPick=null,myWord=null,ticker=null,lastSound="",pending=null;
 const every=(f,ms)=>{const t=setInterval(f,ms);loops.push(t);return t};
 function needLib(){if(typeof mqtt==="undefined"){home("Couldn't load the connection library. Check your internet and open the app again.");return false}return true}
-const APPV="10.6";
+const APPV="10.7";
 let netLog={};
 const bName=u=>/emqx/.test(u)?"EMQX":/hivemq/.test(u)?"HiveMQ":/mosquitto/.test(u)?"Mosquitto":u;
 function netDiag(){const parts=BROKERS.map(u=>{const s=netLog[bName(u)];return `${bName(u)} ${!s?"–":s.ok?"✓ "+s.ms+"ms":s.err==="trying"?(s.last?"✗ "+s.last:"…"):"✗ "+(s.err||"")}`});return `${parts.join(" · ")} · v${APPV}${typeof mqtt==="undefined"?" · no library":""}`}
@@ -3517,12 +3517,10 @@ function ffMount(){
   ffFrame=app.querySelector("#ffframe");ffKey=S.ff.id;ffDone=false;
   ffFrame.onload=()=>ffSync();ffFrame.srcdoc=FF_HTML;
 }
-function ffGroupHTML(){const F=S.ff,live=S.players.filter(p=>p.on),res=F.res||{},n=live.filter(p=>res[p.id]).length;
-  const who=live.map(p=>`<span class="p ${res[p.id]?"ok":""}">${esc(p.name)} ${res[p.id]?"✓ "+"★".repeat(res[p.id].stars):"🔎"}</span>`).join("");
-  if(S.phase==="ffplay"){
-    return `<h4>Your group · ${n} of ${live.length} cracked it</h4><div class="who">${who}</div>`+(isHost()?`<div class="row"><button class="gb alt" data-ff="reveal">Reveal the answer for everyone</button></div>`:"")}
+function ffGroupHTML(){const live=S.players.filter(p=>p.on);
+  if(S.phase==="ffplay")return isHost()?`<div class="row"><button class="gb alt" data-ff="reveal">Reveal the answer for everyone</button></div>`:"";
   const r=new Set(S.ready||[]),mine=r.has(pid),left=live.filter(p=>!r.has(p.id)).length;
-  return `<h4>Case closed for everyone · ${n} of ${live.length} cracked it</h4><div class="who">${who}</div><div class="row">${mine?`<small>Waiting for ${left} more…</small>`:`<button class="gb" data-ff="ready">See the scores</button>`}${isHost()&&left?`<button class="gb alt" data-ff="skip">Skip waiting</button>`:""}</div>`}
+  return `<div class="row">${mine?`<small>Waiting for ${left} more…</small>`:`<button class="gb" data-ff="ready">See the scores</button>`}${isHost()&&left?`<button class="gb alt" data-ff="skip">Skip waiting</button>`:""}</div>`}
 function ffSync(){if(!ffFrame)return;const w=ffFrame.contentWindow;if(!w||!w.ffStatus)return;
   w.ffStatus(ffGroupHTML());if(S.phase==="ffres")w.ffReveal()}
 function rFFIntro(){
@@ -3617,7 +3615,7 @@ function topbar(){
 }
 function litSet(){
   if(READY.includes(S.phase))return new Set(S.ready||[]);
-  if(["q","nq","gq","bet","ddwager","fwager","tbvote","mnight","mvote","gsolve","nnight","nvote","ipvote"].includes(S.phase))return new Set(S.players.filter(p=>p.done).map(p=>p.id));
+  if(["q","nq","gq","bet","ddwager","fwager","tbvote","mnight","mvote","gsolve","nnight","nvote","ipvote","ffplay"].includes(S.phase))return new Set(S.players.filter(p=>p.done).map(p=>p.id));
   return new Set();
 }
 const CROWN='<svg class="cr" viewBox="0 0 24 16" role="img" aria-label="host"><path d="M2 14 1 3l6 5 5-7 5 7 6-5-1 11z" fill="#ffc94a"/></svg>';
